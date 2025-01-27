@@ -10,11 +10,9 @@ class Usuario(db.Model):
     nome = Column(String, index=True)
     email = Column(String, unique=True, index=True)
     senha = Column(String)
-    ativo = Column(Boolean, default=True)
+    is_active = Column(Boolean, default=True)
+    role = Column(String(10), nullable=False, default="user")
 
-    # Relacionamentos
-    encaminhamentos = relationship("Encaminhamento", back_populates="usuario")
-    guias = relationship("Guia", back_populates="usuario")
 
 
 # Tabela Cliente
@@ -131,4 +129,3 @@ class Guia(db.Model):
     # Relacionamentos
     cliente = relationship("Cliente", back_populates="guias")
     profissional = relationship("Profissional", back_populates="guias")
-    usuario = relationship("Usuario", back_populates="guias")

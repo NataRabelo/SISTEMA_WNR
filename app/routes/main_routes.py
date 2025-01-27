@@ -4,4 +4,8 @@ main_bp = Blueprint('main_bp', __name__)
 
 @main_bp.route('/')
 def index():
-    return "<h1><strong>Aplicativo funcionando</trong></h1>"
+    return render_template('main/index.html')
+
+@main_bp.route('/menu')
+def menu():
+    return render_template('main/teste_logado.html')
