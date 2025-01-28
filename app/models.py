@@ -13,6 +13,20 @@ class Usuario(db.Model):
     is_active = Column(Boolean, default=True)
     role = Column(String(10), nullable=False, default="user")
 
+    # Método obrigatório para Flask-Login
+    def get_id(self):
+        return str(self.id)
+    
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+
 
 
 # Tabela Cliente

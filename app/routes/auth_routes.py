@@ -17,6 +17,7 @@ def registro():
         nome = request.form.get('nome')
         email = request.form.get('email')
         senha = request.form.get('senha')
+        role = request.form.get('role')
 
         verificar_email = Usuario.query.filter_by(email=email).first()
         if verificar_email:
@@ -24,7 +25,7 @@ def registro():
             return redirect(url_for('auth_bp.registro'))
 
         senha_criptografada = bcrypt.generate_password_hash(senha).decode('utf-8')
-        usuario = Usuario(nome=nome, email=email, senha=senha_criptografada)
+        usuario = Usuario(nome=nome, email=email, senha=senha_criptografada, role=role)
         db.session.add(usuario)
         db.session.commit()
         flash('Registro realizado com sucesso!', 'success')
@@ -50,3 +51,10 @@ def login():
             return redirect(url_for('auth_bp.login'))
 
     return render_template('main/login.html')
+
+@auth_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Você deslogou do sistema','info')
+    return redirect(url_for('auth_bp.login'))

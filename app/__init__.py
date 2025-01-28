@@ -18,7 +18,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'  # Atualize a rota se necessário
+    login_manager.login_view = 'auth_bp.login'  # Atualize a rota se necessário
     bcrypt.init_app(app)
 
     # Importar e registrar os blueprints
@@ -31,6 +31,8 @@ def create_app():
     from app.routes.professional_routes import professional_bp
     from app.routes.report_routes import report_bp
 
+    from app.routes.teste_routes import teste_bp
+
     app.register_blueprint(auth_bp)
     app.register_blueprint(client_bp)
     app.register_blueprint(Encaminhamento_bp)
@@ -39,5 +41,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(professional_bp)
     app.register_blueprint(report_bp)
+
+    app.register_blueprint(teste_bp)
 
     return app
