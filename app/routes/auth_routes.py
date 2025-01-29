@@ -1,15 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Usuario
-from flask_login import login_user, logout_user, login_required, current_user
-from app import login_manager
+from flask_login import login_user, logout_user, login_required
 from app import bcrypt
 from app import db
 
 auth_bp = Blueprint('auth_bp', __name__)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return Usuario.query.get(int(user_id))
 
 @auth_bp.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -32,7 +27,6 @@ def registro():
         return redirect(url_for('auth_bp.login'))
 
     return render_template('main/registro.html')
-
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

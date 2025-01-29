@@ -10,6 +10,13 @@ migrate = Migrate()
 login_manager = LoginManager()  # Inicializa o LoginManager
 bcrypt = Bcrypt()  # Inicializa o Bcrypt
 
+from app.models import Usuario  # Importe seu modelo de usuário
+
+@login_manager.user_loader
+def load_user(id):
+    return Usuario.query.get(int(id))  # Converte para inteiro e busca no banco
+
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
