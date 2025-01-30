@@ -1,11 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Cliente</title>
-</head>
-<body>
-    <h2>Editar o cliente</h2>
-    
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Editar Cliente{% endblock %}
+
+{% block content %}
+    <br><br>
+    <form action="/editar_cliente/{{ cliente.id }}" method="POST" class="mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="nome" class="custom-label">Nome:</label>
+                <input type="text" class="form-control" name="nome" value="{{ cliente.nome }}">
+            </div>
+            <div class="col-md-6">
+                <label for="cpf" class="custom-label">CPF:</label>
+                <input type="text" class="form-control" name="cpf" value="{{ cliente.cpf }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="email" class="custom-label">Email:</label>
+                <input type="email" class="form-control" name="email" value="{{ cliente.email }}">
+            </div>
+            <div class="col-md-6">
+                <label for="dt_nascimento" class="custom-label">Data de Nascimento:</label>
+                <input type="date" class="form-control" name="dt_nascimento" value="{{ cliente.dt_nascimento }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
+                <input type="number" class="form-control" name="renda_familiar" value="{{ cliente.renda_familiar }}">
+            </div>
+            <div class="col-md-6">
+                <label for="bairro" class="custom-label">Bairro:</label>
+                <input type="text" class="form-control" name="bairro" value="{{ cliente.bairro }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="canal_divulgacao" class="custom-label">Canal de Divulgação:</label>
+                <input type="text" class="form-control" name="canal_divulgacao" value="{{ cliente.canal_divulgacao }}">
+            </div>
+            <div class="col-md-6">
+                <label for="cep" class="custom-label">CEP:</label>
+                <input type="text" class="form-control" name="cep" value="{{ cliente.cep }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="cidade" class="custom-label">Cidade:</label>
+                <input type="text" class="form-control" name="cidade" value="{{ cliente.cidade }}">
+            </div>
+            <div class="col-md-6">
+                <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
+                <input type="text" class="form-control" name="condicao_habitacao" value="{{ cliente.condicao_habitacao }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="cpf_responsavel" class="custom-label">CPF do Responsável:</label>
+                <input type="text" class="form-control" name="cpf_responsavel" value="{{ cliente.cpf_responsavel }}">
+            </div>
+            <div class="col-md-6">
+                <label for="numero_cs" class="custom-label">Número CS:</label>
+                <input type="text" class="form-control" name="numero_cs" value="{{ cliente.numero_cs }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
+                <input type="number" class="form-control" name="despesa_mensal" value="{{ cliente.despesa_mensal }}">
+            </div>
+            <div class="col-md-6">
+                <label for="escolariedade" class="custom-label">Escolariedade:</label>
+                <input type="text" class="form-control" name="escolariedade" value="{{ cliente.escolariedade }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="estado" class="custom-label">Estado:</label>
+                <input type="text" class="form-control" name="estado" value="{{ cliente.estado }}">
+            </div>
+            <div class="col-md-6">
+                <label for="fone_contato" class="custom-label">Telefone de Contato:</label>
+                <input type="tel" class="form-control" name="fone_contato" value="{{ cliente.fone_contato }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
+                <input type="tel" class="form-control" name="fone_pessoal" value="{{ cliente.fone_pessoal }}">
+            </div>
+            <div class="col-md-6">
+                <label for="foto" class="custom-label">Foto:</label>
+                <input type="file" class="form-control" name="foto">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="grau_parentesco" class="custom-label">Grau de Parentesco:</label>
+                <input type="text" class="form-control" name="grau_parentesco" value="{{ cliente.grau_parentesco }}">
+            </div>
+            <div class="col-md-6">
+                <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
+                <input type="text" class="form-control" name="nome_plano_saude" value="{{ cliente.nome_plano_saude }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="nome_responsavel" class="custom-label">Nome do Responsável:</label>
+                <input type="text" class="form-control" name="nome_responsavel" value="{{ cliente.nome_responsavel }}">
+            </div>
+            <div class="col-md-6">
+                <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
+                <input type="number" class="form-control" name="numero_filhos" value="{{ cliente.numero_filhos }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
+                <select class="form-select" name="plano_saude" value="{{ cliente.plano_saude }}">
+                    <option value="sim">Sim</option>
+                    <option value="nao">Não</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="previdenciario" class="custom-label">Previdenciário:</label>
+                <input type="text" class="form-control" name="previdenciario" value="{{ cliente.previdenciario }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="profissao" class="custom-label">Profissão:</label>
+                <input type="text" class="form-control" name="profissao" value="{{ cliente.profissao }}">
+            </div>
+            <div class="col-md-6">
+                <label for="remuneracao" class="custom-label">Remuneração:</label>
+                <input type="number" class="form-control" name="remuneracao" value="{{ cliente.remuneracao }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="rg" class="custom-label">RG:</label>
+                <input type="text" class="form-control" name="rg" value="{{ cliente.rg }}">
+            </div>
+            <div class="col-md-6">
+                <label for="saldo" class="custom-label">Saldo:</label>
+                <input type="number" class="form-control" name="saldo" value="{{ cliente.saldo }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="sexo" class="custom-label">Sexo:</label>
+                <select class="form-select" name="sexo" value="{{ cliente.sexo }}">
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
+                <input type="text" class="form-control" name="tipo_moradia" value="{{ cliente.tipo_moradia }}">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="transporte" class="custom-label">Meio de Transporte:</label>
+                <input type="text" class="form-control" name="transporte" value="{{ cliente.transporte }}">
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Enviar</button>
+    </form>
+{% endblock %}

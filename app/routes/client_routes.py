@@ -7,7 +7,7 @@ from datetime import datetime
 client_bp = Blueprint('client_bp', __name__)
 
 @client_bp.route('/cadastrar_cliente', methods=['GET','POST'])
-
+@login_required
 def cadastrar_cliente():
     if request.method == 'POST':
         cliente = Cliente (
@@ -55,11 +55,13 @@ def cadastrar_cliente():
     return render_template('clientes/form.html')
 
 @client_bp.route('/listar_cliente', methods=['GET', 'POST'])
+@login_required
 def listar_cliente():
     clientes = Cliente.query.all()
     return render_template('clientes/list.html', clientes=clientes)
 
 @client_bp.route('/editar_cliente/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editar_cliente(id):
     cliente = Cliente.query.get_or_404(id)
 
@@ -103,6 +105,15 @@ def editar_cliente(id):
 
         db.session.commit()
         flash('Cliente atualizado com sucesso!', 'success')
-        return redirect(url_for('client_bp.listar_clientes'))  # Corrigido para um endpoint válido
+        return redirect(url_for('client_bp.listar_cliente'))  # Corrigido para um endpoint válido
 
     return render_template('clientes/form_edit.html', cliente=cliente)
+
+@client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deletar_cliente(id):
+    cliente = Cliente.query.get_or_404(id)
+    db.session.delete(cliente)
+    db.session.commit()
+    flash('Cliente excluido com sucesso', 'success')
+    return redirect(url_for('client_bp.listar_cliente'))

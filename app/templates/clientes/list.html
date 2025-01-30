@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Cliente</title>
-</head>
-<body>
-    <h2>Lista de Clientes</h2>
-    <ol>
-        {% for cliente in clientes %}
-            <li>
-                {{ cliente.nome }} - {{ cliente.email }} 
-                <a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}">Editar</a>
-            </li>
-        {% endfor %}
-    </ol>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Listar Cliente{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<ol>
+    {% for cliente in clientes %}
+        <li>
+            {{ cliente.nome }} - {{ cliente.email }} 
+            <a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}">Editar</a>
+            <a href="{{ url_for('client_bp.deletar_cliente', id=cliente.id) }}">Deletar</a>
+        </li>
+    {% endfor %}
+</ol>
+{% endblock %}

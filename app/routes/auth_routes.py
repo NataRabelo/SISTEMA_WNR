@@ -51,4 +51,4 @@ def login():
 def logout():
     logout_user()
     flash('Você deslogou do sistema','info')
-    return redirect(url_for('auth_bp.login'))
+    return redirect(url_for('main_bp.index'))
