@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro de Cliente{% endblock %}
+
+{% block content %}
+    <h1>Cadastro de Cliente</h1>
+    <br><br>
+    <form action="/cadastrar_cliente" method="POST" class="mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="nome" class="custom-label">Nome:</label>
+                <input type="text" class="form-control" name="nome" placeholder="Nome">
+            </div>
+            <div class="col-md-6">
+                <label for="cpf" class="custom-label">CPF:</label>
+                <input type="text" class="form-control" name="cpf" placeholder="CPF">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="email" class="custom-label">Email:</label>
+                <input type="email" class="form-control" name="email" placeholder="Email">
+            </div>
+            <div class="col-md-6">
+                <label for="dt_nascimento" class="custom-label">Data de Nascimento:</label>
+                <input type="date" class="form-control" name="dt_nascimento">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
+                <input type="number" class="form-control" name="renda_familiar" placeholder="Renda Familiar">
+            </div>
+            <div class="col-md-6">
+                <label for="bairro" class="custom-label">Bairro:</label>
+                <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="canal_divulgacao" class="custom-label">Canal de Divulgação:</label>
+                <input type="text" class="form-control" name="canal_divulgacao" placeholder="Canal de Divulgação">
+            </div>
+            <div class="col-md-6">
+                <label for="cep" class="custom-label">CEP:</label>
+                <input type="text" class="form-control" name="cep" placeholder="CEP">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="cidade" class="custom-label">Cidade:</label>
+                <input type="text" class="form-control" name="cidade" placeholder="Cidade">
+            </div>
+            <div class="col-md-6">
+                <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
+                <input type="text" class="form-control" name="condicao_habitacao" placeholder="Condição de Habitação">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="cpf_responsavel" class="custom-label">CPF do Responsável:</label>
+                <input type="text" class="form-control" name="cpf_responsavel" placeholder="CPF do Responsável">
+            </div>
+            <div class="col-md-6">
+                <label for="numero_cs" class="custom-label">Número CS:</label>
+                <input type="text" class="form-control" name="numero_cs" placeholder="Número CS">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
+                <input type="number" class="form-control" name="despesa_mensal" placeholder="Despesa Mensal">
+            </div>
+            <div class="col-md-6">
+                <label for="escolariedade" class="custom-label">Escolariedade:</label>
+                <input type="text" class="form-control" name="escolariedade" placeholder="Escolariedade">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="estado" class="custom-label">Estado:</label>
+                <input type="text" class="form-control" name="estado" placeholder="Estado">
+            </div>
+            <div class="col-md-6">
+                <label for="fone_contato" class="custom-label">Telefone de Contato:</label>
+                <input type="tel" class="form-control" name="fone_contato" placeholder="Telefone de Contato">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
+                <input type="tel" class="form-control" name="fone_pessoal" placeholder="Telefone Pessoal">
+            </div>
+            <div class="col-md-6">
+                <label for="foto" class="custom-label">Foto:</label>
+                <input type="file" class="form-control" name="foto">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="grau_parentesco" class="custom-label">Grau de Parentesco:</label>
+                <input type="text" class="form-control" name="grau_parentesco" placeholder="Grau de Parentesco">
+            </div>
+            <div class="col-md-6">
+                <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
+                <input type="text" class="form-control" name="nome_plano_saude" placeholder="Nome do Plano de Saúde">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="nome_responsavel" class="custom-label">Nome do Responsável:</label>
+                <input type="text" class="form-control" name="nome_responsavel" placeholder="Nome do Responsável">
+            </div>
+            <div class="col-md-6">
+                <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
+                <input type="number" class="form-control" name="numero_filhos" placeholder="Número de Filhos">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
+                <select class="form-select" name="plano_saude">
+                    <option value="sim">Sim</option>
+                    <option value="nao">Não</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="previdenciario" class="custom-label">Previdenciário:</label>
+                <input type="text" class="form-control" name="previdenciario" placeholder="Previdenciário">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="profissao" class="custom-label">Profissão:</label>
+                <input type="text" class="form-control" name="profissao" placeholder="Profissão">
+            </div>
+            <div class="col-md-6">
+                <label for="remuneracao" class="custom-label">Remuneração:</label>
+                <input type="number" class="form-control" name="remuneracao" placeholder="Remuneração">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="rg" class="custom-label">RG:</label>
+                <input type="text" class="form-control" name="rg" placeholder="RG">
+            </div>
+            <div class="col-md-6">
+                <label for="saldo" class="custom-label">Saldo:</label>
+                <input type="number" class="form-control" name="saldo" placeholder="Saldo">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="sexo" class="custom-label">Sexo:</label>
+                <select class="form-select" name="sexo">
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
+                <input type="text" class="form-control" name="tipo_moradia" placeholder="Tipo de Moradia">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="transporte" class="custom-label">Meio de Transporte:</label>
+                <input type="text" class="form-control" name="transporte" placeholder="Meio de Transporte">
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Enviar</button>
+    </form>
+{% endblock %}
