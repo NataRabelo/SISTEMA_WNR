@@ -14,7 +14,10 @@
                         <div>
                             <strong>{{ profissional.nome }}</strong> - {{ profissional.email }}
                         </div>
-                        
+                        <div>
+                            <a href="{{ url_for('professional_bp.editar_profissional', id=profissional.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            
+                        </div>
                     </li>
                 {% endfor %}
             </ul>

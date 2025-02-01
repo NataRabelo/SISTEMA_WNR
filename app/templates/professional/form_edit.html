@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Cliente{% endblock %}
+
+{% block content %}
+    <h2 class="text-center mb-4 mt-5">editar profissional</h2>
+    <br><br>
+    <form action="cadastrar_profissional" method="POST" class="mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="nome" class="custom-label">Nome:</label>
+                <input type="text" class="form-control" name="nome" value="{{ profissional.nome }}">
+            </div>
+            <div class="col-md-6">
+                <label for="cpf" class="custom-label">CPF:</label>
+                <input type="text" class="form-control" name="cpf" value="{{ profissional.cpf }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="email" class="custom-label">Email:</label>
+                <input type="text" class="form-control" name="email" value="{{ profissional.email }}">
+            </div>
+            <div class="col-md-6">
+                <label for="data_nascimento" class="custom-label">Data de Nascimento:</label>
+                <input type="date" class="form-control" name="data_nascimento" value="{{ profissional.data_nascimento }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="bairro" class="custom-label">Bairro:</label>
+                <input type="text" class="form-control" name="bairro" value="{{ profissional.bairro}}">
+            </div>
+            <div class="col-md-6">
+                <label for="banco" class="custom-label">Banco:</label>
+                <input type="text" class="form-control" name="banco" value="{{ profissional.banco }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="cep" class="custom-label">CEP:</label>
+                <input type="text" class="form-control" name="cep" value="{{ profissional.cep }}">
+            </div>
+            <div class="col-md-6">
+                <label for="cidade" class="custom-label">Cidade:</label>
+                <input type="text" class="form-control" name="cidade" value="{{ profissional.cidade }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="graduacao" class="custom-label">Graducação:</label>
+                <input type="text" class="form-control" name="graduacao" value="{{ profissional.graduacao }}">
+            </div>
+            <div class="col-md-6">
+                <label for="issqn" class="custom-label">ISSQN:</label>
+                <input type="text" class="form-control" name="issqn" value="{{ profissional.issqn }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
+                <input type="text" class="form-control" name="fone_pessoal" value="{{ profissional.fone_pessoal }}">
+            </div>
+            <div class="col-md-6">
+                <label for="fone_profissional" class="custom-label">Telefone Profissional:</label>
+                <input type="text" class="form-control" name="fone_profissional" value="{{ profissional.fone_profissional }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="foto" class="custom-label">Foto:</label>
+                <input type="file" class="form-control" name="foto">
+            </div>
+            <div class="col-md-6">
+                <label for="curriculum_lattes" class="custom-label">Curriculum Lattes:</label>
+                <input type="text" class="form-control" name="curriculum_lattes"  value="{{ profissional.curriculum_lattes }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="dias_horas_disponiveis" class="custom-label">Dias/Horas Disponíveis:</label>
+                <input type="text" class="form-control" name="dias_horas_disponiveis" value="{{ profissional.dias_horas_disponiveis }}">
+            </div>
+            <div class="col-md-6">
+                <label for="endereco_profissional" class="custom-label">Endereço Profissional:</label>
+                <input type="text" class="form-control" name="endereco_profissional"  value="{{ profissional.endereco_profissional }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="estado" class="custom-label">Estado:</label>
+                <input type="text" class="form-control" name="estado" value="{{ profissional.estado }}">
+            </div>
+            <div class="col-md-6">
+                <label for="observacoes" class="custom-label">Observações:</label>
+                <input type="text" class="form-control" name="observacoes" value="{{ profissional.observacoes }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="pix" class="custom-label">PIX:</label>
+                <input type="text" class="form-control" name="pix" value="{{ profissional.pix }}">
+            </div>
+            <div class="col-md-6">
+                <label for="registro_profissional" class="custom-label">Registro Profissional:</label>
+                <input type="text" class="form-control" name="registro_profissional"  value="{{ profissional.registro_profissional }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="rg" class="custom-label">RG:</label>
+                <input type="text" class="form-control" name="rg" value="{{ profissional.rg }}">
+            </div>
+            <div class="col-md-6">
+                <label for="valor_minimo" class="custom-label">Valor mínimo:</label>
+                <input type="number" class="form-control" name="valor_minimo"  value="{{ profissional.valor_minimo }}">
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Salvar</button>
+    </form>
+{% endblock %}

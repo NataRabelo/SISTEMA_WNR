@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, render_template, request, redirect, url_for
 from flask_login import login_required
-from app.models import Profissional
+from app.models import Cliente, Profissional
 from datetime import datetime
 from app import db
 
@@ -50,3 +50,37 @@ def cadastrar_profissional():
 def listar_profissional():
     profissionais = Profissional.query.all()
     return render_template('professional/list.html', profissionais=profissionais)
+
+@professional_bp.route('/editar_profissional/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editar_profissional(id):
+    profissional = Profissional.query.get_or_404(id)
+    if request.method == 'POST':
+
+        profissional.nome  = request.form.get('nome')
+        profissional.cpf = request.form.get('cpf')
+        profissional.email = request.form.get('emial')
+        profissional.data_nascimento = request.form.get('data_nascimento')
+        profissional.bairro = request.form.get('bairro')               
+        profissional.banco = request.form.get('banco')                
+        profissional.cep = request.form.get('cep')                  
+        profissional.cidade = request.form.get('cidade')               
+        profissional.graduacao = request.form.get('graduacao')            
+        profissional.issqn = request.form.get('issqn')                
+        profissional.fone_pessoal = request.form.get('fone_pessoal')         
+        profissional.fone_profissional = request.form.get('fone_profissional')    
+        profissional.foto = request.form.get('foto')                 
+        profissional.curriculum_lattes = request.form.get('curriculum_lattes')    
+        profissional.dias_horas_disponivei = request.form.get('dias_horas_disponiveis')
+        profissional.endereco_profissional = request.form.get('endereco_profissional')
+        profissional.estado = request.form.get('estado')               
+        profissional.observacoes = request.form.get('observacoes')          
+        profissional.pix = request.form.get('pix')                  
+        profissional.registro_profissional = request.form.get('registro_profissional')
+        profissional.rg = request.form.get('rg')                   
+        profissional.valor_minimo = request.form.get('valor_minimo')         
+
+        db.session.add(profissional)
+        db.session.commit()
+        flash('Profissional atualizdo com sucesso!', 'success')
+    return render_template('professional/form_edit.html', profissional=profissional)
