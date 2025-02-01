@@ -44,3 +44,9 @@ def cadastrar_profissional():
         db.session.commit()
         flash('Profissional cadastrado com sucesso!', 'success')
     return render_template('professional/form.html')
+
+@professional_bp.route('/listar_profissional', methods=['GET', 'POST'])
+@login_required
+def listar_profissional():
+    profissionais = Profissional.query.all()
+    return render_template('professional/list.html', profissionais=profissionais)
