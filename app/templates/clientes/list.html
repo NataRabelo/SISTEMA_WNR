@@ -3,15 +3,25 @@
 {% block title %}Listar Cliente{% endblock %}
 
 {% block content %}
-<br>
-<br>
-<ol>
-    {% for cliente in clientes %}
-        <li>
-            {{ cliente.nome }} - {{ cliente.email }} 
-            <a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}">Editar</a>
-            <a href="{{ url_for('client_bp.deletar_cliente', id=cliente.id) }}">Deletar</a>
-        </li>
-    {% endfor %}
-</ol>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 mt-5">Lista de Clientes</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <ul class="list-group">
+                {% for cliente in clientes %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ cliente.nome }}</strong> - {{ cliente.email }}
+                        </div>
+                        <div>
+                            <a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="{{ url_for('client_bp.deletar_cliente', id=cliente.id) }}" class="btn btn-sm btn-danger">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

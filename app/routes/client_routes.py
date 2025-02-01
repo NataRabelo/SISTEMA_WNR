@@ -1,15 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Cliente
-from flask_login import login_required
-from app import db
-from datetime import datetime
 from app.utils.decorators import role_required
+from flask_login import login_required
+from app.models import Cliente
+from datetime import datetime
+from app import db
+
 
 client_bp = Blueprint('client_bp', __name__)
 
 @client_bp.route('/cadastrar_cliente', methods=['GET','POST'])
 @login_required
-@role_required('user', 'supervisor', 'admin')
 def cadastrar_cliente():
     if request.method == 'POST':
         cliente = Cliente (
@@ -58,7 +58,6 @@ def cadastrar_cliente():
 
 @client_bp.route('/listar_cliente', methods=['GET', 'POST'])
 @login_required
-@role_required('user', 'supervisor', 'admin')
 def listar_cliente():
     clientes = Cliente.query.all()
     return render_template('clientes/list.html', clientes=clientes)
@@ -114,7 +113,6 @@ def editar_cliente(id):
 
 @client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
 @login_required
-@role_required('supervisor', 'admin')
 def deletar_cliente(id):
     cliente = Cliente.query.get_or_404(id)
     db.session.delete(cliente)

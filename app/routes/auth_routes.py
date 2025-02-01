@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Usuario
 from flask_login import login_user, logout_user, login_required
-from app import bcrypt
-from app import db
 from app.utils.decorators import role_required
+from app.models import Usuario
+from app import bcrypt, db
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -49,7 +48,6 @@ def login():
     return render_template('main/login.html')
 
 @auth_bp.route('/logout')
-@role_required('user', 'supervisor', 'admin')
 @login_required
 def logout():
     logout_user()

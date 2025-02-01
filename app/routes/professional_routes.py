@@ -1,7 +1,7 @@
-from datetime import datetime
 from flask import Blueprint, flash, render_template, request, redirect, url_for
-from app.models import Profissional
 from flask_login import login_required
+from app.models import Profissional
+from datetime import datetime
 from app import db
 
 professional_bp = Blueprint('professional_bp', __name__)
