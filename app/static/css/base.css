@@ -1,0 +1,76 @@
+/* Estilização geral */
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #1d3557;
+}
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.navbar .btn {
+    font-size: 1rem;
+    transition: 0.3s;
+}
+.navbar .btn:hover {
+    opacity: 0.8;
+}
+
+/* Layout principal */
+.dashboard-container {
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botões principais */
+.dashboard-btn {
+    width: 300px;
+    height: 120px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.dashboard-btn i {
+    margin-right: 10px;
+    font-size: 1.6rem;
+}
+
+.dashboard-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Cores dos botões */
+.btn-cliente { background-color: #457b9d; color: white; }
+.btn-profissional { background-color: #e63946; color: white; }
+.btn-encaminhamento { background-color: #2a9d8f; color: white; }
+.btn-guia { background-color: #f4a261; color: white; }
+
+.btn-cliente:hover { background-color: #396a8f; }
+.btn-profissional:hover { background-color: #c62839; }
+.btn-encaminhamento:hover { background-color: #21867a; }
+.btn-guia:hover { background-color: #d48b50; }
+
+/* Dropdown personalizado */
+.dropdown-menu {
+    width: 100%;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+.dropdown-item {
+    font-size: 1.2rem;
+}
+.dropdown-item:hover {
+    background-color: #ddd;
+}

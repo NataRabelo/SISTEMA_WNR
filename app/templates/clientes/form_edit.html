@@ -5,7 +5,7 @@
 {% block content %}
     <h2 class="text-center mb-4 mt-5">Editar cliente</h2>
     <br><br>
-    <form action="/editar_cliente/{{ cliente.id }}" method="POST" class="mb-5">
+    <form action="{{ url_for('client_bp.editar_cliente', id=cliente.id)}}" method="POST" class="mb-5">
         <div class="row">
             <div class="col-md-6">
                 <label for="nome" class="custom-label">Nome:</label>

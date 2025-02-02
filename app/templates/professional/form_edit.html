@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Editar Cliente{% endblock %}
+{% block title %}Editar profissional{% endblock %}
 
 {% block content %}
-    <h2 class="text-center mb-4 mt-5">editar profissional</h2>
+    <h2 class="text-center mb-4 mt-5">Editar profissional</h2>
     <br><br>
-    <form action="cadastrar_profissional" method="POST" class="mb-5">
+    <form action="{{ url_for('professional_bp.editar_profissional', id=profissional.id)}}" method="POST" class="mb-5">
         <div class="row">
             <div class="col-md-6">
                 <label for="nome" class="custom-label">Nome:</label>

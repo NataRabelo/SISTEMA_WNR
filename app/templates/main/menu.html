@@ -1,6 +1,50 @@
 {% extends 'base.html' %}
 
-{% block title %}  Menu {% endblock %}
+{% block title %}Menu do Sistema{% endblock %}
 
 {% block content %}
-{% endblock%}
+    <!-- Container de Botões -->
+    <div class="container dashboard-container">
+        <div class="row text-center">
+            <!-- Cliente -->
+            <div class="col-md-3 mb-3">
+                <div class="dropdown">
+                    <button class="btn dashboard-btn btn-cliente dropdown-toggle" type="button" id="clienteDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i> Cliente
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="clienteDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('client_bp.cadastrar_cliente')}}"><i class="fas fa-user-plus"></i> Cadastrar Cliente</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('client_bp.listar_cliente')}}"><i class="fas fa-list"></i> Listar Clientes</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Profissional -->
+            <div class="col-md-3 mb-3">
+                <div class="dropdown">
+                    <button class="btn dashboard-btn btn-profissional dropdown-toggle" type="button" id="profissionalDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-md"></i> Profissional
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="profissionalDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('professional_bp.cadastrar_profissional')}}"><i class="fas fa-user-plus"></i> Cadastrar Profissional</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('professional_bp.listar_profissional')}}"><i class="fas fa-list"></i> Listar Profissionais</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gerar Encaminhamento -->
+            <div class="col-md-3 mb-3">
+                <a href="#" class="btn dashboard-btn btn-encaminhamento">
+                    <i class="fas fa-file-medical"></i> Gerar Encaminhamento
+                </a>
+            </div>
+
+            <!-- Emitir Guia -->
+            <div class="col-md-3 mb-3">
+                <a href="#" class="btn dashboard-btn btn-guia">
+                    <i class="fas fa-file-invoice"></i> Emitir Guia
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
