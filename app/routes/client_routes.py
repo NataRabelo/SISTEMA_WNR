@@ -28,6 +28,7 @@ def cadastrar_cliente():
             despesa_mensal = request.form.get('despesa_mensal'),
             escolaridade = request.form.get('escolariedade'),
             estado = request.form.get('estado'),
+            endereco = request.form.get('endereco'),
             fone_contato = request.form.get('fone_contato'),
             fone_pessoal = request.form.get('fone_pessoal'),
             foto = request.form.get('foto'),
@@ -82,12 +83,13 @@ def editar_cliente(id):
         cliente.canal_divulgacao = request.form.get('canal_divulgacao')
         cliente.cep = request.form.get('cep')
         cliente.cidade = request.form.get('cidade')
-        cliente.condicao_habitacao = request.form.get('condicao_habitacao')  # Corrigido
+        cliente.condicao_habitacao = request.form.get('condicao_habitacao')  
         cliente.cpf_responsavel = request.form.get('cpf_responsavel')
         cliente.numero_cs = request.form.get('numero_cs')
         cliente.despesa_mensal = request.form.get('despesa_mensal')
-        cliente.escolaridade = request.form.get('escolaridade')  # Corrigido
+        cliente.escolaridade = request.form.get('escolaridade')  
         cliente.estado = request.form.get('estado')
+        cliente.endereco = request.form.get('endereco')
         cliente.fone_contato = request.form.get('fone_contato')
         cliente.fone_pessoal = request.form.get('fone_pessoal')
         cliente.foto = request.form.get('foto')
@@ -107,7 +109,7 @@ def editar_cliente(id):
 
         db.session.commit()
         flash('Cliente atualizado com sucesso!', 'success')
-        return redirect(url_for('client_bp.listar_cliente'))  # Corrigido para um endpoint válido
+        return redirect(url_for('client_bp.listar_cliente'))  
 
     return render_template('clientes/form_edit.html', cliente=cliente)
 

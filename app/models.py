@@ -49,6 +49,7 @@ class Cliente(db.Model):
     despesa_mensal          = Column(Float)
     escolaridade            = Column(String)
     estado                  = Column(String)
+    endereco                = Column(String)
     fone_contato            = Column(String)
     fone_pessoal            = Column(String)
     foto                    = Column(String)

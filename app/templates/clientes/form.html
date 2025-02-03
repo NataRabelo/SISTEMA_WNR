@@ -3,188 +3,331 @@
 {% block title %}Cadastro de Cliente{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4 mt-5">Cadastro de Clientes</h2>
-    <br><br>
-    <form action="{{ url_for('client_bp.cadastrar_cliente')}}" method="POST" class="mb-5">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="nome" class="custom-label">Nome:</label>
-                <input type="text" class="form-control" name="nome" placeholder="Nome">
+<div class="container mt-4">
+    <h2 class="text-center">Cadastro de Cliente</h2>
+    <form action="{{ url_for('client_bp.cadastrar_cliente')}}" method="POST">
+        <div class="container">
+            <h2 class="mb-4"> Dados Pessoais </h2>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" id="dataNascimento" name="dt_nascimento"  onchange="verificarIdade()">
+                </div>
             </div>
-            <div class="col-md-6">
-                <label for="cpf" class="custom-label">CPF:</label>
-                <input type="text" class="form-control" name="cpf" placeholder="CPF">
+            <div id="campos_adicionais" style="display: none">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="nome_responsavel" class="form-label">Nome responsável:</label>
+                        <input type="text" class="form-control" id="nome_responsal" name="nome_responsavel" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cpf_responsavel" class="form-label">CPF responsável:</label>
+                        <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
+                        <select class="form-select" name="grau_parentesco" id="grau_parentesco" required>
+                            <option value="pai">Pai</option>
+                            <option value="mae">Mãe</option>
+                            <option value="avo">Avô</option>
+                            <option value="avo_f">Avó</option>
+                            <option value="bisavo">Bisavô</option>
+                            <option value="bisavo_f">Bisavó</option>
+                            <option value="trisavo">Trisavô</option>
+                            <option value="trisavo_f">Trisavó</option>
+                            <option value="filho">Filho</option>
+                            <option value="filha">Filha</option>
+                            <option value="neto">Neto</option>
+                            <option value="neta">Neta</option>
+                            <option value="bisneto">Bisneto</option>
+                            <option value="bisneta">Bisneta</option>
+                            <option value="trisneto">Trisneto</option>
+                            <option value="trisneta">Trisneta</option>
+                            <option value="irmao">Irmão</option>
+                            <option value="irma">Irmã</option>
+                            <option value="tio">Tio</option>
+                            <option value="tia">Tia</option>
+                            <option value="sobrinho">Sobrinho</option>
+                            <option value="sobrinha">Sobrinha</option>
+                            <option value="primo">Primo</option>
+                            <option value="prima">Prima</option>
+                            <option value="sogro">Sogro</option>
+                            <option value="sogra">Sogra</option>
+                            <option value="genro">Genro</option>
+                            <option value="nora">Nora</option>
+                            <option value="cunhado">Cunhado</option>
+                            <option value="cunhada">Cunhada</option>
+                            <option value="padrasto">Padrasto</option>
+                            <option value="madrasta">Madrasta</option>
+                            <option value="enteado">Enteado</option>
+                            <option value="enteada">Enteada</option>
+                            <option value="pais_adotivos">Pais adotivos</option>
+                            <option value="filhos_adotivos">Filhos adotivos</option>
+                            <option value="irmaos_criacao">Irmãos de criação</option>
+                          </select>                          
+                    </div>
+                </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="rg" class="form-label">RG</label>
+                    <input type="text" class="form-control" name="rg" id="rg" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="sexo" class="form-label">Sexo:</label>
+                    <select class="form-select" id="sexo" name="sexo" required>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+            </div>
+            <h2 class="mb-4 mt-4"> Contatos </h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
+                    <input type="text" class="form-control" name="fone_pessoal" id="celular" placeholder="(xx) xxxxxxxxx">
+                </div>
+                <div class="col-md-3">
+                    <label for="fone_profissional" class="custom-label">Telefone Profissional:</label>
+                    <input type="text" class="form-control" name="fone_profissional" id="telefone" placeholder="(xx) xxxxxxxxx">
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="custom-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+            </div>
+            <h2 class="mb-4 mt-4"> Endereço </h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cep" class="custom-label">CEP:</label>
+                    <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="endereco" class="custom-label">Endereço:</label>
+                    <input type="text" class="form-control" name="endereco" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="numero_cs" class="custom-label">Nr Casa:</label>
+                    <input type="text" class="form-control" name="numero_cs" placeholder="Número CS">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div  class="col-md-3">
+                    <label for="bairro" class="custom-label">Bairro:</label>
+                    <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+                </div>
+                <div class="col-md-3">
+                    <label for="cidade" class="custom-label">Cidade:</label>
+                    <input type="text" class="form-control" name="cidade" placeholder="Cidade">
+                </div>
+                <div class="col-md-2">
+                    <label for="estado" class="custom-label">Estado:</label>
+                    <input type="text" class="form-control" name="estado" placeholder="Estado">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
+                    <select class="form-select" name="condicao_habitacao">
+                        <option  value="Alugada">Alugada</option>
+                        <option  value="Própria">Própria</option>
+                        <option  value="Financiada">Financiada</option>
+                        <option  value="Cedida">Cedida</option>
+                        <option  value="Compartilhada">Compartilhada</option>
+                        <option  value="Ocupação Irregular">Ocupação Irregular</option>
+                        <option  value="Sublugada">Sublugada</option>
+                        <option  value="Cohab">Cohab</option>
+                        <option  value="Temporária">Temporária</option>
+                        <option  value="Comodatária">Comodatária</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
+                    <select class="form-select" name="tipo_moradia">
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Sobrado">Sobrado</option>
+                        <option value="Cortiço">Cortiço</option>
+                        <option value="Chale">Chale</option>
+                        <option value="Studio">Studio</option>
+                        <option value="Kitnet">Kitnet</option>
+                        <option value="Residencia">Residencia</option>
+                        <option value="Condominio">Condominio</option>
+                        <option value="Barraco">Barraco</option>
+                        <option value="Albergue">Albergue</option>
+                        <option value="Predio">Prédio</option>
+                        <option value="Sitio">Sitio</option>
+                        <option value="Chacara">Chacara</option>
+                        <option value="Fazenda">Fazenda</option>
+                        <option value="Rancho">Rancho</option>
+                        <option value="Moradia Estudantil">Moradia Estudantil</option>
+                        <option value="Cohab">Cohab</option>
+                        <option value="Vila">Vila</option>
+                    </select>
+                </div>
+            </div>
+            <div  class="row mb-3">
+                <h2 class="mb-4 mt-4">Outras informações</h2>
+                <div class="col-md-3">
+                    <label for="transporte" class="custom-label">Meio de Transporte:</label>
+                    <select class="form-select" name="transporte">
+                        <option value="Transporte Publico">Transporte Público</option>
+                        <option value="Bicicleta">Bicicleta</option>
+                        <option value="Carro">Carro</option>
+                        <option value="Moto">Moto</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="escolariedade" class="custom-label">Escolariedade:</label>
+                    <select class="form-select" name="escolariedade">
+                        <option vlaue="Não Alfabetizado">Não Alfabetizado</option>
+                        <option vlaue="Ensino Fundamental">Ensino Fundamental</option>
+                        <option vlaue="Ensino Mêdio">Ensino Mêdio</option>
+                        <option vlaue="Ensino Superior">Ensino Superior</option>
+                        <option vlaue="Pós Graduação">Pós Graduação</option>
+                        <option vlaue="Mestado">Mestrado</option>
+                        <option vlaue="Doutorado">Doutorado</option>
+                        <option vlaue="PhD">PhD</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="profissao" class="custom-label">Profissão:</label>
+                    <input type="text" class="form-control" name="profissao" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
+                    <select class="form-select" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
+                    <input type="text" class="form-control" id="nome_plano_saude" name="nome_plano_saude" >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="possui_filhos" class="custom-label">Possui filhos?</label>
+                    <select class="form-select" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
+                        <option value="sim">Sim</option>
+                        <option value="nao">Não</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
+                    <input type="number" class="form-control" id="qtn_filhos" name="numero_filhos">
+                </div>
+                <div class="col-md-3">
+                    <label for="previdenciario" class="custom-label">Previdenciário:</label>
+                    <select class="form-select" name="qtd_filhos">
+                        <option value="não">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="remuneracao" class="custom-label">Remuneração:</label>
+                    <input type="number" class="form-control" id="remuneracao" name="remuneracao" placeholder="Remuneração" oninput="calcularSaldo()">
+                </div>
+                <div class="col-md-3">
+                    <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
+                    <input type="number" class="form-control" id="renda_familiar" name="renda_familiar" placeholder="Renda Familiar" oninput="calcularSaldo()">
+                </div>
+                <div class="col-md-3">
+                    <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
+                    <input type="number" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="Despesa Mensal" oninput="calcularSaldo()">
+                </div>
+                <div class="col-md-3">
+                    <label for="saldo" class="custom-label">Saldo:</label>
+                    <input type="text" class="form-control" id="saldo" name="saldo" placeholder="Saldo" readonly>
+                </div>
+            </div>
+            <div class="row mt-4 mb-5">
+                <div class="col-md-12 text-end">
+                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </div>                        
         </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="email" class="custom-label">Email:</label>
-                <input type="email" class="form-control" name="email" placeholder="Email">
-            </div>
-            <div class="col-md-6">
-                <label for="dt_nascimento" class="custom-label">Data de Nascimento:</label>
-                <input type="date" class="form-control" name="dt_nascimento">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
-                <input type="number" class="form-control" name="renda_familiar" placeholder="Renda Familiar"> 
-            </div>
-            <div class="col-md-6">
-                <label for="bairro" class="custom-label">Bairro:</label>
-                <input type="text" class="form-control" name="bairro" placeholder="Bairro">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="canal_divulgacao" class="custom-label">Canal de Divulgação:</label>
-                <input type="text" class="form-control" name="canal_divulgacao" placeholder="Canal de Divulgação">
-            </div>
-            <div class="col-md-6">
-                <label for="cep" class="custom-label">CEP:</label>
-                <input type="text" class="form-control" name="cep" placeholder="CEP">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="cidade" class="custom-label">Cidade:</label>
-                <input type="text" class="form-control" name="cidade" placeholder="Cidade">
-            </div>
-            <div class="col-md-6">
-                <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
-                <input type="text" class="form-control" name="condicao_habitacao" placeholder="Condição de Habitação">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="cpf_responsavel" class="custom-label">CPF do Responsável:</label>
-                <input type="text" class="form-control" name="cpf_responsavel" placeholder="CPF do Responsável">
-            </div>
-            <div class="col-md-6">
-                <label for="numero_cs" class="custom-label">Número CS:</label>
-                <input type="text" class="form-control" name="numero_cs" placeholder="Número CS">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
-                <input type="number" class="form-control" name="despesa_mensal" placeholder="Despesa Mensal">
-            </div>
-            <div class="col-md-6">
-                <label for="escolariedade" class="custom-label">Escolariedade:</label>
-                <input type="text" class="form-control" name="escolariedade" placeholder="Escolariedade">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="estado" class="custom-label">Estado:</label>
-                <input type="text" class="form-control" name="estado" placeholder="Estado">
-            </div>
-            <div class="col-md-6">
-                <label for="fone_contato" class="custom-label">Telefone de Contato:</label>
-                <input type="tel" class="form-control" name="fone_contato" placeholder="Telefone de Contato">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
-                <input type="tel" class="form-control" name="fone_pessoal" placeholder="Telefone Pessoal">
-            </div>
-            <div class="col-md-6">
-                <label for="foto" class="custom-label">Foto:</label>
-                <input type="file" class="form-control" name="foto">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="grau_parentesco" class="custom-label">Grau de Parentesco:</label>
-                <input type="text" class="form-control" name="grau_parentesco" placeholder="Grau de Parentesco">
-            </div>
-            <div class="col-md-6">
-                <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
-                <input type="text" class="form-control" name="nome_plano_saude" placeholder="Nome do Plano de Saúde">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="nome_responsavel" class="custom-label">Nome do Responsável:</label>
-                <input type="text" class="form-control" name="nome_responsavel" placeholder="Nome do Responsável">
-            </div>
-            <div class="col-md-6">
-                <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
-                <input type="number" class="form-control" name="numero_filhos" placeholder="Número de Filhos">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
-                <select class="form-select" name="plano_saude">
-                    <option value="sim">Sim</option>
-                    <option value="nao">Não</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="previdenciario" class="custom-label">Previdenciário:</label>
-                <input type="text" class="form-control" name="previdenciario" placeholder="Previdenciário">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="profissao" class="custom-label">Profissão:</label>
-                <input type="text" class="form-control" name="profissao" placeholder="Profissão">
-            </div>
-            <div class="col-md-6">
-                <label for="remuneracao" class="custom-label">Remuneração:</label>
-                <input type="number" class="form-control" name="remuneracao" placeholder="Remuneração">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="rg" class="custom-label">RG:</label>
-                <input type="text" class="form-control" name="rg" placeholder="RG">
-            </div>
-            <div class="col-md-6">
-                <label for="saldo" class="custom-label">Saldo:</label>
-                <input type="number" class="form-control" name="saldo" placeholder="Saldo">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="sexo" class="custom-label">Sexo:</label>
-                <select class="form-select" name="sexo">
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="outro">Outro</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
-                <input type="text" class="form-control" name="tipo_moradia" placeholder="Tipo de Moradia">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="transporte" class="custom-label">Meio de Transporte:</label>
-                <input type="text" class="form-control" name="transporte" placeholder="Meio de Transporte">
-            </div>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-success">Enviar</button>
     </form>
+</div>
+    <script>
+        function verificaDropdown_PlanodeSaude() {
+            let dropdown = document.getElementById("plano_saude");
+            let input = document.getElementById("nome_plano_saude");
+            input.disabled = dropdown.value === "nao";
+        }
+
+        function verificarDropdown_Filhos() {
+            let dropdown = document.getElementById('possui_filhos');
+            let input = document.getElementById('qtn_filhos');
+            input.disabled = dropdown.value === "nao";
+        }
+
+        $(document).ready(function() {
+        $('#cpf').mask('000.000.000-00'); // Máscara para CPF
+        $('#rg').mask('00.000.000-0'); // Máscara para RG
+        $('#cep').mask('00000-000'); // Máscara para CEP
+        $('#telefone').mask('(00) 00000-0000'); // Máscara para telefone (suporta celular e fixo)
+        $('#celular').mask('(00) 00000-0000'); // Máscara para Celular
+    });
+    function formatarMoeda(valor) {
+        return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Função para calcular e exibir o saldo
+    function calcularSaldo() {
+        const remuneracao = parseFloat(document.getElementById('remuneracao').value) || 0;
+        const rendaFamiliar = parseFloat(document.getElementById('renda_familiar').value) || 0;
+        const despesaMensal = parseFloat(document.getElementById('despesa_mensal').value) || 0;
+
+        // Calculando o saldo
+        const saldo = (remuneracao + rendaFamiliar) - despesaMensal;
+
+        // Exibindo o saldo formatado
+        document.getElementById('saldo').value = formatarMoeda(saldo);
+    }
+
+    function verificarIdade() {
+        const dataNascimento = document.getElementById("dataNascimento").value;
+        const camposAdicionais = document.getElementById("campos_adicionais");
+        const idade = calcularIdade(dataNascimento);
+        
+        // Verifica se a idade é menor que 18 para exibir os campos adicionais
+        if (idade < 18) {
+            camposAdicionais.style.display = "block";  // Exibe os campos adicionais
+        } else {
+            camposAdicionais.style.display = "none";  // Oculta os campos adicionais
+        }
+    }
+
+    function calcularIdade(dataNascimento) {
+        const hoje = new Date();
+        const nascimento = new Date(dataNascimento);
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+        const m = hoje.getMonth() - nascimento.getMonth();
+
+        if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+            idade--;
+        }
+        return idade;
+    }
+    </script>
 {% endblock %}
