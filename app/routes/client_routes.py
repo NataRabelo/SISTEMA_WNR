@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from app.utils.edit_values import limpar_valor
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Cliente
@@ -12,40 +13,42 @@ client_bp = Blueprint('client_bp', __name__)
 @login_required
 def cadastrar_cliente():
     if request.method == 'POST':
-        cliente = Cliente (
-            nome = request.form.get('nome'),
-            cpf = request.form.get('cpf'),
-            email = request.form.get('email'),
-            data_nascimento = datetime.strptime(request.form.get('dt_nascimento'),"%Y-%m-%d").date(),
-            renda_familiar = request.form.get('renda_familiar'),
-            bairro = request.form.get('bairro'),
-            canal_divulgacao = request.form.get('canal_divulgacao'),
-            cep = request.form.get('cep'),
-            cidade = request.form.get('cidade'),
-            condicao_habitacao = request.form.get('cidade'),
-            cpf_responsavel = request.form.get('cpf_responsavel'),
-            numero_cs = request.form.get('numero_cs'),
-            despesa_mensal = request.form.get('despesa_mensal'),
-            escolaridade = request.form.get('escolariedade'),
-            estado = request.form.get('estado'),
-            endereco = request.form.get('endereco'),
-            fone_contato = request.form.get('fone_contato'),
-            fone_pessoal = request.form.get('fone_pessoal'),
-            foto = request.form.get('foto'),
-            grau_parentesco = request.form.get('grau_parentesco'),
-            nome_plano_saude = request.form.get('nome_plano_saude'),
-            nome_responsavel = request.form.get('nome_responsavel'),
-            numero_filhos = request.form.get('numero_filhos'),
-            plano_saude = request.form.get('plano_de_saude'),
-            previdenciario = request.form.get('previdenciario'),
-            profissao = request.form.get('profissao'),
-            remuneracao = request.form.get('remuneracao'),
-            rg = request.form.get('rg'),
-            saldo = request.form.get('saldo'),
-            sexo = request.form.get('sexo'),
-            tipo_moradia = request.form.get('tipo_moradia'),
-            transporte = request.form.get('transporte')
+        cliente = Cliente(
+            nome                = request.form.get('nome'),
+            cpf                 = request.form.get('cpf'),
+            email               = request.form.get('email'),
+            data_nascimento     = datetime.strptime(request.form.get('data_nascimento'),"%Y-%m-%d").date(),
+            renda_familiar      = limpar_valor(request.form.get('renda_familiar')),
+            bairro              = request.form.get('bairro'),
+            canal_divulgacao    = request.form.get('canal_divulgacao'),
+            cep                 = request.form.get('cep'),
+            cidade              = request.form.get('cidade'),
+            condicao_habitacao  = request.form.get('condicao_habitacao'),
+            cpf_responsavel     = request.form.get('cpf_responsavel'),
+            numero_cs           = request.form.get('numero_cs'),
+            despesa_mensal      = limpar_valor(request.form.get('despesa_mensal')),
+            escolaridade        = request.form.get('escolariedade'),
+            estado              = request.form.get('estado'),
+            endereco            = request.form.get('endereco'),
+            fone_contato        = request.form.get('fone_contato'),
+            fone_pessoal        = request.form.get('fone_pessoal'),
+            foto                = request.form.get('foto'),
+            grau_parentesco     = request.form.get('grau_parentesco'),
+            nome_plano_saude    = request.form.get('nome_plano_saude'),
+            nome_responsavel    = request.form.get('nome_responsavel'),
+            possui_filhos        = request.form.get('possui_filhos'),
+            numero_filhos       = request.form.get('numero_filhos'),
+            plano_saude         = request.form.get('plano_saude'),
+            previdenciario      = request.form.get('previdenciario'),
+            profissao           = request.form.get('profissao'),
+            remuneracao         = limpar_valor(request.form.get('remuneracao')),
+            rg                  = request.form.get('rg'),
+            saldo               = limpar_valor(request.form.get('saldo')),
+            sexo                = request.form.get('sexo'),
+            tipo_moradia        = request.form.get('tipo_moradia'),
+            transporte          = request.form.get('transporte')
         )
+        
         cpf = request.form.get('cpf')
         verifica_cliente = Cliente.query.filter_by(cpf=cpf).first()
         if verifica_cliente:
@@ -54,8 +57,11 @@ def cadastrar_cliente():
         
         db.session.add(cliente)
         db.session.commit()
-        flash('Cliente cadastrado com sucesso!', 'success')
+        flash("Cadastro realizado com sucesso!", "success")  # Mensagem de sucesso com categoria
+        return redirect(url_for('main_bp.menu'))
+    
     return render_template('clientes/form.html')
+
 
 @client_bp.route('/listar_cliente', methods=['GET', 'POST'])
 @login_required
@@ -87,7 +93,7 @@ def editar_cliente(id):
         cliente.cpf_responsavel = request.form.get('cpf_responsavel')
         cliente.numero_cs = request.form.get('numero_cs')
         cliente.despesa_mensal = request.form.get('despesa_mensal')
-        cliente.escolaridade = request.form.get('escolaridade')  
+        cliente.escolariedade = request.form.get('escolariedade')  
         cliente.estado = request.form.get('estado')
         cliente.endereco = request.form.get('endereco')
         cliente.fone_contato = request.form.get('fone_contato')
@@ -96,8 +102,9 @@ def editar_cliente(id):
         cliente.grau_parentesco = request.form.get('grau_parentesco')
         cliente.nome_plano_saude = request.form.get('nome_plano_saude')
         cliente.nome_responsavel = request.form.get('nome_responsavel')
+        cliente.possui_filhos = request.form.get('possui_filhos')
         cliente.numero_filhos = request.form.get('numero_filhos')
-        cliente.plano_saude = request.form.get('plano_de_saude')
+        cliente.plano_saude = request.form.get('plano_saude')
         cliente.previdenciario = request.form.get('previdenciario')
         cliente.profissao = request.form.get('profissao')
         cliente.remuneracao = request.form.get('remuneracao')

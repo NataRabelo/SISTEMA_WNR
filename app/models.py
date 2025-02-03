@@ -57,6 +57,7 @@ class Cliente(db.Model):
     nome_plano_saude        = Column(String)
     nome_responsavel        = Column(String)
     numero_filhos           = Column(Integer)
+    possui_filhos           = Column(String)
     plano_saude             = Column(String)
     previdenciario          = Column(String)
     profissao               = Column(String)

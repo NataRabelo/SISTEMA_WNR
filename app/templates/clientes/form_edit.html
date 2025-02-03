@@ -1,190 +1,300 @@
 {% extends 'base.html' %}
 
-{% block title %}Editar Cliente{% endblock %}
+{% block title %}Editar cliente{% endblock %}
 
 {% block content %}
-    <h2 class="text-center mb-4 mt-5">Editar cliente</h2>
-    <br><br>
-    <form action="{{ url_for('client_bp.editar_cliente', id=cliente.id)}}" method="POST" class="mb-5">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="nome" class="custom-label">Nome:</label>
-                <input type="text" class="form-control" name="nome" value="{{ cliente.nome }}">
+<div class="container mt-4">
+    <h2 class="text-center">Editar cliente</h2>
+    <form action="{{ url_for('client_bp.editar_cliente', id=cliente.id)}}" method="POST">
+        <div class="container">
+            <h2 class="mb-4"> Dados Pessoais </h2>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{cliente.nome}}">
+                </div>
+                <div class="col-md-3">
+                    <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" id="dataNascimento" name="data_nascimento" value="{{cliente.data_nascimento}}" onchange="verificarIdade()">
+                </div>
             </div>
-            <div class="col-md-6">
-                <label for="cpf" class="custom-label">CPF:</label>
-                <input type="text" class="form-control" name="cpf" value="{{ cliente.cpf }}">
+            <div id="campos_adicionais" style="display: none">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="nome_responsavel" class="form-label">Nome responsável:</label>
+                        <input type="text" class="form-control" id="nome_responsal" name="nome_responsavel" value="{{cliente.nome_responsavel}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cpf_responsavel" class="form-label">CPF responsável:</label>
+                        <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel" value="{{cliente.cpf_responsavel}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
+                        <select class="form-select" name="grau_parentesco" id="grau_parentesco">
+                            {% set graus_parentesco = [
+                                'pai', 'mae', 'avo', 'avo_f', 'bisavo', 'bisavo_f', 'trisavo', 'trisavo_f',
+                                'filho', 'filha', 'neto', 'neta', 'bisneto', 'bisneta', 'trisneto', 'trisneta',
+                                'irmao', 'irma', 'tio', 'tia', 'sobrinho', 'sobrinha', 'primo', 'prima',
+                                'sogro', 'sogra', 'genro', 'nora', 'cunhado', 'cunhada', 'padrasto', 'madrasta',
+                                'enteado', 'enteada', 'pais_adotivos', 'filhos_adotivos', 'irmaos_criacao'
+                            ] %}
+                            
+                            {% for grau in graus_parentesco %}
+                                <option value="{{ grau }}" {% if cliente.grau_parentesco == grau %}selected{% endif %}>{{ grau | capitalize }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" value={{cliente.cpf}}>
+                </div>
+                <div class="col-md-3">
+                    <label for="rg" class="form-label">RG</label>
+                    <input type="text" class="form-control" name="rg" id="rg" value={{cliente.rg}}>
+                </div>
+                <div class="col-md-3">
+                    <label for="sexo" class="form-label">Sexo:</label>
+                    <select class="form-select" name="sexo">
+                        {% set sexos = ['Masculino', 'Feminino', 'Outros'] %}
+                
+                        {% for sexo in sexos %}
+                            <option value="{{ sexo}}" {% if cliente.sexo == sexo %}selected{% endif %}>{{ sexo }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <h2 class="mb-4 mt-4"> Contatos </h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
+                    <input type="text" class="form-control" name="fone_pessoal" id="celular" value="{{cliente.fone_pessoal}}">
+                </div>
+                <div class="col-md-3">
+                    <label for="fone_contato" class="custom-label">Telefone Contato:</label>
+                    <input type="text" class="form-control" name="fone_contato" id="telefone" value="{{cliente.fone_contato}}">
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="custom-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{cliente.email}}">
+                </div>
+            </div>
+            <h2 class="mb-4 mt-4"> Endereço </h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cep" class="custom-label">CEP:</label>
+                    <input type="text" class="form-control" id="cep" name="cep" value="{{cliente.cep}}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="endereco" class="custom-label">Endereço:</label>
+                    <input type="text" class="form-control" name="endereco" value="{{cliente.endereco}}">
+                </div>
+                <div class="col-md-2">
+                    <label for="numero_cs" class="custom-label">Nr Casa:</label>
+                    <input type="text" class="form-control" name="numero_cs" value="{{cliente.numero_cs}}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div  class="col-md-3">
+                    <label for="bairro" class="custom-label">Bairro:</label>
+                    <input type="text" class="form-control" name="bairro" value="{{cliente.bairro}}">
+                </div>
+                <div class="col-md-3">
+                    <label for="cidade" class="custom-label">Cidade:</label>
+                    <input type="text" class="form-control" name="cidade" value="{{cliente.cidade}}">
+                </div>
+                <div class="col-md-2">
+                    <label for="estado" class="custom-label">Estado:</label>
+                    <input type="text" class="form-control" name="estado" value="{{cliente.estado}}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
+                    <select class="form-select" name="condicao_habitacao">
+                        {% set condicoes_habitacao = ['Alugada', 'Própria', 'Financiada', 'Cedida', 'Compartilhada', 'Ocupação Irregular', 'Sublugada', 'Cohab', 'Temporária', 'Comodatária'] %}
+                        
+                        {% for condicao in condicoes_habitacao %}
+                            <option value="{{ condicao }}" {% if cliente.condicao_habitacao == condicao %}selected{% endif %}>{{ condicao }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
+                    <select class="form-select" name="tipo_moradia">
+                        {% set tipos_moradia = ['Apartamento', 'Casa', 'Sobrado', 'Cortiço', 'Chale', 'Studio', 'Kitnet', 'Residencia', 'Condominio', 'Barraco', 'Albergue', 'Predio', 'Sitio', 'Chacara', 'Fazenda', 'Rancho', 'Moradia Estudantil', 'Cohab', 'Vila'] %}
+                        
+                        {% for tipo in tipos_moradia %}
+                            <option value="{{ tipo }}" {% if cliente.tipo_moradia == tipo %}selected{% endif %}>{{ tipo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div  class="row mb-3">
+                <h2 class="mb-4 mt-4">Outras informações</h2>
+                <div class="col-md-3">
+                    <label for="transporte" class="custom-label">Meio de Transporte:</label>
+                    <select class="form-select" name="transporte" id="transporte">
+                        {% set meios_transporte = [
+                            'Transporte Público', 'Bicicleta', 'Carro', 'Moto'
+                        ] %}
+
+                        {% for transporte in meios_transporte %}
+                            <option value="{{ transporte }}" {% if cliente.transporte == transporte %}selected{% endif %}>{{ transporte }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="escolariedade" class="custom-label">Escolariedade:</label>
+                    <select class="form-select" name="escolariedade" id="escolariedade">
+                        {% set escolaridades = [
+                            'Não Alfabetizado', 'Ensino Fundamental', 'Ensino Médio', 'Ensino Superior',
+                            'Pós Graduação', 'Mestrado', 'Doutorado', 'PhD'
+                        ] %}
+
+                        {% for escolaridade in escolaridades %}
+                            <option value="{{ escolaridade }}" {% if cliente.escolariedade == escolaridade %}selected{% endif %}>{{ escolaridade }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="profissao" class="custom-label">Profissão:</label>
+                    <input type="text" class="form-control" name="profissao" value="{{cliente.profissao}}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
+                    <select class="form-select" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
+                        <option value="{{cliente.plano_saude}}" {% if cliente.plano_saude%}selected{% endif %}>{{cliente.plano_saude}}</option>
+                        <option value="Sim" {% if cliente.possui_filhos == 'Sim'%}selectd{% endif %}>Sim</option>
+                        <option value="Não" {% if cliente.possui_filhos == 'Não'%}selectd{% endif %}>Não</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
+                    <input type="text" class="form-control" id="nome_plano_saude" name="nome_plano_saude" {% if cliente.nome_plano_saude != 'None' %} value="{{cliente.nome_plano_saude}}" {% endif %}  >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="possui_filhos" class="custom-label">Possui filhos?</label>
+                    <select class="form-select" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
+                        <option value="{{cliente.possui_filhos}}" {% if cliente.possui_filhos %}selected{% endif %}>{{cliente.possui_filhos}}</option>
+                        <option value="Sim" {% if cliente.possui_filhos == 'Sim' %}selected{% endif %}>Sim</option>
+                        <option value="Não" {% if cliente.possui_filhos == 'Não' %}selected{% endif %}>Não</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
+                    <input type="number" class="form-control" id="qtn_filhos" name="numero_filhos" value="{{cliente.qtn_filhos}}">
+                </div>
+                <div class="col-md-3">
+                    <label for="previdenciario" class="custom-label">Previdenciário:</label>
+                    <select class="form-select" name="previdenciario">
+                        {% set options = ['Sim', 'Não'] %}
+                
+                        {% for option in options %}
+                            <option value="{{ option}}" {% if cliente.previdenciario == option %}selected{% endif %}>{{ option }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="remuneracao" class="custom-label">Remuneração:</label>
+                    <input type="number" class="form-control" id="remuneracao" name="remuneracao" value="{{cliente.remuneracao}}" oninput="calcularSaldo()">
+                </div>
+                <div class="col-md-3">
+                    <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
+                    <input type="number" class="form-control" id="renda_familiar" name="renda_familiar" value="{{cliente.renda_familiar}}" oninput="calcularSaldo()">
+                </div>
+                <div class="col-md-3">
+                    <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
+                    <input type="number" class="form-control" id="despesa_mensal" name="despesa_mensal" value="{{cliente.despesa_mensal}}" oninput="calcularSaldo()">
+                </div>
+                <div class="col-md-3">
+                    <label for="saldo" class="custom-label">Saldo:</label>
+                    <input type="number" class="form-control" id="saldo" name="saldo" value="{{cliente.saldo}}" readonly>
+                </div>
+            </div>
+            <div class="row mt-4 mb-5">
+                <div class="col-md-12 text-end">
+                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </div>                        
         </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="email" class="custom-label">Email:</label>
-                <input type="email" class="form-control" name="email" value="{{ cliente.email }}">
-            </div>
-            <div class="col-md-6">
-                <label for="dt_nascimento" class="custom-label">Data de Nascimento:</label>
-                <input type="date" class="form-control" name="dt_nascimento" value="{{ cliente.dt_nascimento }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
-                <input type="number" class="form-control" name="renda_familiar" value="{{ cliente.renda_familiar }}">
-            </div>
-            <div class="col-md-6">
-                <label for="bairro" class="custom-label">Bairro:</label>
-                <input type="text" class="form-control" name="bairro" value="{{ cliente.bairro }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="canal_divulgacao" class="custom-label">Canal de Divulgação:</label>
-                <input type="text" class="form-control" name="canal_divulgacao" value="{{ cliente.canal_divulgacao }}">
-            </div>
-            <div class="col-md-6">
-                <label for="cep" class="custom-label">CEP:</label>
-                <input type="text" class="form-control" name="cep" value="{{ cliente.cep }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="cidade" class="custom-label">Cidade:</label>
-                <input type="text" class="form-control" name="cidade" value="{{ cliente.cidade }}">
-            </div>
-            <div class="col-md-6">
-                <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
-                <input type="text" class="form-control" name="condicao_habitacao" value="{{ cliente.condicao_habitacao }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="cpf_responsavel" class="custom-label">CPF do Responsável:</label>
-                <input type="text" class="form-control" name="cpf_responsavel" value="{{ cliente.cpf_responsavel }}">
-            </div>
-            <div class="col-md-6">
-                <label for="numero_cs" class="custom-label">Número CS:</label>
-                <input type="text" class="form-control" name="numero_cs" value="{{ cliente.numero_cs }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
-                <input type="number" class="form-control" name="despesa_mensal" value="{{ cliente.despesa_mensal }}">
-            </div>
-            <div class="col-md-6">
-                <label for="escolariedade" class="custom-label">Escolariedade:</label>
-                <input type="text" class="form-control" name="escolariedade" value="{{ cliente.escolariedade }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="estado" class="custom-label">Estado:</label>
-                <input type="text" class="form-control" name="estado" value="{{ cliente.estado }}">
-            </div>
-            <div class="col-md-6">
-                <label for="fone_contato" class="custom-label">Telefone de Contato:</label>
-                <input type="tel" class="form-control" name="fone_contato" value="{{ cliente.fone_contato }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
-                <input type="tel" class="form-control" name="fone_pessoal" value="{{ cliente.fone_pessoal }}">
-            </div>
-            <div class="col-md-6">
-                <label for="foto" class="custom-label">Foto:</label>
-                <input type="file" class="form-control" name="foto">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="grau_parentesco" class="custom-label">Grau de Parentesco:</label>
-                <input type="text" class="form-control" name="grau_parentesco" value="{{ cliente.grau_parentesco }}">
-            </div>
-            <div class="col-md-6">
-                <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
-                <input type="text" class="form-control" name="nome_plano_saude" value="{{ cliente.nome_plano_saude }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="nome_responsavel" class="custom-label">Nome do Responsável:</label>
-                <input type="text" class="form-control" name="nome_responsavel" value="{{ cliente.nome_responsavel }}">
-            </div>
-            <div class="col-md-6">
-                <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
-                <input type="number" class="form-control" name="numero_filhos" value="{{ cliente.numero_filhos }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
-                <select class="form-select" name="plano_saude" value="{{ cliente.plano_saude }}">
-                    <option value="sim">Sim</option>
-                    <option value="nao">Não</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="previdenciario" class="custom-label">Previdenciário:</label>
-                <input type="text" class="form-control" name="previdenciario" value="{{ cliente.previdenciario }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="profissao" class="custom-label">Profissão:</label>
-                <input type="text" class="form-control" name="profissao" value="{{ cliente.profissao }}">
-            </div>
-            <div class="col-md-6">
-                <label for="remuneracao" class="custom-label">Remuneração:</label>
-                <input type="number" class="form-control" name="remuneracao" value="{{ cliente.remuneracao }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="rg" class="custom-label">RG:</label>
-                <input type="text" class="form-control" name="rg" value="{{ cliente.rg }}">
-            </div>
-            <div class="col-md-6">
-                <label for="saldo" class="custom-label">Saldo:</label>
-                <input type="number" class="form-control" name="saldo" value="{{ cliente.saldo }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="sexo" class="custom-label">Sexo:</label>
-                <select class="form-select" name="sexo" value="{{ cliente.sexo }}">
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="outro">Outro</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
-                <input type="text" class="form-control" name="tipo_moradia" value="{{ cliente.tipo_moradia }}">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="transporte" class="custom-label">Meio de Transporte:</label>
-                <input type="text" class="form-control" name="transporte" value="{{ cliente.transporte }}">
-            </div>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-success">Enviar</button>
     </form>
+</div>
+    <script>
+    // Remove a máscara e converte para float antes de calcular
+    function obterValorNumerico(valor) {
+        return parseFloat(valor.replace('R$', '').replace(/\./g, '').replace(',', '.')) || 0;
+    }
+
+    // Função para calcular e exibir o saldo
+    function calcularSaldo() {
+        const remuneracao = obterValorNumerico(document.getElementById('remuneracao').value);
+        const rendaFamiliar = obterValorNumerico(document.getElementById('renda_familiar').value);
+        const despesaMensal = obterValorNumerico(document.getElementById('despesa_mensal').value);
+
+        // Calculando o saldo
+        const saldo = (remuneracao + rendaFamiliar) - despesaMensal;
+
+        // Exibindo o saldo formatado (sem máscara para facilitar no backend)
+        document.getElementById('saldo').value = saldo.toFixed(2);
+    }
+
+    function verificaDropdown_PlanodeSaude() {
+            let dropdown = document.getElementById("plano_saude");
+            let input = document.getElementById("nome_plano_saude");
+            input.disabled = dropdown.value === "Não";
+        }
+
+        function verificarDropdown_Filhos() {
+            let dropdown = document.getElementById('possui_filhos');
+            let input = document.getElementById('qtn_filhos');
+            input.disabled = dropdown.value === "Não";
+        }
+
+        $(document).ready(function() {
+        $('#cpf').mask('000.000.000-00'); // Máscara para CPF
+        $('#rg').mask('00.000.000-0'); // Máscara para RG
+        $('#cep').mask('00000-000'); // Máscara para CEP
+        $('#telefone').mask('(00) 00000-0000'); // Máscara para telefone (suporta celular e fixo)
+        $('#celular').mask('(00) 00000-0000'); // Máscara para Celular
+    });
+
+    function verificarIdade() {
+        const dataNascimento = document.getElementById("dataNascimento").value;
+        const camposAdicionais = document.getElementById("campos_adicionais");
+        const idade = calcularIdade(dataNascimento);
+        
+        // Verifica se a idade é menor que 18 para exibir os campos adicionais
+        if (idade < 18) {
+            camposAdicionais.style.display = "block";  // Exibe os campos adicionais
+        } else {
+            camposAdicionais.style.display = "none";  // Oculta os campos adicionais
+        }
+    }
+
+    function calcularIdade(dataNascimento) {
+        const hoje = new Date();
+        const nascimento = new Date(dataNascimento);
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+        const m = hoje.getMonth() - nascimento.getMonth();
+
+        if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+            idade--;
+        }
+        return idade;
+    }
+    </script>
 {% endblock %}
