@@ -84,3 +84,12 @@ def editar_profissional(id):
         db.session.commit()
         flash('Profissional atualizdo com sucesso!', 'success')
     return render_template('professional/form_edit.html', profissional=profissional)
+
+@professional_bp.route('/deletar_profissão/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deletar_profissional(id):
+    profissional = Profissional.query.get_or_404(id)
+    db.session.delete(profissional)
+    db.session.commit()
+    flash('Profissional excluido com sucesso', 'success')
+    return redirect(url_for('professional_bp.listar_profissional'))

@@ -3,120 +3,137 @@
 {% block title %}Cadastro de profissional{% endblock %}
 
 {% block content %}
-    <h2 class="text-center mb-4 mt-5">Cadastro de profissional</h2>
-    <br><br>
-    <form action="{{ url_for('professional_bp.cadastrar_profissional')}}" method="POST" class="mb-5">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="nome" class="custom-label">Nome:</label>
-                <input type="text" class="form-control" name="nome" placeholder="Nome">
+<div class="container mb-5 mt-4">
+    <h2 class="text-center">Cadastro de profissional</h2>
+    <form action="{{ url_for('professional_bp.cadastrar_profissional')}}" method="POST">
+        <div class="container">
+            <h2 class="mb-4"> Dados Pessoais </h2>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
+                    <input type="date" class="form-control" id=data_nascimento name="data_nascimento" required>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label for="cpf" class="custom-label">CPF:</label>
-                <input type="text" class="form-control" name="cpf" placeholder="CPF">
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cpf" class="form-label">CPF:</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="rg" class="form-label">RG:</label>
+                    <input type="text" class="form-control" id="rg" name="rg" placeholder="RG" required>
+                </div>
+            </div>
+            <h2 class="mb-4 mt-4">Contatos</h2>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="fone_pessoal" class="form-label">Telefone Pessoal:</label>
+                    <input type="text" class="form-control" id="fone_pessoal" name="fone_pessoal" placeholder="(xx) xxxxxxxxx" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="fone_profissional" class="form-label">Telefone Profissional:</label>
+                    <input type="text" class="form-control" id="fone_profissional" name="fone_profissional" placeholder="(xx) xxxxxxxxx" required>
+                </div>
+            </div>
+            <h2 class="mb-4 mt-4">Endereço</h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cep" class="form-label">CEP:</label>
+                    <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="endereco_profissional" class="form-label">Endereço Profissional:</label>
+                    <input type="text" class="form-control" id="endereco_profissional" name="endereco_profissional" placeholder="Endereço profissional" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="bairro" class="form-label">Bairro:</label>
+                    <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="cidade" class="form-label">Cidade:</label>
+                    <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="estado" class="form-label">Estado:</label>
+                    <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required>
+                </div>
+            </div>
+            <h2 class="mb-3">Dados profissionais</h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="graduacao" class="form-label">Graducação:</label>
+                    <input type="text" class="form-control" id="graduacao" name="graduacao" placeholder="Graducação" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="registro_profissional" class="form-label">Registro Profissional:</label>
+                    <input type="text" class="form-control" id="registro_profissional" name="registro_profissional" placeholder="Registro Profissional" >
+                </div>
+                <div class="col-md-3">
+                    <label for="issqn" class="form-label">ISSQN:</label>
+                    <input type="text" class="form-control" id="issqn" name="issqn" placeholder="ISSQN" >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="curriculum_lattes" class="form-label">Curriculum Lattes:</label>
+                    <input type="text" class="form-control" id="curriculum_lattes" name="curriculum_lattes" placeholder="Curriculum Lattes" >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="banco" class="form-label">Banco:</label>
+                    <input type="text" class="form-control" id="banco" name="banco" placeholder="Banco" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="valor_minimo" class="form-label">Valor mínimo:</label>
+                    <input type="number" class="form-control" id="valor_minimo" name="valor_minimo" placeholder="Valor mínimo" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="pix" class="form-label">PIX:</label>
+                    <input type="text" class="form-control" id="pix" name="pix" placeholder="celular/email/cpf/cnpj" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="dias_horas_disponiveis" class="custom-label">Dias/Horas Disponíveis:</label>
+                    <input type="text" class="form-control" id="dias_horas_disponiveis" name="dias_horas_disponiveis" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="observacoes" class="custom-label">Observações:</label>
+                    <input type="text" class="form-control" id="observacoes" name="observacoes" placeholder="Obs" >
+                </div>
+            </div>
+            <div class="row mt-4 mb-5">
+                <div class="col-md-12 text-end">
+                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="email" class="custom-label">Email:</label>
-                <input type="text" class="form-control" name="email" placeholder="Email">
-            </div>
-            <div class="col-md-6">
-                <label for="data_nascimento" class="custom-label">Data de Nascimento:</label>
-                <input type="date" class="form-control" name="data_nascimento">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="bairro" class="custom-label">Bairro:</label>
-                <input type="text" class="form-control" name="bairro" placeholder="Bairro">
-            </div>
-            <div class="col-md-6">
-                <label for="banco" class="custom-label">Banco:</label>
-                <input type="text" class="form-control" name="banco" placeholder="Banco">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="cep" class="custom-label">CEP:</label>
-                <input type="text" class="form-control" name="cep" placeholder="CEP">
-            </div>
-            <div class="col-md-6">
-                <label for="cidade" class="custom-label">Cidade:</label>
-                <input type="text" class="form-control" name="cidade" placeholder="Cidade">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="graduacao" class="custom-label">Graducação:</label>
-                <input type="text" class="form-control" name="graduacao" placeholder="Graducação">
-            </div>
-            <div class="col-md-6">
-                <label for="issqn" class="custom-label">ISSQN:</label>
-                <input type="text" class="form-control" name="issqn" placeholder="ISSQN">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
-                <input type="text" class="form-control" name="fone_pessoal" placeholder="(xx) xxxxxxxxx">
-            </div>
-            <div class="col-md-6">
-                <label for="fone_profissional" class="custom-label">Telefone Profissional:</label>
-                <input type="text" class="form-control" name="fone_profissional" placeholder="(xx) xxxxxxxxx">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="foto" class="custom-label">Foto:</label>
-                <input type="file" class="form-control" name="foto">
-            </div>
-            <div class="col-md-6">
-                <label for="curriculum_lattes" class="custom-label">Curriculum Lattes:</label>
-                <input type="text" class="form-control" name="curriculum_lattes" placeholder="Curriculum Lattes">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="dias_horas_disponiveis" class="custom-label">Dias/Horas Disponíveis:</label>
-                <input type="text" class="form-control" name="dias_horas_disponiveis">
-            </div>
-            <div class="col-md-6">
-                <label for="endereco_profissional" class="custom-label">Endereço Profissional:</label>
-                <input type="text" class="form-control" name="endereco_profissional" placeholder="Endereço profissional">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="estado" class="custom-label">Estado:</label>
-                <input type="text" class="form-control" name="estado" placeholder="Estado">
-            </div>
-            <div class="col-md-6">
-                <label for="observacoes" class="custom-label">Observações:</label>
-                <input type="text" class="form-control" name="observacoes" placeholder="Obs">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="pix" class="custom-label">PIX:</label>
-                <input type="text" class="form-control" name="pix" placeholder="celular/email/cpf/cnpj">
-            </div>
-            <div class="col-md-6">
-                <label for="registro_profissional" class="custom-label">Registro Profissional:</label>
-                <input type="text" class="form-control" name="registro_profissional" placeholder="Registro Profissional">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="rg" class="custom-label">RG:</label>
-                <input type="text" class="form-control" name="rg" placeholder="RG">
-            </div>
-            <div class="col-md-6">
-                <label for="valor_minimo" class="custom-label">Valor mínimo:</label>
-                <input type="number" class="form-control" name="valor_minimo" placeholder="Valor mínimo">
-            </div>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-success">Enviar</button>
     </form>
+</div>
+<script>
+        $(document).ready(function() {
+        $('#cpf').mask('000.000.000-00'); // Máscara para CPF
+        $('#rg').mask('00.000.000-0'); // Máscara para RG
+        $('#cep').mask('00000-000'); // Máscara para CEP
+        $('#fone_profissional').mask('(00) 00000-0000'); // Máscara para telefone (suporta celular e fixo)
+        $('#fone_pessoal').mask('(00) 00000-0000'); // Máscara para Celular
+    });
+
+    </script>
 {% endblock %}

@@ -16,7 +16,7 @@
                         </div>
                         <div>
                             <a href="{{ url_for('professional_bp.editar_profissional', id=profissional.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            
+                            <a href="{{ url_for('professional_bp.deletar_profissional', id=profissional.id) }}" class="btn btn-sm btn-danger">Deletar</a>  
                         </div>
                     </li>
                 {% endfor %}

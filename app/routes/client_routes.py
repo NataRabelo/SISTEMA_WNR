@@ -58,7 +58,6 @@ def cadastrar_cliente():
         db.session.add(cliente)
         db.session.commit()
         flash("Cadastro realizado com sucesso!", "success")  # Mensagem de sucesso com categoria
-        return redirect(url_for('main_bp.menu'))
     
     return render_template('clientes/form.html')
 
