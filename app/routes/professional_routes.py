@@ -59,8 +59,12 @@ def editar_profissional(id):
 
         profissional.nome  = request.form.get('nome')
         profissional.cpf = request.form.get('cpf')
-        profissional.email = request.form.get('emial')
-        profissional.data_nascimento = request.form.get('data_nascimento')
+        profissional.email = request.form.get('email')
+
+        data_nascimento = request.form.get('data_nascimento')
+        if data_nascimento:
+            profissional.data_nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
+        
         profissional.bairro = request.form.get('bairro')               
         profissional.banco = request.form.get('banco')                
         profissional.cep = request.form.get('cep')                  
@@ -83,6 +87,7 @@ def editar_profissional(id):
         db.session.add(profissional)
         db.session.commit()
         flash('Profissional atualizdo com sucesso!', 'success')
+        return redirect(url_for('professional_bp.listar_profissional'))
     return render_template('professional/form_edit.html', profissional=profissional)
 
 @professional_bp.route('/deletar_profissão/<int:id>', methods=['GET', 'POST'])
