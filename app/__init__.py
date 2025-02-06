@@ -31,7 +31,7 @@ def create_app():
     # Importar e registrar os blueprints
     from app.routes.auth_routes import auth_bp
     from app.routes.client_routes import client_bp
-    from app.routes.referral_routes import Encaminhamento_bp
+    from app.routes.referral_routes import encaminhamento_bp
     from app.routes.financial_routes import financial_bp
     from app.routes.guide_routes import guide_bp
     from app.routes.main_routes import main_bp
@@ -42,7 +42,7 @@ def create_app():
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(client_bp)
-    app.register_blueprint(Encaminhamento_bp)
+    app.register_blueprint(encaminhamento_bp)
     app.register_blueprint(financial_bp)
     app.register_blueprint(guide_bp)
     app.register_blueprint(main_bp)
