@@ -1,10 +1,10 @@
 from datetime import datetime
 from flask import Blueprint, flash, render_template, request, redirect, url_for
 from flask_login import login_required
-from app.models import Encaminhamento
+from app.models import Encaminhamento, Cliente, Profissional
 from app import db 
 
-encaminhamento_bp = Blueprint('Encaminhamento_bp', __name__)
+encaminhamento_bp = Blueprint('encaminhamento_bp', __name__)
 
 @encaminhamento_bp.route('/criar_encaminhamento', methods=['GET', 'POST'])
 @login_required
@@ -30,7 +30,9 @@ def criar_encaminhamento():
         db.session.add(encaminhamento)
         db.session.commit()
         flash('Encaminhamento realizado com sucesso!', 'success')
-    return render_template('encaminhamento/form.html')
+    clientes = Cliente.query.all()
+    profissionais = Profissional.query.all()
+    return render_template('encaminhamento/form.html', clientes=clientes, profissionais=profissionais)
 
 @encaminhamento_bp.route('/listar_encaminhamento', methods=['GET', 'POST'])
 @login_required
@@ -57,7 +59,7 @@ def editar_encaminhamento(id):
         db.session.commit()
         flash('Encaminhamento atualizado com sucesso!', 'success')
         return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
-    return render_template('encaminhamento/edit_form.html')
+    return render_template('encaminhamento/form_edit.html')
 
 @encaminhamento_bp.route('/deletar_encaminhamento/<int:id>')
 @login_required

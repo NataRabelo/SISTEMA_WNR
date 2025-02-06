@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Encaminhamentos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4 mt-5">Encaminhamentos</h2>
+    <div class="row mt-4 mb-5">
+        <div class="col-md-12 text-end">
+            <a href="{{ url_for('encaminhamento_bp.criar_encaminhamento') }}" class="btn btn-md btn-success">Encaminhar</a>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <ul class="list-group">
+                {% for encaminhamento in encaminhamentos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ encaminhamento.cliente_id }}</strong> - <strong>{{ encaminhamento.profissional_id }}</strong>
+                        </div>
+                        <div>
+                            <a href="{{ url_for('encaminhameto_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="{{ url_for('encaminhameto_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
