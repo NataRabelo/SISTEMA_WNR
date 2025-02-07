@@ -15,7 +15,7 @@ def criar_encaminhamento():
             profissional = request.form.get('profissional'),
             convenio = request.form.get('convenio'),
             dias_horas_atendimento = request.form.get('dias_horas_atendimento'),
-            data_encaminhamento = datetime(),
+            data_encaminhamento = datetime.utcnow,
             observacoes_gerais = request.form.get('observacoes_gerais'),
             queixa = request.form.get('queixa'),
             situacao = request.form.get('situacao'),

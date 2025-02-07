@@ -35,13 +35,44 @@
                     <input for="convenio" id="convenio" name="convenio" class="form-control">
                 </div>
                 <div class="col-md-3">
-                    <label for="queixa" class="form-label">Dia e horário de atendimento:</label>
-                    <input for="queixa" id="queixa" name="queixa" class="form-control" placeholder="Exemplo: Segunda - Quarta - Sexta ( 14h ou 15h)">
+                    <label for="situacao" class="form-label">Situação:</label>
+                    <input for="situacao" id="situacao" name="situacao" class="form-control">
                 </div>
             </div>
             <div class="row mb-3">
-
+                <div class="col-md-6">
+                    <label for="dias_horas_atendimento" class="form-label">Dia e horário de atendimento:</label>
+                    <input for="dias_horas_atendimento" id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" placeholder="Exemplo: Segunda - Quarta - Sexta ( 14h ou 15h)">
+                </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="queixa" class="form-queixa">Queixa:</label>
+                    <input form="queixa" id="queixa" name="queixa" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
+                    <input for="tipo_encaminhamento" id="tipo_encaminhamento" name="tipo_encaminhamento" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label for="valor" class="form-label">Valor:</label>
+                    <input for="valor" id="valor" name="valor" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="observacoes_gerais" class="form-label">Observações Gerais:</label>
+                    <textarea for="observacoes_gerais" id="observacoes_gerais" name="observacoes_gerais" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row mt-4 mb-5">
+                <div class="col-md-12 text-end">
+                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </div> 
         </div>
     </form>
 </div>
