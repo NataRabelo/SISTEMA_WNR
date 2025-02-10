@@ -1,13 +1,16 @@
 from flask import Blueprint, flash, render_template, request, redirect, url_for
+from app.utils.decorators import role_required
 from flask_login import login_required
-from app.models import Cliente, Profissional
+from app.models import Profissional
 from datetime import datetime
 from app import db
+
 
 professional_bp = Blueprint('professional_bp', __name__)
 
 @professional_bp.route('/cadastrar_profissional', methods=['GET', 'POST'])
 @login_required
+@role_required('atendimento', 'financeiro', 'admin')
 def cadastrar_profissional():
     if request.method == 'POST':
         profissional = Profissional(
@@ -43,16 +46,19 @@ def cadastrar_profissional():
         db.session.add(profissional)
         db.session.commit()
         flash('Profissional cadastrado com sucesso!', 'success')
+        return redirect(url_for('main_bp.menu'))
     return render_template('professional/form.html')
 
 @professional_bp.route('/listar_profissional', methods=['GET', 'POST'])
 @login_required
+@role_required('atendimento', 'financeiro', 'admin')
 def listar_profissional():
     profissionais = Profissional.query.all()
     return render_template('professional/list.html', profissionais=profissionais)
 
 @professional_bp.route('/editar_profissional/<int:id>', methods=['GET', 'POST'])
 @login_required
+@role_required('atendimento', 'financeiro', 'admin')
 def editar_profissional(id):
     profissional = Profissional.query.get_or_404(id)
     if request.method == 'POST':
@@ -92,6 +98,7 @@ def editar_profissional(id):
 
 @professional_bp.route('/deletar_profissão/<int:id>', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def deletar_profissional(id):
     profissional = Profissional.query.get_or_404(id)
     db.session.delete(profissional)

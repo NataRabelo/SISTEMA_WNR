@@ -69,7 +69,7 @@ class Cliente(db.Model):
     transporte              = Column(String)
 
     # Relacionamentos
-    encaminhamentos = relationship("Encaminhamento", back_populates="cliente")
+    encaminhamentos = relationship("Encaminhamento", back_populates="cliente", cascade="all, delete-orphan")
     guias = relationship("Guia", back_populates="cliente")
 
 

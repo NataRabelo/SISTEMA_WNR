@@ -7,10 +7,11 @@ from app import bcrypt, db
 auth_bp = Blueprint('auth_bp', __name__)
 
 @auth_bp.route('/registro', methods=['GET', 'POST'])
+@login_required
 @role_required('admin')
 def registro():
     if request.method == 'POST':
-        nome = request.form.get('nome')
+        nome = request.form.get('name')
         email = request.form.get('email')
         senha = request.form.get('senha')
         role = request.form.get('role')
@@ -28,6 +29,16 @@ def registro():
         return redirect(url_for('auth_bp.login'))
 
     return render_template('main/registro.html')
+
+@auth_bp.route('/deletar_usuario/<int:id>', methods=['GET', 'POST'])
+@login_required
+@role_required('admin')
+def deletar_usuario(id):
+    usuario = Usuario.query.get_or_404(id)
+    db.session.delete(usuario)
+    db.session.commit()
+    flash('Usuario excluido com sucesso', 'success')
+    return redirect(url_for('main_bp.menu'))
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

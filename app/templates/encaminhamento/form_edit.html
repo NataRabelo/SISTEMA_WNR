@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar encaminhamento{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Editar encaminhamento</h2>
+    <form action="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" method="POST">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="cliente_id" class="form-label">Cliente:</label>
+                    <select class="form-select" id="cliente_id" name="cliente_id">
+                        <option value="">Selecione um cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}" {% if cliente.id == encaminhamento.cliente_id %}selected{% endif %}>
+                                {{ cliente.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="profissional_id" class="form-label">Profissional:</label>
+                    <select class="form-select" id="profissional_id" name="profissional_id">
+                        <option value="">Selecione um profissional</option>
+                        {% for profissional in profissionais %}
+                            <option value="{{ profissional.id }}" {% if profissional.id == encaminhamento.profissional_id %}selected{% endif %}>
+                                {{ profissional.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="convenio" class="form-label">Convênio:</label>
+                    <input id="convenio" name="convenio" class="form-control" value="{{ encaminhamento.convenio }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="situacao" class="form-label">Situação:</label>
+                    <input id="situacao" name="situacao" class="form-control" value="{{ encaminhamento.situacao }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="dias_horas_atendimento" class="form-label">Dia e horário de atendimento:</label>
+                    <input id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" value="{{ encaminhamento.dias_horas_atendimento }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="queixa" class="form-label">Queixa:</label>
+                    <input id="queixa" name="queixa" class="form-control" value="{{ encaminhamento.queixa }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
+                    <input id="tipo_encaminhamento" name="tipo_encaminhamento" class="form-control" value="{{ encaminhamento.tipo_encaminhamento }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="valor" class="form-label">Valor:</label>
+                    <input id="valor" name="valor" class="form-control" value="{{ encaminhamento.valor }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="observacoes_gerais" class="form-label">Observações Gerais:</label>
+                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control">{{ encaminhamento.observacoes_gerais }}</textarea>
+                </div>
+            </div>
+            <div class="row mt-4 mb-5">
+                <div class="col-md-12 text-end">
+                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div> 
+        </div>
+    </form>    
+</div>
+{% endblock %}

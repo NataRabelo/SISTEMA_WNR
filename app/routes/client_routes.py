@@ -11,13 +11,14 @@ client_bp = Blueprint('client_bp', __name__)
 
 @client_bp.route('/cadastrar_cliente', methods=['GET','POST'])
 @login_required
+@role_required('atendimento', 'financeiro', 'admin')
 def cadastrar_cliente():
     if request.method == 'POST':
         cliente = Cliente(
             nome                = request.form.get('nome'),
             cpf                 = request.form.get('cpf'),
             email               = request.form.get('email'),
-            data_nascimento     = datetime.strptime(request.form.get('data_nascimento'),"%Y-%m-%d").date(),
+            data_nascimento     = datetime.strptime(request.form.get('dt_nascimento'),"%Y-%m-%d").date(),
             renda_familiar      = limpar_valor(request.form.get('renda_familiar')),
             bairro              = request.form.get('bairro'),
             canal_divulgacao    = request.form.get('canal_divulgacao'),
@@ -58,18 +59,20 @@ def cadastrar_cliente():
         db.session.add(cliente)
         db.session.commit()
         flash("Cadastro realizado com sucesso!", "success")  # Mensagem de sucesso com categoria
+        return redirect(url_for('main_bp.menu'))
     
     return render_template('clientes/form.html')
 
-
 @client_bp.route('/listar_cliente', methods=['GET', 'POST'])
 @login_required
+@role_required('atendimento', 'financeiro', 'admin')
 def listar_cliente():
     clientes = Cliente.query.all()
     return render_template('clientes/list.html', clientes=clientes)
 
 @client_bp.route('/editar_cliente/<int:id>', methods=['GET', 'POST'])
 @login_required
+@role_required('atendimento', 'financeiro', 'admin')
 def editar_cliente(id):
     cliente = Cliente.query.get_or_404(id)
 
@@ -121,6 +124,7 @@ def editar_cliente(id):
 
 @client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def deletar_cliente(id):
     cliente = Cliente.query.get_or_404(id)
     db.session.delete(cliente)

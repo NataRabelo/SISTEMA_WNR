@@ -8,6 +8,7 @@
     <div class="row mt-4 mb-5">
         <div class="col-md-12 text-end">
             <a href="{{ url_for('encaminhamento_bp.criar_encaminhamento') }}" class="btn btn-md btn-success">Encaminhar</a>
+            <a href="{{ url_for('report_bp.report_encaminhamento') }}" class="btn btn-md btn-warning">Relatório</a>
         </div>
     </div>
     <div class="card shadow-sm">
@@ -16,11 +17,16 @@
                 {% for encaminhamento in encaminhamentos %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>{{ encaminhamento.cliente_id }}</strong> - <strong>{{ encaminhamento.profissional_id }}</strong>
+                            <strong>CLIENTE: </strong>
+                            {{ encaminhamento.cliente.nome }}
+                            <br>
+                            <strong>PROFISSIONAL: </strong>
+                            {{ encaminhamento.profissional.nome }}
+                            <br>
                         </div>
                         <div>
-                            <a href="{{ url_for('encaminhameto_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="{{ url_for('encaminhameto_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger">Deletar</a>
+                            <a href="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="{{ url_for('encaminhamento_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger">Deletar</a>
                         </div>
                     </li>
                 {% endfor %}
