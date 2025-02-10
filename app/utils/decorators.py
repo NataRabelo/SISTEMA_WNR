@@ -10,7 +10,7 @@ def role_required(*roles):
             if not current_user.is_authenticated:
                 return redirect(url_for('auth_bp.login'))
             if current_user.role not in roles:
-                flash('Acesso negado: Permissão insuficiente.', 'danger')
+                flash('Acesso negado: Permissão insuficiente.', 'error')
                 return redirect(url_for('main_bp.menu'))
             return func(*args, **kwargs)
         return decorated_view
