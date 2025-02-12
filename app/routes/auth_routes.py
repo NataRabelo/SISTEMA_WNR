@@ -7,8 +7,7 @@ from app import bcrypt, db
 auth_bp = Blueprint('auth_bp', __name__)
 
 @auth_bp.route('/registro', methods=['GET', 'POST'])
-@login_required
-@role_required('admin')
+
 def registro():
     if request.method == 'POST':
         nome = request.form.get('name')

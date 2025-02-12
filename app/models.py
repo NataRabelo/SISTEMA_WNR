@@ -132,15 +132,15 @@ class Guia(db.Model):
     __tablename__ = "guias"
 
     id                      = Column(Integer, primary_key=True, index=True)
-    cliente_id              = Column(Integer, ForeignKey("clientes.id", ondelete="CASCADE"))
-    profissional_id         = Column(Integer, ForeignKey("profissionais.id", ondelete="CASCADE"))
-    usuario_id              = Column(Integer, ForeignKey("usuarios.id", ondelete="SET NULL"))
+    cliente_id              = Column(Integer, ForeignKey("clientes.id"))
+    profissional_id         = Column(Integer, ForeignKey("profissionais.id"))
     data_original           = Column(Date)
     hora_emissao            = Column(String)
     observacoes_gerais      = Column(String)
     quantidade_emissoes     = Column(Integer)
     tipo_pagamento          = Column(String)
     valor_unitario          = Column(Float)
+    pago                    = Column(Boolean, default=False)
 
     # Relacionamentos
     cliente = relationship("Cliente", back_populates="guias")
