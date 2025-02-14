@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="dt_nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento"  onchange="verificarIdade()">
+                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento"  onchange="verificarIdade()" required>
                 </div>
             </div>
             <div id="campos_adicionais" style="display: none">
@@ -94,11 +94,11 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
-                    <input type="text" class="form-control" name="fone_pessoal" id="celular" placeholder="(xx) xxxxxxxxx">
+                    <input type="text" class="form-control" name="fone_pessoal" id="celular" placeholder="(xx) xxxxxxxxx" required>
                 </div>
                 <div class="col-md-3">
                     <label for="fone_contato" class="custom-label">Telefone Contato:</label>
-                    <input type="text" class="form-control" name="fone_contato" id="telefone" placeholder="(xx) xxxxxxxxx">
+                    <input type="text" class="form-control" name="fone_contato" id="telefone" placeholder="(xx) xxxxxxxxx" required>
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="custom-label">E-mail</label>
@@ -109,7 +109,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP:</label>
-                    <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP">
+                    <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" required>
                 </div>
             </div>
             <div class="row mb-3">
@@ -119,27 +119,28 @@
                 </div>
                 <div class="col-md-2">
                     <label for="numero_cs" class="custom-label">Nr Casa:</label>
-                    <input type="text" class="form-control" name="numero_cs" placeholder="Número CS">
+                    <input type="text" class="form-control" name="numero_cs" placeholder="Número CS" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div  class="col-md-3">
                     <label for="bairro" class="custom-label">Bairro:</label>
-                    <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+                    <input type="text" class="form-control" name="bairro" placeholder="Bairro" required>
                 </div>
                 <div class="col-md-3">
                     <label for="cidade" class="custom-label">Cidade:</label>
-                    <input type="text" class="form-control" name="cidade" placeholder="Cidade">
+                    <input type="text" class="form-control" name="cidade" placeholder="Cidade" required>
                 </div>
                 <div class="col-md-2">
                     <label for="estado" class="custom-label">Estado:</label>
-                    <input type="text" class="form-control" name="estado" placeholder="Estado">
+                    <input type="text" class="form-control" name="estado" placeholder="Estado" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
-                    <select class="form-select" name="condicao_habitacao">
+                    <select class="form-select" name="condicao_habitacao" required>
+                        <option value="">...</option>
                         <option  value="Alugada">Alugada</option>
                         <option  value="Própria">Própria</option>
                         <option  value="Financiada">Financiada</option>
@@ -154,7 +155,8 @@
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
-                    <select class="form-select" name="tipo_moradia">
+                    <select class="form-select" name="tipo_moradia" required>
+                        <option value="">...</option>
                         <option value="Apartamento">Apartamento</option>
                         <option value="Casa">Casa</option>
                         <option value="Sobrado">Sobrado</option>
@@ -181,7 +183,8 @@
                 <h2 class="mb-4 mt-4">Outras informações</h2>
                 <div class="col-md-3">
                     <label for="transporte" class="custom-label">Meio de Transporte:</label>
-                    <select class="form-select" name="transporte">
+                    <select class="form-select" name="transporte" required>
+                        <option value="">...</option>
                         <option value="Transporte Publico">Transporte Público</option>
                         <option value="Bicicleta">Bicicleta</option>
                         <option value="Carro">Carro</option>

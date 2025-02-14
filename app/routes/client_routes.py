@@ -77,15 +77,13 @@ def editar_cliente(id):
     cliente = Cliente.query.get_or_404(id)
 
     if request.method == 'POST':
-        # Atualiza os atributos do cliente existente
+
         cliente.nome = request.form.get('nome')
         cliente.cpf = request.form.get('cpf')
         cliente.email = request.form.get('email')
-        
         data_nascimento = request.form.get('dt_nascimento')
         if data_nascimento:
             cliente.data_nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
-
         cliente.renda_familiar = request.form.get('renda_familiar')
         cliente.bairro = request.form.get('bairro')
         cliente.canal_divulgacao = request.form.get('canal_divulgacao')

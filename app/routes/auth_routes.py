@@ -7,7 +7,8 @@ from app import bcrypt, db
 auth_bp = Blueprint('auth_bp', __name__)
 
 @auth_bp.route('/registro', methods=['GET', 'POST'])
-
+@login_required
+@role_required('admin')
 def registro():
     if request.method == 'POST':
         nome = request.form.get('name')
@@ -45,13 +46,13 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
 
-        # Verificar se o usuário existe
+        
         usuario = Usuario.query.filter_by(email=email).first()
         if usuario and usuario.senha and bcrypt.check_password_hash(usuario.senha, senha):
             login_user(usuario)
             return redirect(url_for('main_bp.menu'))
         else:
-            # Redirecionar de volta ao login em caso de erro
+            
             flash('E-mail ou senha inválidos.', 'error')
             return redirect(url_for('auth_bp.login'))
 
@@ -61,5 +62,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('Você deslogou do sistema','info')
     return redirect(url_for('main_bp.index'))
