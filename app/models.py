@@ -56,7 +56,7 @@ class Cliente(db.Model):
     grau_parentesco         = Column(String)
     nome_plano_saude        = Column(String)
     nome_responsavel        = Column(String)
-    numero_filhos           = Column(Integer)
+    numero_filhos           = Column(Integer, default=0)
     possui_filhos           = Column(String)
     plano_saude             = Column(String)
     previdenciario          = Column(String)

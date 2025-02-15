@@ -51,9 +51,13 @@ def cadastrar_cliente():
         )
         
         cpf = request.form.get('cpf')
-        verifica_cliente = Cliente.query.filter_by(cpf=cpf).first()
-        if verifica_cliente:
-            flash('CPF já cadastrado', 'error')
+        verifica_cpf = Cliente.query.filter_by(cpf=cpf).first()
+        
+        email = request.form.get('email')
+        verifica_email = Cliente.query.filter_by(email=email).first()
+
+        if verifica_cpf and verifica_email:
+            flash('Cliente já cadastrado', 'error')
             return redirect(url_for('main_bp.menu'))
         
         db.session.add(cliente)

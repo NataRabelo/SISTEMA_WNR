@@ -140,7 +140,7 @@
                 <div class="col-md-3">
                     <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
                     <select class="form-select" name="condicao_habitacao" required>
-                        <option value="">...</option>
+                        <option value="">Selecione...</option>
                         <option  value="Alugada">Alugada</option>
                         <option  value="Própria">Própria</option>
                         <option  value="Financiada">Financiada</option>
@@ -156,7 +156,7 @@
                 <div class="col-md-3">
                     <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
                     <select class="form-select" name="tipo_moradia" required>
-                        <option value="">...</option>
+                        <option value="">Selecione...</option>
                         <option value="Apartamento">Apartamento</option>
                         <option value="Casa">Casa</option>
                         <option value="Sobrado">Sobrado</option>
@@ -184,7 +184,7 @@
                 <div class="col-md-3">
                     <label for="transporte" class="custom-label">Meio de Transporte:</label>
                     <select class="form-select" name="transporte" required>
-                        <option value="">...</option>
+                        <option value="">Selecione...</option>
                         <option value="Transporte Publico">Transporte Público</option>
                         <option value="Bicicleta">Bicicleta</option>
                         <option value="Carro">Carro</option>
@@ -291,16 +291,29 @@
     }
 
     function verificaDropdown_PlanodeSaude() {
-            let dropdown = document.getElementById("plano_saude");
-            let input = document.getElementById("nome_plano_saude");
-            input.disabled = dropdown.value === "nao";
-        }
+    let dropdown = document.getElementById("plano_saude");
+    let input = document.getElementById("nome_plano_saude");
 
-        function verificarDropdown_Filhos() {
-            let dropdown = document.getElementById('possui_filhos');
-            let input = document.getElementById('qtn_filhos');
-            input.disabled = dropdown.value === "nao";
+    if (dropdown.value === "nao") {
+        input.disabled = true;
+        input.value = ""; // Limpa o que está escrito
+    } else {
+        input.disabled = false;
+    }
+}
+
+
+    function verificarDropdown_Filhos() {
+        let dropdown = document.getElementById('possui_filhos');
+        let input = document.getElementById('qtn_filhos');
+        
+        if (dropdown.value === "nao"){
+            input.disabled = true;
+            input.value = "";
+        }else {
+            input.disabled = false;
         }
+    }
 
         $(document).ready(function() {
         $('#cpf').mask('000.000.000-00'); // Máscara para CPF
