@@ -13,8 +13,8 @@
                     <input type="text" id="client_id" name="client_id" class="form-control" onchange="buscarCliente()"/>
                 </div>
                 <div class="col-md-6">
-                    <label for="resultado" class="form-label">Cliente:</label>
-                    <input type="text" id="resultado" nome="resultado" class="form-control">
+                    <label for="resultadoCliente" class="form-label">Cliente:</label>
+                    <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control">
                 </div>
             </div>
             <div class="row mb-3">
@@ -74,6 +74,5 @@
         </div>
     </form>    
 </div>
-<script src="{{ url_for('static', filename='js/buscar_cliente.js') }}" async></script>
-<script src="{{ url_for('static', filename='js/buscar_profissional.js') }}" async></script>
+<script src="{{ url_for('static', filename='js/encaminhamento.js') }}" async></script>
 {% endblock %}

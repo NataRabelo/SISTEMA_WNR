@@ -30,7 +30,8 @@
                     </div>
                     <div class="col-md-3">
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
-                        <select class="form-select" name="grau_parentesco" id="grau_parentesco">
+                        <select class="form-select campoObrigatorio" name="grau_parentesco" id="grau_parentesco">
+                            <option value="">Selecione...</option>
                             <option value="pai">Pai</option>
                             <option value="mae">Mãe</option>
                             <option value="avo">Avô</option>
@@ -83,7 +84,8 @@
                 </div>
                 <div class="col-md-3">
                     <label for="sexo" class="form-label">Sexo:</label>
-                    <select class="form-select" id="sexo" name="sexo" required>
+                    <select class="form-select campoObrigatorio" id="sexo" name="sexo" required>
+                        <option value="">Selecione...</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Feminino">Feminino</option>
                         <option value="Outro">Outro</option>
@@ -139,7 +141,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
-                    <select class="form-select" name="condicao_habitacao" required>
+                    <select class="form-select campoObrigatorio" name="condicao_habitacao" required>
                         <option value="">Selecione...</option>
                         <option  value="Alugada">Alugada</option>
                         <option  value="Própria">Própria</option>
@@ -155,7 +157,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
-                    <select class="form-select" name="tipo_moradia" required>
+                    <select class="form-select campoObrigatorio" name="tipo_moradia" required>
                         <option value="">Selecione...</option>
                         <option value="Apartamento">Apartamento</option>
                         <option value="Casa">Casa</option>
@@ -183,7 +185,7 @@
                 <h2 class="mb-4 mt-4">Outras informações</h2>
                 <div class="col-md-3">
                     <label for="transporte" class="custom-label">Meio de Transporte:</label>
-                    <select class="form-select" name="transporte" required>
+                    <select class="form-select campoObrigatorio" name="transporte" required>
                         <option value="">Selecione...</option>
                         <option value="Transporte Publico">Transporte Público</option>
                         <option value="Bicicleta">Bicicleta</option>
@@ -195,7 +197,8 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="escolariedade" class="custom-label">Escolariedade:</label>
-                    <select class="form-select" name="escolariedade">
+                    <select class="form-select campoObrigatorio" name="escolariedade">
+                        <option value="">Selecione...</option>
                         <option vlaue="Não Alfabetizado">Não Alfabetizado</option>
                         <option vlaue="Ensino Fundamental">Ensino Fundamental</option>
                         <option vlaue="Ensino Mêdio">Ensino Mêdio</option>
@@ -214,7 +217,8 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
-                    <select class="form-select" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
+                    <select class="form-select campoObrigatorio" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
+                        <option value="">Selecione...</option>
                         <option value="sim">Sim</option>
                         <option value="nao">Não</option>
                     </select>
@@ -227,7 +231,8 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="possui_filhos" class="custom-label">Possui filhos?</label>
-                    <select class="form-select" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
+                    <select class="form-select campoObrigatorio" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
+                        <option value="">Selecione...</option>
                         <option value="sim">Sim</option>
                         <option value="nao">Não</option>
                     </select>
@@ -238,7 +243,8 @@
                 </div>
                 <div class="col-md-3">
                     <label for="previdenciario" class="custom-label">Previdenciário:</label>
-                    <select class="form-select" name="previdenciario">
+                    <select class="form-select campoObrigatorio" name="previdenciario">
+                        <option value="">Selecione...</option>
                         <option value="não">Não</option>
                         <option value="sim">Sim</option>
                     </select>
@@ -247,19 +253,19 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="remuneracao" class="custom-label">Remuneração:</label>
-                    <input type="number" class="form-control" id="remuneracao" name="remuneracao" placeholder="Remuneração" oninput="calcularSaldo()">
+                    <input type="text" class="form-control" id="remuneracao" name="remuneracao" placeholder="R$ 0,00">
                 </div>
                 <div class="col-md-3">
                     <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
-                    <input type="number" class="form-control" id="renda_familiar" name="renda_familiar" placeholder="Renda Familiar" oninput="calcularSaldo()">
+                    <input type="text" class="form-control" id="renda_familiar" name="renda_familiar" placeholder="R$ 0,00">
                 </div>
                 <div class="col-md-3">
                     <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
-                    <input type="number" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="Despesa Mensal" oninput="calcularSaldo()">
+                    <input type="text" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="R$ 0,00">
                 </div>
                 <div class="col-md-3">
                     <label for="saldo" class="custom-label">Saldo:</label>
-                    <input type="number" class="form-control" id="saldo" name="saldo" placeholder="Saldo" readonly>
+                    <input type="text" class="form-control" id="saldo" name="saldo" placeholder="Saldo" placeholder="R$ 0,00" readonly>
                 </div>
             </div>
             <div class="row mt-4 mb-5">

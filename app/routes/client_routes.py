@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
-from app.utils.edit_values import limpar_valor
+from app.utils.edit_values import converter_para_float
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Cliente
@@ -19,7 +19,7 @@ def cadastrar_cliente():
             cpf                 = request.form.get('cpf'),
             email               = request.form.get('email'),
             data_nascimento     = datetime.strptime(request.form.get('dt_nascimento'),"%Y-%m-%d").date(),
-            renda_familiar      = limpar_valor(request.form.get('renda_familiar')),
+            renda_familiar      = converter_para_float(request.form.get('renda_familiar')),
             bairro              = request.form.get('bairro'),
             canal_divulgacao    = request.form.get('canal_divulgacao'),
             cep                 = request.form.get('cep'),
@@ -27,7 +27,7 @@ def cadastrar_cliente():
             condicao_habitacao  = request.form.get('condicao_habitacao'),
             cpf_responsavel     = request.form.get('cpf_responsavel'),
             numero_cs           = request.form.get('numero_cs'),
-            despesa_mensal      = limpar_valor(request.form.get('despesa_mensal')),
+            despesa_mensal      = converter_para_float(request.form.get('despesa_mensal')),
             escolaridade        = request.form.get('escolariedade'),
             estado              = request.form.get('estado'),
             endereco            = request.form.get('endereco'),
@@ -42,9 +42,9 @@ def cadastrar_cliente():
             plano_saude         = request.form.get('plano_saude'),
             previdenciario      = request.form.get('previdenciario'),
             profissao           = request.form.get('profissao'),
-            remuneracao         = limpar_valor(request.form.get('remuneracao')),
+            remuneracao         = converter_para_float(request.form.get('remuneracao')),
             rg                  = request.form.get('rg'),
-            saldo               = limpar_valor(request.form.get('saldo')),
+            saldo               = converter_para_float(request.form.get('saldo')),
             sexo                = request.form.get('sexo'),
             tipo_moradia        = request.form.get('tipo_moradia'),
             transporte          = request.form.get('transporte')

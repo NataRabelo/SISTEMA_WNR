@@ -1,6 +1,9 @@
-def limpar_valor(valor):
-    if isinstance(valor, str):
-        # Remove "R$", espaços invisíveis (\xa0) e troca ',' por '.'
-        valor = valor.replace('R$', '').replace('\xa0', '').replace('.', '').replace(',', '.')
+def converter_para_float(valor):
+    if not valor:
+        return 0.0
+    # Remove 'R$', pontos e troca vírgula por ponto
+    valor = valor.replace('R$', '').replace('.', '').replace(',', '.').strip()
+    try:
         return float(valor)
-    return valor
+    except ValueError:
+        return 0.0

@@ -3,19 +3,6 @@ function obterValorNumerico(valor) {
     return parseFloat(valor.replace('R$', '').replace(/\./g, '').replace(',', '.')) || 0;
 }
 
-// Função para calcular e exibir o saldo
-function calcularSaldo() {
-    const remuneracao = obterValorNumerico(document.getElementById('remuneracao').value);
-    const rendaFamiliar = obterValorNumerico(document.getElementById('renda_familiar').value);
-    const despesaMensal = obterValorNumerico(document.getElementById('despesa_mensal').value);
-
-    // Calculando o saldo
-    const saldo = (remuneracao + rendaFamiliar) - despesaMensal;
-
-    // Exibindo o saldo formatado (sem máscara para facilitar no backend)
-    document.getElementById('saldo').value = saldo.toFixed(2);
-}
-
 function verificaDropdown_PlanodeSaude() {
 let dropdown = document.getElementById("plano_saude");
 let input = document.getElementById("nome_plano_saude");
@@ -77,3 +64,81 @@ function calcularIdade(dt_nascimento) {
     }
     return idade;
 }
+
+function formatarMoeda(campo) {
+    let valor = campo.value.replace(/\D/g, '');
+    if (valor === '') {
+        campo.value = 'R$ 0,00';
+        return;
+    }
+
+    valor = (parseFloat(valor) / 100).toFixed(2);
+    valor = valor.replace('.', ',');
+    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    campo.value = 'R$ ' + valor;
+}
+
+// Função para extrair valor numérico do campo formatado
+function obterValorNumerico(valorFormatado) {
+    if (!valorFormatado) return 0;
+    return parseFloat(valorFormatado.replace(/\D/g, '')) / 100;
+}
+
+// Função para calcular e exibir o saldo
+function calcularSaldo() {
+    const remuneracao = obterValorNumerico(document.getElementById('remuneracao').value);
+    const rendaFamiliar = obterValorNumerico(document.getElementById('renda_familiar').value);
+    const despesaMensal = obterValorNumerico(document.getElementById('despesa_mensal').value);
+
+    const saldo = (remuneracao + rendaFamiliar) - despesaMensal;
+
+    const saldoCampo = document.getElementById('saldo');
+    saldoCampo.value = saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+// Capturando os campos de entrada
+const camposMonetarios = [
+    document.getElementById('remuneracao'),
+    document.getElementById('renda_familiar'),
+    document.getElementById('despesa_mensal')
+];
+
+// Adicionando evento a cada campo
+camposMonetarios.forEach(campo => {
+    campo.addEventListener('input', function () {
+        formatarMoeda(campo);
+        calcularSaldo();
+    });
+});
+
+function validarDropdownsObrigatorios() {
+    const selectsObrigatorios = document.querySelectorAll('.campoObrigatorio');
+    let valido = true;
+
+    selectsObrigatorios.forEach(select => {
+        if (select.value === '') {
+            valido = false;
+            select.style.border = '2px solid red';
+        } else {
+            select.style.border = '';
+        }
+    });
+
+    if (!valido) {
+        alert('Por favor, selecione uma opção válida em todos os campos obrigatórios.');
+    }
+
+    return valido;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const formulario = document.getElementById('meuFormulario');
+
+    if (formulario) {
+        formulario.addEventListener('submit', function (event) {
+            if (!validarDropdownsObrigatorios()) {
+                event.preventDefault();
+            }
+        });
+    }
+});
