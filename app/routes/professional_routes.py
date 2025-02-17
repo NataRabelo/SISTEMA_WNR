@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, request, redirect, url_for
+from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Profissional
@@ -104,3 +104,11 @@ def deletar_profissional(id):
     db.session.commit()
     flash('Profissional {{ profissional.nome }} excluido com sucesso', 'success')
     return redirect(url_for('professional_bp.listar_profissional'))
+
+@professional_bp.route('/buscar_profissional', methods=['GET'])
+def buscar_profissional():
+    codigo = request.args.get('codigo')
+    profissional = Profissional.query.filter_by(id=codigo).first()
+    if profissional:
+        return jsonify({'nome': profissional.nome})
+    return jsonify({'erro': 'profissional não encontrado'}), 404

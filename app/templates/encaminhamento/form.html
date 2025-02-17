@@ -8,25 +8,23 @@
     <form action="{{ url_for('encaminhamento_bp.criar_encaminhamento')}}" method="POST">
         <div class="container">
             <div class="row mb-3">
+                <div class="col-md-2">
+                    <label for="client_id" class="form-label">Cód Cliente:</label>
+                    <input type="text" id="client_id" name="client_id" class="form-control" onchange="buscarCliente()"/>
+                </div>
                 <div class="col-md-6">
-                    <label for="cliente_id" class="form-label">Cliente:</label>
-                    <select class="form-select" id="cliente_id" name="cliente_id">
-                        <option value="">Selecione um cliente</option>
-                        {% for cliente in clientes %}
-                            <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
-                        {% endfor %}
-                    </select>
+                    <label for="resultado" class="form-label">Cliente:</label>
+                    <input type="text" id="resultado" nome="resultado" class="form-control">
                 </div>
             </div>
             <div class="row mb-3">
+                <div class="col-md-2">
+                    <label for="profissional_id" class="form-label">Cód Profissional:</label>
+                    <input type="text" id="profissional_id" name="profissional_id" class="form-control" onchange="buscarProfissional()"/>
+                </div>
                 <div class="col-md-6">
-                    <label for="profissional_id" class="form-label">Profissional:</label>
-                    <select class="form-select" id="profissional_id" name="profissional_id">
-                        <option value="">Selecione um profissional</option>
-                        {% for profissional in profissionais %}
-                            <option value="{{ profissional.id }}">{{ profissional.nome }}</option>
-                        {% endfor %}
-                    </select>
+                    <label for="resultado" class="form-label">Profissional:</label>
+                    <input type="text" id="resultadoProfissional" name="resultadoProfissional" class="form-control">
                 </div>
             </div>
             <div class="row mb-3">
@@ -76,4 +74,6 @@
         </div>
     </form>    
 </div>
+<script src="{{ url_for('static', filename='js/buscar_cliente.js') }}" async></script>
+<script src="{{ url_for('static', filename='js/buscar_profissional.js') }}" async></script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
 from app.utils.edit_values import limpar_valor
 from app.utils.decorators import role_required
 from flask_login import login_required
@@ -133,3 +133,11 @@ def deletar_cliente(id):
     db.session.commit()
     flash('Cliente excluido com sucesso', 'success')
     return redirect(url_for('client_bp.listar_cliente'))
+
+@client_bp.route('/buscar_cliente', methods=['GET'])
+def buscar_cliente():
+    codigo = request.args.get('codigo')
+    cliente = Cliente.query.filter_by(id=codigo).first()
+    if cliente:
+        return jsonify({'nome': cliente.nome})
+    return jsonify({'erro': 'Cliente não encontrado'}), 404
