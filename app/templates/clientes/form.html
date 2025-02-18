@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2 class="text-center">Cadastro de Cliente</h2>
-    <form action="{{ url_for('client_bp.cadastrar_cliente')}}" method="POST">
+    <form id="meuFormulario" action="{{ url_for('client_bp.cadastrar_cliente')}}" method="POST">
         <div class="container">
             <h2 class="mb-4"> Dados Pessoais </h2>
             <div class="row mb-3">
@@ -111,31 +111,31 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP:</label>
-                    <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" required>
+                    <input type="text" class="form-control" id="cep" name="cep" oninput="buscarCEP()" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="endereco" class="custom-label">Endereço:</label>
-                    <input type="text" class="form-control" name="endereco" required>
+                    <input type="text" id="enderco" class="form-control" name="endereco" required>
                 </div>
                 <div class="col-md-2">
                     <label for="numero_cs" class="custom-label">Nr Casa:</label>
-                    <input type="text" class="form-control" name="numero_cs" placeholder="Número CS" required>
+                    <input type="text" id="numero_cs" class="form-control" name="numero_cs"  required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div  class="col-md-3">
                     <label for="bairro" class="custom-label">Bairro:</label>
-                    <input type="text" class="form-control" name="bairro" placeholder="Bairro" required>
+                    <input type="text" id="bairro" class="form-control" name="bairro" required>
                 </div>
                 <div class="col-md-3">
                     <label for="cidade" class="custom-label">Cidade:</label>
-                    <input type="text" class="form-control" name="cidade" placeholder="Cidade" required>
+                    <input type="text" id="cidade" class="form-control" name="cidade" required>
                 </div>
                 <div class="col-md-2">
                     <label for="estado" class="custom-label">Estado:</label>
-                    <input type="text" class="form-control" name="estado" placeholder="Estado" required>
+                    <input type="text" id="estado" class="form-control" name="estado" required>
                 </div>
             </div>
             <div class="row mb-3">
