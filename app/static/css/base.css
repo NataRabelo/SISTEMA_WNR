@@ -1,10 +1,12 @@
-/* Estilização geral */
+
 body {
     background-color: #f4f4f4;
     font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* Navbar */
+
 .navbar {
     background-color: #1d3557;
 }
@@ -20,18 +22,20 @@ body {
     opacity: 0.8;
 }
 
-/* Layout principal */
+
 .dashboard-container {
-    height: 85vh;
+    min-height: calc(100vh - 100px);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
 }
 
-/* Botões principais */
+
 .dashboard-btn {
-    width: 300px;
-    height: 120px;
+    width: 280px;
+    height: 110px;
     font-size: 1.4rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -62,15 +66,30 @@ body {
 .btn-encaminhamento:hover { background-color: #21867a; }
 .btn-guia:hover { background-color: #d48b50; }
 
-/* Dropdown personalizado */
-.dropdown-menu {
-    width: 100%;
+
+#flash-container {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    width: 50%;
+}
+
+.flash-message {
     text-align: center;
-    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-.dropdown-item {
-    font-size: 1.2rem;
-}
-.dropdown-item:hover {
-    background-color: #ddd;
+
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding-top: 50px;
+    }
+    .dashboard-btn {
+        width: 90%;
+        height: 100px;
+    }
 }

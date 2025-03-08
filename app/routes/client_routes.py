@@ -9,6 +9,12 @@ from app import db
 
 client_bp = Blueprint('client_bp', __name__)
 
+@client_bp.route('/cliente', methods=['GET', 'POST'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def cliente():
+    return render_template('clientes/cliente.html')
+
 @client_bp.route('/cadastrar_cliente', methods=['GET','POST'])
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')

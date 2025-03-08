@@ -7,6 +7,12 @@ from app.utils.decorators import role_required
 
 guide_bp = Blueprint('guide_bp', __name__)
 
+@guide_bp.route('/guia', methods=['GET', 'POST'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def guia():
+    return render_template('guides/guide.html')
+
 @guide_bp.route('/emitir_guia', methods=['GET', 'POST'])
 def emitir_guia():
     if request.method == 'POST':
@@ -30,7 +36,6 @@ def emitir_guia():
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
     return render_template('guides/form.html', clientes=clientes, profissionais=profissionais)
-
 
 @guide_bp.route('/listar_guia', methods=['GET', 'POST'])
 @login_required

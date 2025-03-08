@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Central de Clientes{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Digite para pesquisar pelo cliente...">
+            </div>
+            <div id="searchResults" class="p-3 border bg-white rounded shadow">
+                <p class="text-muted">Resultados aparecerão aqui...</p>
+            </div>
+        </div>
+
+        <div class="col-md-2 d-flex flex-column gap-3">
+            <a class="btn btn-outline-success btn-lg" href="{{ url_for('client_bp.cadastrar_cliente')}}">Novo Registro</a>
+            <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('client_bp.listar_cliente')}}">Mostrar Grade</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

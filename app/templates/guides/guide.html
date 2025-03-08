@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Central de Guias{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Digite para pesquisar pela guia...">
+            </div>
+            <div id="searchResults" class="p-3 border bg-white rounded shadow">
+                <p class="text-muted">Resultados aparecerão aqui...</p>
+            </div>
+        </div>
+
+        <div class="col-md-2 d-flex flex-column gap-3">
+            <button class="btn btn-outline-success btn-lg">Novo Registro</button>
+            <button class="btn btn-outline-secondary btn-lg">Mostrar Grade</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

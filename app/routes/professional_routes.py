@@ -8,6 +8,12 @@ from app import db
 
 professional_bp = Blueprint('professional_bp', __name__)
 
+@professional_bp.route('/profissional', methods=['GET', 'POST'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def profissional():
+    return render_template('professional/professional.html')
+
 @professional_bp.route('/cadastrar_profissional', methods=['GET', 'POST'])
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')

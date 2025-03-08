@@ -8,6 +8,12 @@ from app import db
 
 encaminhamento_bp = Blueprint('encaminhamento_bp', __name__)
 
+@encaminhamento_bp.route('/encaminhamento', methods=['GET', 'POST'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def encaminhamento():
+    return render_template('encaminhamento/encaminhamento.html')
+
 @encaminhamento_bp.route('/criar_encaminhamento', methods=['GET', 'POST'])
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')
