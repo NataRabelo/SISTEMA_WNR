@@ -147,3 +147,14 @@ def buscar_cliente():
     if cliente:
         return jsonify({'nome': cliente.nome})
     return jsonify({'erro': 'Cliente não encontrado'}), 404
+
+@client_bp.route("/filtra_cliente", methods=["GET", "POST"])
+def filtra_cliente():
+    query = request.args.get("q", "").strip()
+    if query:
+        clientes = Cliente.query.filter(Cliente.nome.ilike(f"%{query}%")).limit(10).all()
+        return jsonify([
+            {"id": c.id, "nome": c.nome, "cpf": c.cpf, "email": c.email} 
+            for c in clientes
+        ])
+    return jsonify([])

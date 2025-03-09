@@ -118,3 +118,14 @@ def buscar_profissional():
     if profissional:
         return jsonify({'nome': profissional.nome})
     return jsonify({'erro': 'profissional não encontrado'}), 404
+
+@professional_bp.route("/filtra_profissional", methods=["GET", "POST"])
+def filtra_profissional():
+    query = request.args.get("q", "").strip()
+    if query:
+        profissionais = Profissional.query.filter(Profissional.nome.ilike(f"%{query}%")).limit(10).all()
+        return jsonify([
+            {"id": c.id, "nome": c.nome, "cpf": c.cpf, "email": c.email} 
+            for c in profissionais
+        ])
+    return jsonify([])

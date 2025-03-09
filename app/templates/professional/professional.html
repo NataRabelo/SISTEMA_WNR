@@ -20,4 +20,45 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+    
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.trim();
+    
+            if (query.length > 0) {
+                fetch(`/filtra_profissional?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = "";
+                        
+                        if (data.length > 0) {
+                            data.forEach(profissional => {
+                                const item = document.createElement("div");
+                                item.classList.add("p-2", "border-bottom");
+    
+                                item.innerHTML = `
+                                    <a href="/editar_profissional/${profissional.id}" class="text-decoration-none text-dark">
+                                        <strong>${profissional.nome}</strong> <br>
+                                        <small>CPF: ${profissional.cpf} | Email: ${profissional.email}</small>
+                                    </a>
+                                `;
+    
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = "<p class='text-muted'>Nenhum profissional encontrado...</p>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao buscar profissionais:", error);
+                    });
+            } else {
+                searchResults.innerHTML = "<p class='text-muted'>Resultados aparecerão aqui...</p>";
+            }
+        });
+    });
+    </script>   
 {% endblock %}
