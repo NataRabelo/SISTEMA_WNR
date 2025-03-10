@@ -48,12 +48,12 @@ def cadastrar_profissional():
         verifica_profissional = Profissional.query.filter_by(cpf=cpf).first()
         if verifica_profissional:
             flash('Profissional já cadastrado', 'error')
-            return redirect(url_for('main_bp.menu'))
+            return redirect(url_for('professional_bp.profissional'))
         
         db.session.add(profissional)
         db.session.commit()
         flash('Profissional cadastrado com sucesso!', 'success')
-        return redirect(url_for('main_bp.menu'))
+        return redirect(url_for('professional_bp.profissional'))
     return render_template('professional/form.html')
 
 @professional_bp.route('/listar_profissional', methods=['GET', 'POST'])

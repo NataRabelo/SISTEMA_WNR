@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
-                        <select class="form-select campoObrigatorio" name="grau_parentesco" id="grau_parentesco">
+                        <select class="form-select" name="grau_parentesco" id="grau_parentesco">
                             <option value="">Selecione...</option>
                             <option value="pai">Pai</option>
                             <option value="mae">Mãe</option>
@@ -111,7 +111,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP:</label>
-                    <input type="text" class="form-control" id="cep" name="cep" oninput="buscarCEP()" required>
+                    <input type="text" class="form-control" id="cep" name="cep" required>
                 </div>
             </div>
             <div class="row mb-3">
@@ -219,8 +219,8 @@
                     <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
                     <select class="form-select campoObrigatorio" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
                         <option value="">Selecione...</option>
-                        <option value="sim">Sim</option>
-                        <option value="nao">Não</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -233,8 +233,8 @@
                     <label for="possui_filhos" class="custom-label">Possui filhos?</label>
                     <select class="form-select campoObrigatorio" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
                         <option value="">Selecione...</option>
-                        <option value="sim">Sim</option>
-                        <option value="nao">Não</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -245,8 +245,8 @@
                     <label for="previdenciario" class="custom-label">Previdenciário:</label>
                     <select class="form-select campoObrigatorio" name="previdenciario">
                         <option value="">Selecione...</option>
-                        <option value="não">Não</option>
-                        <option value="sim">Sim</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
                     </select>
                 </div>
             </div>
@@ -256,7 +256,7 @@
                     <input type="text" class="form-control" id="remuneracao" name="remuneracao" placeholder="R$ 0,00">
                 </div>
                 <div class="col-md-3">
-                    <label for="renda_familiar" class="custom-label">Renda Familiar:</label>
+                    <label for="renda_familiar" class="custom-label">Outras Rendas:</label>
                     <input type="text" class="form-control" id="renda_familiar" name="renda_familiar" placeholder="R$ 0,00">
                 </div>
                 <div class="col-md-3">
@@ -270,7 +270,7 @@
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12 text-end">
-                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <a href="{{ url_for('client_bp.cliente') }}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div>                        

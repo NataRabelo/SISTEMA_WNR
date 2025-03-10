@@ -94,34 +94,39 @@ function validarDropdownsObrigatorios() {
     return valido;
 }
 
-
 function verificaDropdown_PlanodeSaude() {
     let dropdown = document.getElementById("plano_saude");
     let input = document.getElementById("nome_plano_saude");
     
-    if (dropdown.value === "nao") {
+    if (dropdown.value === "Não") {
+        input.value = "";
         input.disabled = true;
-        input.value = ""; 
+
     } else {
         input.disabled = false;
     }
 }
-    
+
 function verificarDropdown_Filhos() {
     let dropdown = document.getElementById('possui_filhos');
     let input = document.getElementById('qtn_filhos');
      
-    if (dropdown.value === "nao"){
-        input.disabled = true;
+    if (dropdown.value === "Não") {
         input.value = "";
-    }else {
+        input.disabled = true;
+    } else {
         input.disabled = false;
     }
 }
-    
 
 document.addEventListener('DOMContentLoaded', function () {
     const formulario = document.getElementById('meuFormulario');
+
+    camposMonetarios.forEach(campo => {
+        formatarMoeda(campo);
+    });
+
+    calcularSaldo();
 
     if (formulario) {
         formulario.addEventListener('submit', function (event) {
@@ -131,5 +136,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
 
 

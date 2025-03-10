@@ -64,12 +64,12 @@ def cadastrar_cliente():
 
         if verifica_cpf and verifica_email:
             flash('Cliente já cadastrado', 'error')
-            return redirect(url_for('main_bp.menu'))
+            return redirect(url_for('client_bp.cliente'))
         
         db.session.add(cliente)
         db.session.commit()
         flash("Cadastro realizado com sucesso!", "success")  # Mensagem de sucesso com categoria
-        return redirect(url_for('main_bp.menu'))
+        return redirect(url_for('client_bp.cliente'))
     
     return render_template('clientes/form.html')
 
@@ -94,7 +94,7 @@ def editar_cliente(id):
         data_nascimento = request.form.get('dt_nascimento')
         if data_nascimento:
             cliente.data_nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
-        cliente.renda_familiar = request.form.get('renda_familiar')
+        cliente.renda_familiar = converter_para_float(request.form.get('renda_familiar'))
         cliente.bairro = request.form.get('bairro')
         cliente.canal_divulgacao = request.form.get('canal_divulgacao')
         cliente.cep = request.form.get('cep')
@@ -102,7 +102,7 @@ def editar_cliente(id):
         cliente.condicao_habitacao = request.form.get('condicao_habitacao')  
         cliente.cpf_responsavel = request.form.get('cpf_responsavel')
         cliente.numero_cs = request.form.get('numero_cs')
-        cliente.despesa_mensal = request.form.get('despesa_mensal')
+        cliente.despesa_mensal = converter_para_float(request.form.get('despesa_mensal'))
         cliente.escolariedade = request.form.get('escolariedade')  
         cliente.estado = request.form.get('estado')
         cliente.endereco = request.form.get('endereco')
@@ -110,16 +110,26 @@ def editar_cliente(id):
         cliente.fone_pessoal = request.form.get('fone_pessoal')
         cliente.foto = request.form.get('foto')
         cliente.grau_parentesco = request.form.get('grau_parentesco')
-        cliente.nome_plano_saude = request.form.get('nome_plano_saude')
         cliente.nome_responsavel = request.form.get('nome_responsavel')
-        cliente.possui_filhos = request.form.get('possui_filhos')
-        cliente.numero_filhos = request.form.get('numero_filhos')
-        cliente.plano_saude = request.form.get('plano_saude')
+        numero_filhos = request.form.get('numero_filhos')
+        possui_filhos = request.form.get('possui_filhos')
+        if possui_filhos == 'Não':
+            cliente.numero_filhos = 0
+        elif possui_filhos == 'Sim':
+            cliente.numero_filhos = numero_filhos
+
+        nome_plano_saude = request.form.get('nome_plano_saude')    
+        plano_saude = request.form.get('plano_saude')
+        if plano_saude == 'Sim':
+            cliente.nome_plano_saude = nome_plano_saude
+        elif plano_saude == 'Não':
+            cliente.nome_plano_saude = 'Sem plano de Saúde'
+
         cliente.previdenciario = request.form.get('previdenciario')
         cliente.profissao = request.form.get('profissao')
-        cliente.remuneracao = request.form.get('remuneracao')
+        cliente.remuneracao = converter_para_float(request.form.get('remuneracao'))
         cliente.rg = request.form.get('rg')
-        cliente.saldo = request.form.get('saldo')
+        cliente.saldo = converter_para_float(request.form.get('saldo'))
         cliente.sexo = request.form.get('sexo')
         cliente.tipo_moradia = request.form.get('tipo_moradia')
         cliente.transporte = request.form.get('transporte')
