@@ -1,9 +1,11 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
+from app.utils.edit_values import converter_para_float
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Profissional
 from datetime import datetime
 from app import db
+
 
 
 professional_bp = Blueprint('professional_bp', __name__)
@@ -42,7 +44,7 @@ def cadastrar_profissional():
             pix                     = request.form.get('pix'),
             registro_profissional   = request.form.get('registro_profissional'),
             rg                      = request.form.get('rg'),
-            valor_minimo            = request.form.get('valor_minimo')
+            valor_minimo            = converter_para_float(request.form.get('valor_minimo'))
         )
         cpf = request.form.get('cpf')
         verifica_profissional = Profissional.query.filter_by(cpf=cpf).first()
@@ -93,7 +95,7 @@ def editar_profissional(id):
         profissional.pix                    = request.form.get('pix')                  
         profissional.registro_profissional  = request.form.get('registro_profissional')
         profissional.rg                     = request.form.get('rg')                   
-        profissional.valor_minimo           = request.form.get('valor_minimo')         
+        profissional.valor_minimo           = converter_para_float(request.form.get('valor_minimo'))
 
         db.session.add(profissional)
         db.session.commit()
@@ -101,14 +103,14 @@ def editar_profissional(id):
         return redirect(url_for('professional_bp.listar_profissional'))
     return render_template('professional/form_edit.html', profissional=profissional)
 
-@professional_bp.route('/deletar_profissão/<int:id>', methods=['GET', 'POST'])
+@professional_bp.route('/deletar_profissional/<int:id>', methods=['GET', 'POST'])
 @login_required
 @role_required('admin')
 def deletar_profissional(id):
     profissional = Profissional.query.get_or_404(id)
     db.session.delete(profissional)
     db.session.commit()
-    flash('Profissional {{ profissional.nome }} excluido com sucesso', 'success')
+    flash('Profissional excluido com sucesso', 'success')
     return redirect(url_for('professional_bp.listar_profissional'))
 
 @professional_bp.route('/buscar_profissional', methods=['GET'])

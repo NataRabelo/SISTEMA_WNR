@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
-from app.utils.edit_values import converter_para_float
+from app.utils.edit_values import converter_para_float, formatar_para_moeda
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Cliente
@@ -85,6 +85,9 @@ def listar_cliente():
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_cliente(id):
     cliente = Cliente.query.get_or_404(id)
+    remuneracao_formatada = formatar_para_moeda(cliente.remuneracao)
+    renda_familiar_formatada = formatar_para_moeda(cliente.renda_familiar)
+    despesa_mensal_formatada = formatar_para_moeda(cliente.despesa_mensal)
 
     if request.method == 'POST':
 
@@ -111,19 +114,24 @@ def editar_cliente(id):
         cliente.foto = request.form.get('foto')
         cliente.grau_parentesco = request.form.get('grau_parentesco')
         cliente.nome_responsavel = request.form.get('nome_responsavel')
+        
         numero_filhos = request.form.get('numero_filhos')
         possui_filhos = request.form.get('possui_filhos')
         if possui_filhos == 'Não':
             cliente.numero_filhos = 0
+            cliente.possui_filhos = possui_filhos
         elif possui_filhos == 'Sim':
             cliente.numero_filhos = numero_filhos
+            cliente.possui_filhos = possui_filhos
 
         nome_plano_saude = request.form.get('nome_plano_saude')    
         plano_saude = request.form.get('plano_saude')
         if plano_saude == 'Sim':
             cliente.nome_plano_saude = nome_plano_saude
+            cliente.plano_saude = plano_saude
         elif plano_saude == 'Não':
             cliente.nome_plano_saude = 'Sem plano de Saúde'
+            cliente.plano_saude = plano_saude
 
         cliente.previdenciario = request.form.get('previdenciario')
         cliente.profissao = request.form.get('profissao')
@@ -138,7 +146,7 @@ def editar_cliente(id):
         flash('Cliente atualizado com sucesso!', 'success')
         return redirect(url_for('client_bp.listar_cliente'))  
 
-    return render_template('clientes/form_edit.html', cliente=cliente)
+    return render_template('clientes/form_edit.html', cliente=cliente, remuneracao=remuneracao_formatada, renda_familiar=renda_familiar_formatada, despesa_mensal=despesa_mensal_formatada)
 
 @client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
 @login_required

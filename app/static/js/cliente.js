@@ -34,8 +34,12 @@ function verificarIdade() {
 
 function obterValorNumerico(valorFormatado) {
     if (!valorFormatado) return 0;
-    return parseFloat(valorFormatado.replace(/\D/g, '')) / 100;
+
+    let valor = valorFormatado.replace(/[^\d,]/g, '').replace(',', '.');
+    
+    return parseFloat(valor) || 0;
 }
+
 
 function calcularSaldo() {
     const remuneracao = obterValorNumerico(document.getElementById('remuneracao').value);
@@ -55,11 +59,12 @@ function formatarMoeda(campo) {
         return;
     }
 
-    valor = (parseFloat(valor) / 100).toFixed(2);
+    valor = (parseInt(valor) / 100).toFixed(2);
     valor = valor.replace('.', ',');
-    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    campo.value = 'R$ ' + valor;
+
+    campo.value = 'R$ ' + valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
+
 
 const camposMonetarios = [
     document.getElementById('remuneracao'),
