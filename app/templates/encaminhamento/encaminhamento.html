@@ -20,4 +20,47 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.trim();
+
+            if (query.length > 0) {
+                fetch(`/filtra_encaminhamento?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = "";
+
+                        if (data.length > 0) {
+                            data.forEach(encaminhamento => {
+                                const item = document.createElement("div");
+                                item.classList.add("p-2", "border-bottom");
+
+                                item.innerHTML = `
+                                    <a href="/editar_encaminhamento/${encaminhamento.id}" class="text-decoration-none text-dark">
+                                        <strong>${encaminhamento.nome}</strong> <br>
+                                        <small>Profissional: ${encaminhamento.profissional}</small>
+                                    </a>
+                                `;
+
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = "<p class='text-muted'>Nenhum encaminhamento encontrado...</p>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao buscar encaminhamentos:", error);
+                        searchResults.innerHTML = "<p class='text-danger'>Erro ao buscar encaminhamentos.</p>";
+                    });
+            } else {
+                searchResults.innerHTML = "<p class='text-muted'>Resultados aparecerão aqui...</p>";
+            }
+        });
+    });
+</script>
+
 {% endblock %}

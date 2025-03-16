@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, request, redirect, url_for
+from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.models import Encaminhamento, Cliente, Profissional
 from app.utils.decorators import role_required 
 from flask_login import login_required
@@ -91,3 +91,27 @@ def deletar_encaminhamento(id):
     db.session.commit()
     flash('Encaminhamento excluido com sucesso', 'success')
     return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
+
+@encaminhamento_bp.route("/filtra_encaminhamento", methods=["GET", "POST"])
+def filtra_encaminhamento():
+    query = request.args.get("q", "").strip()
+    
+    if query:
+        encaminhamentos = (
+            Encaminhamento.query
+            .join(Cliente)  # Se necessário, unir a tabela Cliente
+            .filter(Cliente.nome.ilike(f"%{query}%"))
+            .limit(10)
+            .all()
+        )
+
+        return jsonify([
+            {
+                "id": c.id,
+                "nome": c.cliente.nome,  # Acessando o nome pelo relacionamento
+                "profissional": c.profissional.nome
+            } 
+            for c in encaminhamentos
+        ])
+    
+    return jsonify([])
