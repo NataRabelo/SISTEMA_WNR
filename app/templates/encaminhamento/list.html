@@ -25,7 +25,7 @@
                         </div>
                         <div>
                             <a href="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="{{ url_for('encaminhamento_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger">Deletar</a>
+                            <a href="{{ url_for('encaminhamento_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger"data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ encaminhamento.id }}">Deletar</a>
                         </div>
                     </li>
                 {% endfor %}
@@ -33,4 +33,33 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="confirmarExclusao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja excluir este encaminhamento?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <a id="confirmarExclusaoBtn" href="#" class="btn btn-danger">Excluir</a>
+        </div>
+      </div>
+    </div>
+</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var modal = document.getElementById("confirmarExclusao");
+      var confirmBtn = document.getElementById("confirmarExclusaoBtn");
+  
+      modal.addEventListener("show.bs.modal", function (event) {
+        var button = event.relatedTarget;
+        var clientId = button.getAttribute("data-id");
+        confirmBtn.href = "/deletar_encaminhamento/" + clientId;
+      });
+    });
+  </script>
 {% endblock %}

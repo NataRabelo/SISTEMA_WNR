@@ -1,83 +1,85 @@
 {% extends 'base.html' %}
 
-{% block title %}Editar encaminhamento{% endblock %}
+{% block title %}Cadastro de Cliente{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-center">Editar encaminhamento</h2>
-    <form action="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" method="POST">
+    <h2 class="text-center">Criar encaminhamento</h2>
+    <form action="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id)}}" method="POST">
         <div class="container">
             <div class="row mb-3">
+                <div class="col-md-2">
+                    <label for="cliente_id" class="form-label">Cód Cliente:</label>
+                    <input type="text" id="cliente_id" name="cliente_id" class="form-control" onchange="buscarCliente()" value="{{ encaminhamento.cliente_id }}"/>
+                </div>
                 <div class="col-md-6">
-                    <label for="cliente_id" class="form-label">Cliente:</label>
-                    <select class="form-select" id="cliente_id" name="cliente_id">
-                        <option value="">Selecione um cliente</option>
-                        {% for cliente in clientes %}
-                            <option value="{{ cliente.id }}" {% if cliente.id == encaminhamento.cliente_id %}selected{% endif %}>
-                                {{ cliente.nome }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    <label for="resultadoCliente" class="form-label">Cliente:</label>
+                    <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control" value="{{ encaminhamento.cliente.nome }}">
                 </div>
             </div>
             <div class="row mb-3">
+                <div class="col-md-2">
+                    <label for="profissional_id" class="form-label">Cód Profissional:</label>
+                    <input type="text" id="profissional_id" name="profissional_id" class="form-control" onchange="buscarProfissional()" value="{{ encaminhamento.profissional_id}}"/>
+                </div>
                 <div class="col-md-6">
-                    <label for="profissional_id" class="form-label">Profissional:</label>
-                    <select class="form-select" id="profissional_id" name="profissional_id">
-                        <option value="">Selecione um profissional</option>
-                        {% for profissional in profissionais %}
-                            <option value="{{ profissional.id }}" {% if profissional.id == encaminhamento.profissional_id %}selected{% endif %}>
-                                {{ profissional.nome }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    <label for="resultado" class="form-label">Profissional:</label>
+                    <input type="text" id="resultadoProfissional" name="resultadoProfissional" class="form-control" value="{{ encaminhamento.profissional.nome }}">
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="convenio" class="form-label">Convênio:</label>
                     <input id="convenio" name="convenio" class="form-control" value="{{ encaminhamento.convenio }}">
                 </div>
                 <div class="col-md-3">
                     <label for="situacao" class="form-label">Situação:</label>
-                    <input id="situacao" name="situacao" class="form-control" value="{{ encaminhamento.situacao }}">
+                    <select class="form-select campoObrigatorio" name="situacao" id="situacao">
+                        <option value="">Selecione...</option>
+                        <option value="Pendente" {% if encaminhamento.situacao == "Pendente" %}selected{% endif %}>Pendente</option>
+                        <option value="Negado"{% if encaminhamento.situacao == "Negado" %}selected{% endif %}>Negado</option>
+                        <option value="Aprovado"{% if encaminhamento.situacao == "Aprovado" %}selected{% endif %}>Aprovado</option>
+                        <option value="Em análise"{% if encaminhamento.situacao == "Em análise" %}selected{% endif %}>Em análise</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
+                    <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento">
+                        <option value="">Selecione...</option>
+                        <option value="Presencial"{% if encaminhamento.tipo_encaminhamento == "Presencial" %}selected{% endif %}>Presencial</option>
+                        <option value="Online"{% if encaminhamento.tipo_encaminhamento == "Online" %}selected{% endif %}>Online</option>
+                        <option value="Hibrida"{% if encaminhamento.tipo_encaminhamento == "Hibrida" %}selected{% endif %}>Hibrida</option>
+                    </select>
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label for="dias_horas_atendimento" class="form-label">Dia e horário de atendimento:</label>
                     <input id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" value="{{ encaminhamento.dias_horas_atendimento }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="valor" class="form-label">Valor:</label>
+                    <input id="valor" name="valor" class="form-control" value="{{ valor_formatado }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="queixa" class="form-label">Queixa:</label>
-                    <input id="queixa" name="queixa" class="form-control" value="{{ encaminhamento.queixa }}">
+                    <textarea id="queixa" name="queixa" class="form-control" style="height: 150px;">{{ encaminhamento.queixa }}</textarea>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
-                    <input id="tipo_encaminhamento" name="tipo_encaminhamento" class="form-control" value="{{ encaminhamento.tipo_encaminhamento }}">
-                </div>
-                <div class="col-md-3">
-                    <label for="valor" class="form-label">Valor:</label>
-                    <input id="valor" name="valor" class="form-control" value="{{ encaminhamento.valor }}">
-                </div>
-            </div>
-            <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="observacoes_gerais" class="form-label">Observações Gerais:</label>
-                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control">{{ encaminhamento.observacoes_gerais }}</textarea>
+                    <label for="observacoes_gerais" class="form-label" >Observações Gerais:</label>
+                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control" style="height: 150px;">{{ encaminhamento.observacoes_gerais }}</textarea>
                 </div>
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12 text-end">
                     <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div> 
         </div>
     </form>    
 </div>
+<script src="{{ url_for('static', filename='js/encaminhamento.js') }}" async></script>
 {% endblock %}

@@ -29,7 +29,7 @@ function buscarProfissional() {
 
 
 function buscarCliente() {
-    const codigo = document.getElementById('client_id').value;
+    const codigo = document.getElementById('cliente_id').value;
     const nomeClienteInput = document.getElementById('resultadoCliente');
     if (!codigo) {
         nomeClienteInput.value = '';
@@ -53,3 +53,13 @@ function buscarCliente() {
             });
     }, 500);
 }
+
+document.getElementById('valor').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    let formattedValue = (Number(value) / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+    
+    e.target.value = formattedValue;
+});

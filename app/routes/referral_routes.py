@@ -4,6 +4,7 @@ from app.utils.decorators import role_required
 from flask_login import login_required
 from datetime import datetime
 from app import db
+from app.utils.edit_values import converter_para_float, formatar_para_moeda
 
 
 encaminhamento_bp = Blueprint('encaminhamento_bp', __name__)
@@ -36,7 +37,7 @@ def criar_encaminhamento():
             queixa=request.form.get('queixa'),
             situacao=request.form.get('situacao'),
             tipo_encaminhamento=request.form.get('tipo_encaminhamento'),
-            valor=request.form.get('valor')
+            valor= converter_para_float(request.form.get('valor'))
         )
 
         db.session.add(encaminhamento)
@@ -62,6 +63,7 @@ def editar_encaminhamento(id):
     encaminhamento = Encaminhamento.query.get_or_404(id)
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
+    valor_formatado = formatar_para_moeda(encaminhamento.valor)
 
     if request.method == 'POST':
         encaminhamento.cliente_id = request.form.get('cliente_id')
@@ -72,13 +74,13 @@ def editar_encaminhamento(id):
         encaminhamento.queixa = request.form.get('queixa')
         encaminhamento.situacao = request.form.get('situacao')
         encaminhamento.tipo_encaminhamento = request.form.get('tipo_encaminhamento')
-        encaminhamento.valor = request.form.get('valor')
+        encaminhamento.valor = converter_para_float(request.form.get('valor'))
         
         db.session.commit()
         flash('Encaminhamento atualizado com sucesso!', 'success')
         return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
     return render_template(
-        'encaminhamento/form_edit.html', encaminhamento=encaminhamento, clientes=clientes, profissionais=profissionais)
+        'encaminhamento/form_edit.html', encaminhamento=encaminhamento, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado)
 
 @encaminhamento_bp.route('/deletar_encaminhamento/<int:id>')
 @login_required

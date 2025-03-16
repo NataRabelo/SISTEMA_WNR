@@ -9,8 +9,8 @@
         <div class="container">
             <div class="row mb-3">
                 <div class="col-md-2">
-                    <label for="client_id" class="form-label">Cód Cliente:</label>
-                    <input type="text" id="client_id" name="client_id" class="form-control" onchange="buscarCliente()"/>
+                    <label for="cliente_id" class="form-label">Cód Cliente:</label>
+                    <input type="text" id="cliente_id" name="cliente_id" class="form-control" onchange="buscarCliente()"/>
                 </div>
                 <div class="col-md-6">
                     <label for="resultadoCliente" class="form-label">Cliente:</label>
@@ -28,41 +28,47 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="convenio" class="form-label">Convênio:</label>
                     <input id="convenio" name="convenio" class="form-control">
                 </div>
                 <div class="col-md-3">
                     <label for="situacao" class="form-label">Situação:</label>
-                    <input id="situacao" name="situacao" class="form-control">
+                    <select class="form-select campoObrigatorio" name="situacao" id="situacao">
+                        <option value="">Selecione...</option>
+                        <option value="Negado">Negado</option>
+                        <option value="Aprovado">Aprovado</option>
+                        <option value="Em análise">Em análise</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
+                    <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento">
+                        <option value="">Selecione...</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Online">Online</option>
+                        <option value="Hibrida">Hibrida</option>
+                    </select>
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label for="dias_horas_atendimento" class="form-label">Dia e horário de atendimento:</label>
-                    <input id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" placeholder="Exemplo: Segunda - Quarta - Sexta ( 14h ou 15h)">
+                    <input id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" placeholder="Exemplo: Segunda as 14h">
+                </div>
+                <div class="col-md-3">
+                    <label for="valor" class="form-label">Valor:</label>
+                    <input id="valor" name="valor" class="form-control" placeholder="R$ 0,00">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="queixa" class="form-label">Queixa:</label>
-                    <input id="queixa" name="queixa" class="form-control">
+                    <textarea id="queixa" name="queixa" class="form-control" style="height: 150px;"></textarea>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
-                    <input id="tipo_encaminhamento" name="tipo_encaminhamento" class="form-control">
-                </div>
-                <div class="col-md-3">
-                    <label for="valor" class="form-label">Valor:</label>
-                    <input id="valor" name="valor" class="form-control">
-                </div>
-            </div>
-            <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="observacoes_gerais" class="form-label">Observações Gerais:</label>
-                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control"></textarea>
+                    <label for="observacoes_gerais" class="form-label" >Observações Gerais:</label>
+                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control" style="height: 150px;"></textarea>
                 </div>
             </div>
             <div class="row mt-4 mb-5">
