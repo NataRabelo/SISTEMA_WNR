@@ -11,7 +11,7 @@ function buscarProfissional() {
     // Evita fazer requisições a cada tecla digitada (debounce)
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-        fetch(`http://127.0.0.1:5000/buscar_profissional?codigo=${codigo}`)
+        fetch(`https://projeto-wnr.onrender.com/buscar_profissional?codigo=${codigo}`)
             .then(response => response.json())
             .then(data => {
                 if (data.erro) {
@@ -38,7 +38,7 @@ function buscarCliente() {
     // Evita fazer requisições a cada tecla digitada (debounce)
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-        fetch(`http://127.0.0.1:5000/buscar_cliente?codigo=${codigo}`)
+        fetch(`https://projeto-wnr.onrender.com/buscar_cliente?codigo=${codigo}`)
             .then(response => response.json())
             .then(data => {
                 if (data.erro) {
