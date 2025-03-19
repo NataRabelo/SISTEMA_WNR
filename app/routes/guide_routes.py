@@ -1,7 +1,7 @@
 from datetime import datetime
-from flask import Blueprint, flash, render_template, request, redirect, url_for
+from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from flask_login import login_required
-from app.models import Cliente, Guia, Profissional
+from app.models import Cliente, Encaminhamento, Guia, Profissional
 from app import db
 from app.utils.decorators import role_required
 
@@ -35,7 +35,7 @@ def emitir_guia():
         
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
-    return render_template('guides/form.html', clientes=clientes, profissionais=profissionais)
+    return render_template('guides/form.html', clientes=clientes)
 
 @guide_bp.route('/listar_guia', methods=['GET', 'POST'])
 @login_required
@@ -73,3 +73,13 @@ def deletar_guia(id):
     db.session.commit()
     flash('Guia deletada com sucesso', 'success')
     return redirect(url_for('guide_bp.listar_guia'))
+
+# Essa rota ficará aqui pois a mesma é utilizada na tela de emissão de guia
+@guide_bp.route('/buscar_profissionais/<int:cliente_id>', methods=['GET'])
+def buscar_profissionais(cliente_id):
+    encaminhamentos = Encaminhamento.query.filter_by(cliente_id=cliente_id).all()
+    profissionais = [profissional for enc in encaminhamentos for profissional in Profissional.query.filter_by(id=enc.profissional_id).all()]
+
+    return jsonify({
+        "profissionais": [{"id": p.id, "nome": p.nome} for p in profissionais]
+    })

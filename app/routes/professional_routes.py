@@ -119,7 +119,7 @@ def buscar_profissional():
     profissional = Profissional.query.filter_by(id=codigo).first()
     if profissional:
         return jsonify({'nome': profissional.nome})
-    return jsonify({'erro': 'profissional não encontrado'}), 404
+    return jsonify({'erro': 'Profissional não encontrado'}), 404
 
 @professional_bp.route("/filtra_profissional", methods=["GET", "POST"])
 def filtra_profissional():
