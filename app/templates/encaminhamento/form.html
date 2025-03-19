@@ -10,17 +10,23 @@
             <div class="row mb-3">
                 <div class="col-md-2">
                     <label for="cliente_id" class="form-label">Cód Cliente:</label>
-                    <input type="text" id="cliente_id" name="cliente_id" class="form-control" onchange="buscarCliente()"/>
+                    <div class="input-group">
+                        <input type="text" id="cliente_id" name="cliente_id" class="form-control">
+                        <button type="button" name="buscar_cliente_btn" id="buscar_cliente_btn" class="btn btn-primary" onclick="buscarCliente()">Buscar</button>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="resultadoCliente" class="form-label">Cliente:</label>
-                    <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control" disabled>
+                    <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control" disabled>    
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-2">
                     <label for="profissional_id" class="form-label">Cód Profissional:</label>
-                    <input type="text" id="profissional_id" name="profissional_id" class="form-control" onchange="buscarProfissional()"/>
+                    <div class="input-group">
+                        <input type="text" id="cliente_id" name="cliente_id" class="form-control">
+                        <button type="button" name="buscar_profissional_btn" id="buscar_profissional_btn" class="btn btn-primary" onclick="buscarProfissional()">Buscar</button>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="resultadoProfissional" class="form-label">Profissional:</label>
