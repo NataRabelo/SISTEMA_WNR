@@ -10,7 +10,11 @@ function buscarProfissional() {
     // Evita fazer requisições a cada tecla digitada (debounce)
     clearTimeout(timeout);
     timeout = setTimeout(() => {
+<<<<<<< HEAD
         fetch(`/buscar_profissional?codigo=${codigo}`)
+=======
+        fetch(`https://projeto-wnr.onrender.com/buscar_profissional?codigo=${codigo}`)
+>>>>>>> c9c95f3708449477f3bf078079ffd5feb64cf34b
             .then(response => response.json())
             .then(data => {
                 if (data.erro) {
@@ -37,7 +41,11 @@ function buscarCliente() {
     // Evita fazer requisições a cada tecla digitada (debounce)
     clearTimeout(timeout);
     timeout = setTimeout(() => {
+<<<<<<< HEAD
         fetch(`/buscar_cliente?codigo=${codigo}`)
+=======
+        fetch(`https://projeto-wnr.onrender.com/buscar_cliente?codigo=${codigo}`)
+>>>>>>> c9c95f3708449477f3bf078079ffd5feb64cf34b
             .then(response => response.json())
             .then(data => {
                 if (data.erro) {
