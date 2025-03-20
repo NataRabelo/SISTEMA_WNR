@@ -1,0 +1,50 @@
+from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
+from app.utils.decorators import role_required
+from flask_login import login_required
+from app.models import Profissional, Cliente, Encaminhamento
+
+utils_bp = Blueprint('utils_bp', __name__)
+
+
+@utils_bp.route('/buscar_profissional', methods=['GET'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def buscar_profissional():
+    codigo = request.args.get('codigo')
+    profissional = Profissional.query.filter_by(id=codigo).first()
+    if profissional:
+        return jsonify({'nome': profissional.nome})
+    return jsonify({'erro': 'Profissional não encontrado'}), 404
+
+
+@utils_bp.route('/buscar_cliente', methods=['GET'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def buscar_cliente():
+    codigo = request.args.get('codigo')
+    cliente = Cliente.query.filter_by(id=codigo).first()
+    if cliente:
+        return jsonify({'nome': cliente.nome})
+    return jsonify({'erro': 'Cliente não encontrado'}), 404
+
+
+@utils_bp.route('/buscar_profissionais/<int:cliente_id>', methods=['GET'])
+def buscar_profissionais(cliente_id):
+    encaminhamentos = Encaminhamento.query.filter_by(cliente_id=cliente_id).all()
+    profissionais = [profissional for enc in encaminhamentos for profissional in Profissional.query.filter_by(id=enc.profissional_id).all()]
+
+    return jsonify({
+        "profissionais": [{"id": p.id, "nome": p.nome} for p in profissionais]
+    })
+
+
+@utils_bp.route('/buscar_valor', methods=['GET'])
+@login_required
+@role_required('atendimento', 'financeiro', 'admin')
+def buscar_valor():
+    codCliente = request.args.get('codigoCliente')
+    codProfissional = request.args.get('codigoProfissional')
+    encaminhamento = Encaminhamento.query.filter_by(cliente_id=codCliente, profissional_id=codProfissional).first()
+    if encaminhamento:
+        return jsonify({'valor': encaminhamento.valor})
+    return jsonify({'erro': 'Valor não encontrado'}), 404

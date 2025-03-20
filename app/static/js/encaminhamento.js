@@ -1,9 +1,9 @@
 function buscarProfissional() {
     const codigo = document.getElementById('profissional_id').value;
-    const nomeClienteInput = document.getElementById('resultadoProfissional');
+    const nomeProfissionalInput = document.getElementById('resultadoProfissional');
 
     if (!codigo.trim()) {
-        nomeClienteInput.value = '';
+        nomeProfissionalInput.value = '';
         return;
     }
 
@@ -11,13 +11,13 @@ function buscarProfissional() {
         .then(response => response.json())
         .then(data => {
             if (data.erro) {
-                nomeClienteInput.value = data.erro;
+                nomeProfissionalInput.value = data.erro;
             } else {
-                nomeClienteInput.value = data.nome;
+                nomeProfissionalInput.value = data.nome;
             }
         })
         .catch(error => {
-            nomeClienteInput.value = 'Erro na requisição';
+            nomeProfissionalInput.value = 'Erro na requisição';
             console.error('Erro:', error);
         });
 }

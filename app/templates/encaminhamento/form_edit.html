@@ -10,21 +10,27 @@
             <div class="row mb-3">
                 <div class="col-md-2">
                     <label for="cliente_id" class="form-label">Cód Cliente:</label>
-                    <input type="text" id="cliente_id" name="cliente_id" class="form-control" onchange="buscarCliente()" value="{{ encaminhamento.cliente_id }}"/>
+                    <div class="input-group">
+                        <input type="text" id="cliente_id" name="cliente_id" class="form-control" value="{{ encaminhamento.cliente_id }}">
+                        <button type="button" name="buscar_cliente_btn" id="buscar_cliente_btn" class="btn btn-primary" onclick="buscarCliente()">Buscar</button>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="resultadoCliente" class="form-label">Cliente:</label>
-                    <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control" value="{{ encaminhamento.cliente.nome }}">
+                    <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control" value="{{ encaminhamento.cliente.nome }}" disabled>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-2">
                     <label for="profissional_id" class="form-label">Cód Profissional:</label>
-                    <input type="text" id="profissional_id" name="profissional_id" class="form-control" onchange="buscarProfissional()" value="{{ encaminhamento.profissional_id}}"/>
+                    <div class="input-group">
+                        <input type="text" id="profissional_id" name="profissional_id" class="form-control" value="{{ encaminhamento.profissional_id}}">
+                        <button type="button" name="buscar_profissional_btn" id="buscar_profissional_btn" class="btn btn-primary" onclick="buscarProfissional()">Buscar</button>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="resultado" class="form-label">Profissional:</label>
-                    <input type="text" id="resultadoProfissional" name="resultadoProfissional" class="form-control" value="{{ encaminhamento.profissional.nome }}">
+                    <input type="text" id="resultadoProfissional" name="resultadoProfissional" class="form-control" value="{{ encaminhamento.profissional.nome }}" disabled>
                 </div>
             </div>
             <div class="row mb-3">
@@ -74,7 +80,7 @@
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12 text-end">
-                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <a href="{{ url_for('encaminhamento_bp.encaminhamento') }}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div> 

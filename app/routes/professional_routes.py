@@ -113,14 +113,6 @@ def deletar_profissional(id):
     flash('Profissional excluido com sucesso', 'success')
     return redirect(url_for('professional_bp.listar_profissional'))
 
-@professional_bp.route('/buscar_profissional', methods=['GET'])
-def buscar_profissional():
-    codigo = request.args.get('codigo')
-    profissional = Profissional.query.filter_by(id=codigo).first()
-    if profissional:
-        return jsonify({'nome': profissional.nome})
-    return jsonify({'erro': 'Profissional não encontrado'}), 404
-
 @professional_bp.route("/filtra_profissional", methods=["GET", "POST"])
 def filtra_profissional():
     query = request.args.get("q", "").strip()

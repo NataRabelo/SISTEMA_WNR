@@ -158,14 +158,6 @@ def deletar_cliente(id):
     flash('Cliente excluido com sucesso', 'success')
     return redirect(url_for('client_bp.listar_cliente'))
 
-@client_bp.route('/buscar_cliente', methods=['GET'])
-def buscar_cliente():
-    codigo = request.args.get('codigo')
-    cliente = Cliente.query.filter_by(id=codigo).first()
-    if cliente:
-        return jsonify({'nome': cliente.nome})
-    return jsonify({'erro': 'Cliente não encontrado'}), 404
-
 @client_bp.route("/filtra_cliente", methods=["GET", "POST"])
 def filtra_cliente():
     query = request.args.get("q", "").strip()

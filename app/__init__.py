@@ -37,8 +37,7 @@ def create_app():
     from app.routes.main_routes import main_bp
     from app.routes.professional_routes import professional_bp
     from app.routes.report_routes import report_bp
-
-    from app.routes.teste_routes import teste_bp
+    from app.routes.utils import utils_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(client_bp)
@@ -48,7 +47,6 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(professional_bp)
     app.register_blueprint(report_bp)
-
-    app.register_blueprint(teste_bp)
+    app.register_blueprint(utils_bp)
 
     return app
