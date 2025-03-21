@@ -111,13 +111,16 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP:</label>
-                    <input type="text" class="form-control" id="cep" name="cep" required>
+                    <div class="input-group">
+                        <input type="text" id="cep" name="cep" class="form-control">
+                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+                    </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="endereco" class="custom-label">Endereço:</label>
-                    <input type="text" id="enderco" class="form-control" name="endereco" required>
+                    <input type="text" id="endereco" class="form-control" name="endereco" required>
                 </div>
                 <div class="col-md-2">
                     <label for="numero_cs" class="custom-label">Nr Casa:</label>

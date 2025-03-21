@@ -110,14 +110,16 @@
             <h2 class="mb-4 mt-4"> Endereço </h2>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cep" class="custom-label">CEP:</label>
-                    <input type="text" class="form-control" id="cep" name="cep" oninput="buscarCEP()" required value="{{ cliente.cep }}">
+                    <label for="cep" class="custom-label">CEP:</label><div class="input-group">
+                        <input type="text" id="cep" name="cep" class="form-control" value="{{ cliente.cep }}">
+                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+                    </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="endereco" class="custom-label">Endereço:</label>
-                    <input type="text" id="enderco" class="form-control" name="endereco" required value="{{ cliente.endereco }}">
+                    <input type="text" id="endereco" class="form-control" name="endereco" required value="{{ cliente.endereco }}">
                 </div>
                 <div class="col-md-2">
                     <label for="numero_cs" class="custom-label">Nr Casa:</label>
@@ -225,7 +227,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
-                    <input type="text" class="form-control" id="nome_plano_saude" name="nome_plano_saude" value="{{ cliente.nome_plano_saude }}">
+                    <input type="text" class="form-control" id="nome_plano_saude" name="nome_plano_saude" value="{{ cliente.nome_plano_saude }}" {% if cliente.plano_saude == "Não" %}disabled{% endif %}>
                 </div>
             </div>
             <div class="row mb-3">
@@ -239,7 +241,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
-                    <input type="number" class="form-control" id="qtn_filhos" name="numero_filhos" value="{{ cliente.numero_filhos }}">
+                    <input type="number" class="form-control" id="qtn_filhos" name="numero_filhos" value="{{ cliente.numero_filhos }}" {% if cliente.possui_filhos == "Não"%}disabled{% endif %}>
                 </div>
                 <div class="col-md-3">
                     <label for="previdenciario" class="custom-label">Previdenciário:</label>

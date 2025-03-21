@@ -49,7 +49,10 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="cep" class="form-label">CEP:</label>
-                    <input type="text" class="form-control" id="cep" name="cep" value="{{profissional.cep}}" >
+                    <div class="input-group">
+                        <input type="text" id="cep" name="cep" class="form-control" value="{{ profissional.cep }}">
+                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+                    </div>
                 </div>
             </div>
             <div class="row mb-3">

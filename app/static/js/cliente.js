@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#cpf').mask('000.000.000-00');
     $('#rg').mask('00.000.000-0');
-    $('#cep').mask('00000-000'); 
+     
     $('#telefone').mask('(00) 00000-0000'); 
     $('#celular').mask('(00) 00000-0000'); 
     $('#cpf_responsavel').mask('000.000.000-00'); 
@@ -142,5 +142,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+function buscarCEP() {
+    const cep = document.getElementById('cep').value.trim();
+    const bairro = document.getElementById('bairro');
+    const cidade = document.getElementById('cidade');
+    const estado = document.getElementById('estado');
+    const endereco = document.getElementById('endereco');
 
+    // Verifica se o CEP está preenchido e tem 8 dígitos
+    if (!cep || cep.length !== 8 || isNaN(cep)) {
+        alert("CEP inválido! Digite um CEP com 8 números.");
+        return;
+    }
 
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.erro) {
+                alert("CEP não encontrado!");
+                bairro.value = '';
+                cidade.value = '';
+                estado.value = '';
+                endereco.value = '';
+            } else {
+                bairro.value = data.bairro || '';
+                cidade.value = data.localidade || '';
+                estado.value = data.uf || '';
+                endereco.value = data.logradouro || '';
+            }
+        })
+        .catch(error => {
+            alert("Erro ao buscar o CEP. Tente novamente.");
+            console.error('Erro:', error);
+        });
+}
