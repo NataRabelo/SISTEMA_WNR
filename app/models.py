@@ -140,6 +140,7 @@ class Guia(db.Model):
     quantidade_emissoes     = Column(Integer)
     tipo_pagamento          = Column(String)
     valor_unitario          = Column(Float)
+    valor_total             = Column(Float)
     pago                    = Column(Boolean, default=False)
 
     # Relacionamentos

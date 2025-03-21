@@ -5,22 +5,21 @@
 {% block content %}
 <div class="container mt-4">
     <h2 class="text-center">Emitir guia</h2>
-    <form action="{{ url_for('guide_bp.emitir_guia')}}" method="POST">
+    <form action="{{ url_for('guide_bp.editar_guia', id=guia.id)}}" method="POST">
         <div class="container">
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="cliente_id" class="form-label">Cód Cliente:</label>
                     <div class="input-group">
                         <input type="text" id="cliente_id" name="cliente_id" class="form-control" value="{{ guia.cliente_id }}">
-                        <button type="button" name="buscar_cliente_btn" id="buscar_cliente_btn" class="btn btn-primary" onclick="buscarCliente(); buscarProfissionais();">Buscar</button>
+                        <button type="button" name="buscar_cliente_btn" id="buscar_cliente_btn" class="btn btn-primary" onclick="buscarCliente(); buscarProfissionais(); ">Buscar</button>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <label for="resultadoCliente" class="form-label">Cliente:</label>
-                    <input type="text" id="resultadoCliente" name="resultadoCliente" class="form-control" value="{{ guia.cliente.nome }}" disabled>
+                    <input type="text" id="resultadoCliente" name="resultadoCliente" class="form-control" value="{{ guia.cliente.nome}}" disabled>
                 </div>
             </div>
-            
             <div class="row mb-3">
                 <div class="col-md-8">
                     <label for="profissional_id" class="form-label">Profissional:</label>
@@ -32,10 +31,9 @@
                     </select>
                 </div>
             </div>
-            
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="tipo_pagamento" class="form-label">Tipo de pagamento</label>
+                    <label for="tipo_pagamento" onchange="buscarValor()" class="form-label">Tipo de pagamento</label>
                     <select class="form-select" id="tipo_pagamento" name="tipo_pagamento">
                         <option value="">Método de pagamento</option>
                         <option value="Pix" {% if guia.tipo_pagamento == "Pix" %}selected{% endif %}>Pix</option>
@@ -45,25 +43,29 @@
                 </div>
                 <div class="col-md-2">
                     <label for="quantidade_emissoes" class="form-label">Quantidade:</label>
-                    <input type="number" id="quantidade_emissoes" name="quantidade_emissoes" class="form-control">
+                    <input type="number" id="quantidade_emissoes" name="quantidade_emissoes" class="form-control" value="{{ guia.quantidade_emissoes }}">
                 </div>
                 <div class="col-md-2">
                     <label for="valor_unitario" class="form-label">Valor Unitário:</label>
+                    <input type="text" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$ 0,00" value="{{ valor_formatado }}" >
+                </div>
+                <div class="col-md-2">
+                    <label for="valor_total" class="form-label">Valor Total:</label>
                     <div class="input-group">
-                        <input type="text" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$ 0,00" >
-                        <button type="button" name="buscar_valor_btn" id="buscar_valor_btn" class="btn btn-primary" onclick="buscarValor();">Buscar</button>
+                        <input type="text" id="valor_total" name="valor_total" class="form-control" placeholder="R$ 0,00" value="{{ valor_total }}" >
+                        <button type="button" name="valor_total_btn" id="valor_total_btn" class="btn btn-primary" onclick="calcularTotal()">Calcular</button>
                     </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-12">
                     <label for="observacoes_gerais" class="form-label">Observações:</label>
-                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control" style="height: 150px;"></textarea>
+                    <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control" style="height: 150px;">{{ guia.observacoes_gerais }}</textarea>
                 </div>
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12 text-end">
-                    <a href="{{ url_for('main_bp.menu') }}" class="btn btn-danger">Cancelar</a>
+                    <a href="{{ url_for('guide_bp.guia') }}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div> 

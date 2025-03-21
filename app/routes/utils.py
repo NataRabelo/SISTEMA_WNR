@@ -2,6 +2,7 @@ from flask import Blueprint, flash, jsonify, render_template, request, redirect,
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Profissional, Cliente, Encaminhamento
+from app.utils.edit_values import formatar_para_moeda
 
 utils_bp = Blueprint('utils_bp', __name__)
 
@@ -44,7 +45,14 @@ def buscar_profissionais(cliente_id):
 def buscar_valor():
     codCliente = request.args.get('codigoCliente')
     codProfissional = request.args.get('codigoProfissional')
+    tipoPagamento = request.args.get('tipoPagamento')
     encaminhamento = Encaminhamento.query.filter_by(cliente_id=codCliente, profissional_id=codProfissional).first()
     if encaminhamento:
-        return jsonify({'valor': encaminhamento.valor})
+
+        valor = float(encaminhamento.valor)
+
+        if tipoPagamento == "Cartão de Crédito":
+            return jsonify({'valor':formatar_para_moeda( valor + 2.0)})
+        else:
+            return jsonify({'valor': formatar_para_moeda(valor)})
     return jsonify({'erro': 'Valor não encontrado'}), 404

@@ -4,7 +4,7 @@ from flask_login import login_required
 from app.models import Cliente, Encaminhamento, Guia, Profissional
 from app import db
 from app.utils.decorators import role_required
-from app.utils.edit_values import formatar_para_moeda
+from app.utils.edit_values import converter_para_float, formatar_para_moeda
 
 guide_bp = Blueprint('guide_bp', __name__)
 
@@ -22,9 +22,11 @@ def emitir_guia():
 
         if not cliente_id or not profissional_id:
             flash('Erro: Cliente e profissional são obrigatórios!', 'danger')
-            return redirect(url_for('encaminhamento_bp.criar_encaminhamento'))
+            return redirect(url_for('guide_bp.emitir_guia'))
         
         agora = datetime.now()
+        valor_unitario = converter_para_float(request.form.get('valor_unitario'))
+        valor_total = converter_para_float(request.form.get('valor_total'))
         
         guia = Guia(
             cliente_id=cliente_id,
@@ -34,7 +36,8 @@ def emitir_guia():
             observacoes_gerais=request.form.get('observacoes_gerais'),
             quantidade_emissoes=request.form.get('quantidade_emissoes'),
             tipo_pagamento=request.form.get('tipo_pagamento'),
-            valor_unitario=request.form.get('valor_unitario')
+            valor_unitario=valor_unitario,
+            valor_total = valor_total
         )
 
         db.session.add(guia)
@@ -61,6 +64,7 @@ def editar_guia(id):
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
     valor_formatado = formatar_para_moeda(guia.valor_unitario)
+    valor_total = formatar_para_moeda(guia.valor_total )
 
     if request.method == 'POST':
         guia.client_id = request.form.get('client_id')
@@ -68,11 +72,13 @@ def editar_guia(id):
         guia.observacoes_gerais = request.form.get('observacoes_gerais')
         guia.quantidade_emissoes = request.form.get('quantidade_emissoes')
         guia.tipo_pagamento = request.form.get('tipo_pagamento')
-        guia.valor_unitario = request.form.get('valor_unitario')
+        guia.valor_unitario = converter_para_float(request.form.get('valor_unitario'))
+        guia.valor_total = converter_para_float(request.form.get('valor_total'))
 
         db.session.commit()
         flash('Guia atualizada com sucessso', 'success')
-    return render_template('guides/form_edit.html', guia = guia, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado)
+        return redirect(url_for('guide_bp.guia'))
+    return render_template('guides/form_edit.html', guia = guia, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado, valor_total=valor_total)
 
 @guide_bp.route('/deletar_guia/<int:id>', methods=['GET', 'POST'])
 @login_required

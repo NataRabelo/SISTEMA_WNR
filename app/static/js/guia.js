@@ -57,17 +57,21 @@ function buscarProfissionais() {
         });
 }
 
+
+document.getElementById('tipo_pagamento').addEventListener('change', buscarValor);
+
 function buscarValor() {
     const codigoCliente = document.getElementById('cliente_id').value;
     const codigoProfissional = document.getElementById('profissional_id').value;
     const valorUnitario = document.getElementById('valor_unitario');
+    const tipoPagamento = document.getElementById('tipo_pagamento').value;
 
     if (!codigoCliente.trim() && !codigoProfissional.trim()) {
         valorUnitario.value = '';
         return;
     }
 
-    fetch(`/buscar_valor?codigoCliente=${codigoCliente}&codigoProfissional=${codigoProfissional}`)
+    fetch(`/buscar_valor?codigoCliente=${codigoCliente}&codigoProfissional=${codigoProfissional}&tipoPagamento=${tipoPagamento}`)
         .then(response => response.json())
         .then(data => {
             if (data.erro) {
@@ -77,7 +81,33 @@ function buscarValor() {
             }
         })
         .catch(error => {
-            nomeClienteInput.value = 'Erro na requisição';
+            valorUnitario.value = 'Erro na requisição';
             console.error('Erro:', error);
         });
+}
+
+function calcularTotal() {
+    const quantidade = document.getElementById('quantidade_emissoes').value.trim();
+    let valorUnitario = document.getElementById('valor_unitario').value.trim();
+    const valorTotal = document.getElementById('valor_total');
+
+    // Verifica se os campos estão preenchidos
+    if (!quantidade || !valorUnitario) {
+        valorTotal.value = "Valor inválido";
+        return;
+    }
+
+    // Converte o valor unitário para número, removendo "R$" e formatando corretamente
+    valorUnitario = valorUnitario.replace(/[R$\s]/g, "").replace(",", ".");
+    
+    if (isNaN(quantidade) || isNaN(valorUnitario)) {
+        valorTotal.value = "Valor inválido";
+        return;
+    }
+
+    // Calcula o valor total
+    const total = parseFloat(quantidade) * parseFloat(valorUnitario);
+
+    // Exibe o resultado formatado
+    valorTotal.value = `R$ ${total.toFixed(2).replace(".", ",")}`;
 }
