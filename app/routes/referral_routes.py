@@ -43,7 +43,7 @@ def criar_encaminhamento():
         db.session.add(encaminhamento)
         db.session.commit()
         flash('Encaminhamento realizado com sucesso!', 'success')
-        return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
+        return redirect(url_for('encaminhamento_bp.encaminhamento'))
 
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()

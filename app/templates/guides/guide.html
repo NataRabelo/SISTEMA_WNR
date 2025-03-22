@@ -20,4 +20,45 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+    
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.trim();
+    
+            if (query.length > 0) {
+                fetch(`/filtrar_guia?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = "";
+                        
+                        if (data.length > 0) {
+                            data.forEach(guia => {
+                                const item = document.createElement("div");
+                                item.classList.add("p-2", "border-bottom");
+    
+                                item.innerHTML = `
+                                    <a href="/editar_guia/${guia.id}" class="text-decoration-none text-dark">
+                                        Cliente: <strong>${guia.cliente}</strong> <br>
+                                        <small>Profissional: ${guia.profissional} | Valor Total: ${guia.valor}</small>
+                                    </a>
+                                `;
+    
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = "<p class='text-muted'>Nenhuma guia encontrada...</p>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao buscar guias:", error);
+                    });
+            } else {
+                searchResults.innerHTML = "<p class='text-muted'>Resultados aparecerão aqui...</p>";
+            }
+        });
+    });
+    </script>  
 {% endblock %}

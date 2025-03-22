@@ -89,3 +89,15 @@ def deletar_guia(id):
     db.session.commit()
     flash('Guia deletada com sucesso', 'success')
     return redirect(url_for('guide_bp.listar_guia'))
+
+
+@guide_bp.route("/filtrar_guia", methods=["GET", "POST"])
+def filtrar_guia():
+    query = request.args.get("q", "").strip()
+    if query:
+        guias = Guia.query.filter(Guia.id.ilike(f"%{query}%")).limit(10).all()
+        return jsonify([
+            {"id": c.id, "cliente": c.cliente.nome, "profissional": c.profissional.nome, "valor": formatar_para_moeda(c.valor_total)} 
+            for c in guias
+        ])
+    return jsonify([])

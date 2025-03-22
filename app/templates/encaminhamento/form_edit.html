@@ -43,18 +43,18 @@
                     <select class="form-select campoObrigatorio" name="situacao" id="situacao">
                         <option value="">Selecione...</option>
                         <option value="Pendente" {% if encaminhamento.situacao == "Pendente" %}selected{% endif %}>Pendente</option>
-                        <option value="Negado"{% if encaminhamento.situacao == "Negado" %}selected{% endif %}>Negado</option>
-                        <option value="Aprovado"{% if encaminhamento.situacao == "Aprovado" %}selected{% endif %}>Aprovado</option>
-                        <option value="Em análise"{% if encaminhamento.situacao == "Em análise" %}selected{% endif %}>Em análise</option>
+                        <option value="Ativo"{% if encaminhamento.situacao == "Ativo" %}selected{% endif %}>Ativo</option>
+                        <option value="Inativo"{% if encaminhamento.situacao == "Inativo" %}selected{% endif %}>Inativo</option>
+                        <option value="Retorno"{% if encaminhamento.situacao == "Retorno" %}selected{% endif %}>Retorno</option>
+                        <option value="Em andamento"{% if encaminhamento.situacao == "Em andamento" %}selected{% endif %}>Em andamento</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
                     <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento">
                         <option value="">Selecione...</option>
-                        <option value="Presencial"{% if encaminhamento.tipo_encaminhamento == "Presencial" %}selected{% endif %}>Presencial</option>
-                        <option value="Online"{% if encaminhamento.tipo_encaminhamento == "Online" %}selected{% endif %}>Online</option>
-                        <option value="Hibrida"{% if encaminhamento.tipo_encaminhamento == "Hibrida" %}selected{% endif %}>Hibrida</option>
+                        <option value="Rodizio"{% if encaminhamento.tipo_encaminhamento == "Rodizio" %}selected{% endif %}>Rodizio</option>
+                        <option value="Indicação"{% if encaminhamento.tipo_encaminhamento == "Indicação" %}selected{% endif %}>Indicação</option>
                     </select>
                 </div>
             </div>

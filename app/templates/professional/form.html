@@ -13,7 +13,7 @@
                     <label for="nome" class="form-label">Nome:</label>
                     <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
                     <input type="date" class="form-control" id=data_nascimento name="data_nascimento" required>
                 </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="rg" class="form-label">RG:</label>
-                    <input type="text" class="form-control" id="rg" name="rg" placeholder="RG" required>
+                    <input type="text" class="form-control" id="rg" name="rg" placeholder="RG">
                 </div>
             </div>
             <h2 class="mb-4 mt-4">Contatos</h2>
@@ -51,7 +51,7 @@
                     <label for="cep" class="form-label">CEP:</label>
                     <div class="input-group">
                         <input type="text" id="cep" name="cep" class="form-control">
-                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" required onclick="buscarCEP()">Buscar</button>
                     </div>
                 </div>
             </div>
@@ -63,6 +63,12 @@
                 <div class="col-md-3">
                     <label for="bairro" class="form-label">Bairro:</label>
                     <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="complemento" class="custom-label">Complemento (QD/LT):</label>
+                    <input type="text" id="complemento" class="form-control" name="complemento" required>
                 </div>
             </div>
             <div class="row mb-3">
@@ -95,29 +101,30 @@
                     <label for="curriculum_lattes" class="form-label">Curriculum Lattes:</label>
                     <input type="text" class="form-control" id="curriculum_lattes" name="curriculum_lattes" placeholder="Curriculum Lattes" >
                 </div>
+                <div class="col-md-3">
+                    <label for="valor_minimo" class="form-label">Valor mínimo:</label>
+                    <input type="text" class="form-control" id="valor_minimo" name="valor_minimo" placeholder="Valor mínimo" required>
+                </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="banco" class="form-label">Banco:</label>
                     <input type="text" class="form-control" id="banco" name="banco" placeholder="Banco" required>
                 </div>
-                <div class="col-md-3">
-                    <label for="valor_minimo" class="form-label">Valor mínimo:</label>
-                    <input type="text" class="form-control" id="valor_minimo" name="valor_minimo" placeholder="Valor mínimo" required>
-                </div>
+                
                 <div class="col-md-6">
                     <label for="pix" class="form-label">PIX:</label>
                     <input type="text" class="form-control" id="pix" name="pix" placeholder="celular/email/cpf/cnpj" required>
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="dias_horas_disponiveis" class="custom-label">Dias/Horas Disponíveis:</label>
-                    <input type="text" class="form-control" id="dias_horas_disponiveis" name="dias_horas_disponiveis" required>
+                    <textarea class="form-control" id="dias_horas_disponiveis" name="dias_horas_disponiveis" style="height: 150px;" required></textarea>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label for="observacoes" class="custom-label">Observações:</label>
-                    <input type="text" class="form-control" id="observacoes" name="observacoes" placeholder="Obs" >
+                    <textarea class="form-control" id="observacoes" name="observacoes" style="height: 150px;"></textarea>
                 </div>
             </div>
             <div class="row mt-4 mb-5">

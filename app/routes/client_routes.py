@@ -32,9 +32,10 @@ def cadastrar_cliente():
             cidade              = request.form.get('cidade'),
             condicao_habitacao  = request.form.get('condicao_habitacao'),
             cpf_responsavel     = request.form.get('cpf_responsavel'),
+            complemento         = request.form.get('complemento'),
             numero_cs           = request.form.get('numero_cs'),
             despesa_mensal      = converter_para_float(request.form.get('despesa_mensal')),
-            escolaridade        = request.form.get('escolariedade'),
+            escolaridade        = request.form.get('escolaridade'),
             estado              = request.form.get('estado'),
             endereco            = request.form.get('endereco'),
             fone_contato        = request.form.get('fone_contato'),
@@ -53,16 +54,14 @@ def cadastrar_cliente():
             saldo               = converter_para_float(request.form.get('saldo')),
             sexo                = request.form.get('sexo'),
             tipo_moradia        = request.form.get('tipo_moradia'),
-            transporte          = request.form.get('transporte')
+            transporte          = request.form.get('transporte'),
+            idade               = request.form.get('idade')
         )
         
         cpf = request.form.get('cpf')
         verifica_cpf = Cliente.query.filter_by(cpf=cpf).first()
-        
-        email = request.form.get('email')
-        verifica_email = Cliente.query.filter_by(email=email).first()
 
-        if verifica_cpf and verifica_email:
+        if verifica_cpf:
             flash('Cliente já cadastrado', 'error')
             return redirect(url_for('client_bp.cliente'))
         
@@ -95,6 +94,7 @@ def editar_cliente(id):
         cliente.cpf = request.form.get('cpf')
         cliente.email = request.form.get('email')
         data_nascimento = request.form.get('dt_nascimento')
+        cliente.idade = request.form.get('idade')
         if data_nascimento:
             cliente.data_nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
         cliente.renda_familiar = converter_para_float(request.form.get('renda_familiar'))
@@ -104,9 +104,10 @@ def editar_cliente(id):
         cliente.cidade = request.form.get('cidade')
         cliente.condicao_habitacao = request.form.get('condicao_habitacao')  
         cliente.cpf_responsavel = request.form.get('cpf_responsavel')
+        cliente.complemento = request.form.get('complemento')
         cliente.numero_cs = request.form.get('numero_cs')
         cliente.despesa_mensal = converter_para_float(request.form.get('despesa_mensal'))
-        cliente.escolariedade = request.form.get('escolariedade')  
+        cliente.escolaridade = request.form.get('escolaridade')  
         cliente.estado = request.form.get('estado')
         cliente.endereco = request.form.get('endereco')
         cliente.fone_contato = request.form.get('fone_contato')

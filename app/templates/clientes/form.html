@@ -15,7 +15,11 @@
                 </div>
                 <div class="col-md-3">
                     <label for="dt_nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento"  onchange="verificarIdade()" required>
+                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" onchange="verificarIdade()" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="idade" class="form-label">Idade:</label>
+                    <input type="text" class="form-control" id="idade" name="idade" disabled>
                 </div>
             </div>
             <div id="campos_adicionais" style="display: none">
@@ -80,7 +84,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="rg" class="form-label">RG</label>
-                    <input type="text" class="form-control" name="rg" id="rg" required>
+                    <input type="text" class="form-control" name="rg" id="rg">
                 </div>
                 <div class="col-md-3">
                     <label for="sexo" class="form-label">Sexo:</label>
@@ -112,7 +116,7 @@
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP:</label>
                     <div class="input-group">
-                        <input type="text" id="cep" name="cep" class="form-control">
+                        <input type="text" id="cep" name="cep" class="form-control" required>
                         <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
                     </div>
                 </div>
@@ -124,7 +128,13 @@
                 </div>
                 <div class="col-md-2">
                     <label for="numero_cs" class="custom-label">Nr Casa:</label>
-                    <input type="text" id="numero_cs" class="form-control" name="numero_cs"  required>
+                    <input type="text" id="numero_cs" class="form-control" name="numero_cs" >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="complemento" class="custom-label">Complemento (QD/LT):</label>
+                    <input type="text" id="complemento" class="form-control" name="complemento" required>
                 </div>
             </div>
             <div class="row mb-3">
@@ -199,8 +209,8 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="escolariedade" class="custom-label">Escolariedade:</label>
-                    <select class="form-select campoObrigatorio" name="escolariedade">
+                    <label for="escolaridade" class="custom-label">escolaridade:</label>
+                    <select class="form-select campoObrigatorio" id="escolaridade" name="escolaridade">
                         <option value="">Selecione...</option>
                         <option vlaue="Não Alfabetizado">Não Alfabetizado</option>
                         <option vlaue="Ensino Fundamental">Ensino Fundamental</option>

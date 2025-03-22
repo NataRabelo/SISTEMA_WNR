@@ -31,6 +31,7 @@ def cadastrar_profissional():
             banco                   = request.form.get('banco'),
             cep                     = request.form.get('cep'),
             cidade                  = request.form.get('cidade'),
+            complemento             = request.form.get('complemento'),
             graduacao               = request.form.get('graduacao'),
             issqn                   = request.form.get('issqn'),
             fone_pessoal            = request.form.get('fone_pessoal'),
@@ -81,7 +82,8 @@ def editar_profissional(id):
         profissional.bairro                 = request.form.get('bairro')               
         profissional.banco                  = request.form.get('banco')                
         profissional.cep                    = request.form.get('cep')                  
-        profissional.cidade                 = request.form.get('cidade')               
+        profissional.cidade                 = request.form.get('cidade')
+        profissional.complemento            = request.form.get('complemento')              
         profissional.graduacao              = request.form.get('graduacao')            
         profissional.issqn                  = request.form.get('issqn')                
         profissional.fone_pessoal           = request.form.get('fone_pessoal')         

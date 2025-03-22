@@ -45,6 +45,7 @@ class Cliente(db.Model):
     cidade                  = Column(String)
     condicao_habitacao      = Column(String)
     cpf_responsavel         = Column(String(11), nullable=True, default="")
+    complemento             = Column(String)
     numero_cs               = Column(String)
     despesa_mensal          = Column(Float)
     escolaridade            = Column(String)
@@ -67,6 +68,7 @@ class Cliente(db.Model):
     sexo                    = Column(String)
     tipo_moradia            = Column(String)
     transporte              = Column(String)
+    idade                   = Column(String)
 
     # Relacionamentos
     encaminhamentos = relationship("Encaminhamento", back_populates="cliente", cascade="all, delete-orphan")
@@ -86,6 +88,7 @@ class Profissional(db.Model):
     banco                   = Column(String)
     cep                     = Column(String(8))
     cidade                  = Column(String)
+    complemento             = Column(String)
     graduacao               = Column(String)
     issqn                   = Column(String)
     fone_pessoal            = Column(String)

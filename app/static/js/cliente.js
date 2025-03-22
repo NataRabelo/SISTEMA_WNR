@@ -176,3 +176,29 @@ function buscarCEP() {
             console.error('Erro:', error);
         });
 }
+
+
+// Função para calcular a idade
+function calcularIdade(dataNascimento) {
+    const nascimento = new Date(dataNascimento);
+    const hoje = new Date();
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mesAtual = hoje.getMonth();
+    const mesNascimento = nascimento.getMonth();
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+    return idade;
+}
+// Função que é chamada quando o valor do campo de data é alterado
+function atualizarIdade() {
+    const dataNascimento = document.getElementById('dt_nascimento').value;
+    if (dataNascimento) {
+        const idade = calcularIdade(dataNascimento);
+        document.getElementById('idade').value = idade;
+    } else {
+        document.getElementById('idade').value = '';
+    }
+}
+// Adiciona um evento para chamar a função quando o valor do campo de data for alterado
+document.getElementById('dt_nascimento').addEventListener('input', atualizarIdade);

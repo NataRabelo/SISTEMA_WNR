@@ -31,7 +31,6 @@ function buscarProfissionais() {
         .then(response => response.json())
         .then(data => {
             let select = document.getElementById("profissional_id");
-            select.innerHTML = '<option value="">Selecione um profissional</option>';
 
             if (!data.profissionais || data.profissionais.length === 0) {
                 select.innerHTML = '<option value="">Nenhum profissional encontrado</option>';
@@ -87,19 +86,28 @@ function buscarValor() {
 }
 
 function calcularTotal() {
-    const quantidade = document.getElementById('quantidade_emissoes').value.trim();
+    const quantidadeElement = document.getElementById('quantidade_emissoes');
+    let quantidade = quantidadeElement.value.trim();
     let valorUnitario = document.getElementById('valor_unitario').value.trim();
     const valorTotal = document.getElementById('valor_total');
 
     // Verifica se os campos estão preenchidos
-    if (!quantidade || !valorUnitario) {
-        valorTotal.value = "Valor inválido";
+    if ( !valorUnitario) {
+        valorUnitario.value = "R$ 0,00";
+        return;
+    }else if (!quantidade) {
+        // Se algum campo estiver vazio, assume 1 para quantidade
+        quantidade = "1"; // Definindo "1" como valor padrão
+        valorUnitario = valorUnitario.replace(/[R$\s]/g, "").replace(",", ".");
+        const total = parseFloat(quantidade) * parseFloat(valorUnitario);
+        valorTotal.value = `R$ ${total.toFixed(2).replace(".", ",")}`;
+        quantidadeElement.value = "1"; // Definindo "1" no campo quantidade no HTML
         return;
     }
 
     // Converte o valor unitário para número, removendo "R$" e formatando corretamente
     valorUnitario = valorUnitario.replace(/[R$\s]/g, "").replace(",", ".");
-    
+
     if (isNaN(quantidade) || isNaN(valorUnitario)) {
         valorTotal.value = "Valor inválido";
         return;
@@ -111,3 +119,4 @@ function calcularTotal() {
     // Exibe o resultado formatado
     valorTotal.value = `R$ ${total.toFixed(2).replace(".", ",")}`;
 }
+
