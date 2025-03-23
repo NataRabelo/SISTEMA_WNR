@@ -190,15 +190,19 @@ function calcularIdade(dataNascimento) {
     }
     return idade;
 }
+
 // Função que é chamada quando o valor do campo de data é alterado
 function atualizarIdade() {
     const dataNascimento = document.getElementById('dt_nascimento').value;
     if (dataNascimento) {
         const idade = calcularIdade(dataNascimento);
-        document.getElementById('idade').value = idade;
+        document.getElementById('idade').value = idade; // Exibe a idade no campo visual
+        document.getElementById('idade_hidden').value = idade; // Preenche o campo oculto com a idade
     } else {
         document.getElementById('idade').value = '';
+        document.getElementById('idade_hidden').value = '';
     }
 }
+
 // Adiciona um evento para chamar a função quando o valor do campo de data for alterado
 document.getElementById('dt_nascimento').addEventListener('input', atualizarIdade);
