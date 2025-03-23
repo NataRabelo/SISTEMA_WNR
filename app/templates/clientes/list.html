@@ -3,6 +3,7 @@
 {% block title %}Listar Cliente{% endblock %}
 
 {% block content %}
+
 <div class="container mt-5">
     <h2 class="text-center mb-4 mt-5">Clientes Cadastrados</h2>
     <div class="row mt-4 mb-5">
@@ -10,24 +11,31 @@
             <a href="{{ url_for('report_bp.report_cliente') }}" class="btn btn-md btn-warning">Relatório</a>
         </div>
     </div>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <ul class="list-group">
+    <div class="card-body">
+        <table id="table" class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Cód</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
                 {% for cliente in clientes %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>CÓD: </strong>{{cliente.id}}
-                            <strong> - CPF: </strong>{{cliente.cpf}}
-                            <strong> - NOME: </strong>{{cliente.nome}}
-                        </div>
-                        <div>
-                            <a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="{{ url_for('client_bp.deletar_cliente', id=cliente.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ cliente.id }}">Deletar</a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+                    <tr>
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.telefone_contato }}</td>
+                        <td><a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
+                        <td><a href="{{ url_for('client_bp.deletar_cliente', id=cliente.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ cliente.id }}">Deletar</a></td>
+                    </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 <!-- Modal de Confirmação -->
@@ -48,17 +56,36 @@
       </div>
     </div>
 </div>
-  <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
-      var modal = document.getElementById("confirmarExclusao");
-      var confirmBtn = document.getElementById("confirmarExclusaoBtn");
-  
-      modal.addEventListener("show.bs.modal", function (event) {
-        var button = event.relatedTarget;
-        var clientId = button.getAttribute("data-id");
-        confirmBtn.href = "/deletar_cliente/" + clientId;
-      });
+        var modal = document.getElementById("confirmarExclusao");
+        var confirmBtn = document.getElementById("confirmarExclusaoBtn");
+
+        modal.addEventListener("show.bs.modal", function (event) {
+            var button = event.relatedTarget;
+            if (button) {
+                var clientId = button.getAttribute("data-id");
+                confirmBtn.href = "/deletar_cliente/" + clientId;
+            }
+        });
+
+        // Corrigindo o ID da tabela para DataTables
+        $('#table').DataTable({
+            "pageLength": 5,  // Número de linhas por página
+            "lengthChange": false, // Oculta a opção de alterar o número de itens por página
+            "language": {
+                "paginate": {
+                    "first": "Primeiro",
+                    "last": "Último",
+                    "next": "Próximo",
+                    "previous": "Anterior"
+                },
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                "search": "Buscar:"
+            }
+        });
     });
-  </script>
-  
+</script>
+
+
 {% endblock %}

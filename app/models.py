@@ -36,7 +36,7 @@ class Cliente(db.Model):
     id                      = Column(Integer, primary_key=True, index=True)
     nome                    = Column(String, index=True)
     cpf                     = Column(String(11), unique=True, index=True)
-    email                   = Column(String, unique=True, index=True)
+    email                   = Column(String, index=True)
     data_nascimento         = Column(Date)
     renda_familiar          = Column(Float)
     bairro                  = Column(String)
