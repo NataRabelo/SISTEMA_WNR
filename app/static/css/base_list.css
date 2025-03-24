@@ -24,6 +24,7 @@ body {
     left: 0;
     top: 85px; /* Ajuste para a navbar */
     overflow: hidden;
+    z-index: 1000
 }
 
 .sidebar:hover {
