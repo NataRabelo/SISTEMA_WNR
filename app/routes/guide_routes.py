@@ -90,7 +90,6 @@ def deletar_guia(id):
     flash('Guia deletada com sucesso', 'success')
     return redirect(url_for('guide_bp.listar_guia'))
 
-
 @guide_bp.route("/filtrar_guia", methods=["GET", "POST"])
 def filtrar_guia():
     query = request.args.get("q", "").strip()

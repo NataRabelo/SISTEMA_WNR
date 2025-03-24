@@ -1,38 +1,41 @@
-{% extends 'base.html' %}
+{% extends 'base_list.html' %}
 
-{% block title %}Guias{% endblock %}
+{% block title %}Guias Emitidas{% endblock %}
 
 {% block content %}
+
 <div class="container mt-5">
     <h2 class="text-center mb-4 mt-5">Guias Emitidas</h2>
-    <div class="row mt-4 mb-5">
-        <div class="col-md-12 text-end">
-            <a href="{{ url_for('report_bp.report_encaminhamento') }}" class="btn btn-md btn-warning">Relatório</a>
-        </div>
-    </div>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <ul class="list-group">
+    <div class="card-body">
+        <table id="table" class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Cód</th>
+                    <th>Cliente</th>
+                    <th>Profissional</th>
+                    <th>Especialidade</th>
+                    <th>Valor</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
                 {% for guia in guias %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>CLIENTE: </strong>
-                            {{ guia.cliente.nome }}
-                            <br>
-                            <strong>PROFISSIONAL: </strong>
-                            {{ guia.profissional.nome }}
-                            <br>
-                        </div>
-                        <div>
-                            <a href="{{ url_for('guide_bp.editar_guia', id=guia.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="{{ url_for('guide_bp.deletar_guia', id=guia.id) }}" class="btn btn-sm btn-danger"data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ guia.id }}">Deletar</a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+                    <tr>
+                        <td>{{ guia.id }}</td>
+                        <td>{{ guia.cliente.nome }}</td>
+                        <td>{{ guia.profissional.nome }}</td>
+                        <td>{{ guia.profissional.graduacao }}</td>
+                        <td>R$ {{ "%0.2f"|format(guia.valor_total) }}</td>
+                        <td><a href="{{ url_for('guide_bp.editar_guia', id=guia.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
+                        <td><a href="{{ url_for('guide_bp.deletar_guia', id=guia.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ guia.id }}">Deletar</a></td>
+                    </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
+<!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmarExclusao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -41,7 +44,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Tem certeza que deseja excluir esta Guia?
+          Tem certeza que deseja excluir esta guia
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -50,16 +53,50 @@
       </div>
     </div>
 </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var modal = document.getElementById("confirmarExclusao");
-      var confirmBtn = document.getElementById("confirmarExclusaoBtn");
-  
-      modal.addEventListener("show.bs.modal", function (event) {
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.getElementById("confirmarExclusao");
+    var confirmBtn = document.getElementById("confirmarExclusaoBtn");
+
+    modal.addEventListener("show.bs.modal", function (event) {
         var button = event.relatedTarget;
-        var clientId = button.getAttribute("data-id");
-        confirmBtn.href = "/deletar_guia/" + clientId;
-      });
+        if (button) {
+            var guiaID = button.getAttribute("data-id");
+            confirmBtn.href = "/deletar_guia/" + guiaID;
+        }
     });
-  </script>
+
+    // Inicializando DataTables com botões
+    $('#table').DataTable({
+        "pageLength": 10,
+        "lengthChange": false,
+        "language": {
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Próximo",
+                "previous": "Anterior"
+            },
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "search": "Buscar:",
+            "zeroRecords": "Nenhum registro encontrado",
+            "infoEmpty": "Nenhum registro disponível"
+        },
+        "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6 d-flex justify-content-end'<'me-2'f><'ms-2'B>>>" +
+               "<'row'<'col-sm-12'tr>>" +
+               "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        "buttons": [
+            {
+                text: "Relatório",
+                className: "btn btn-warning",
+                action: function () {
+                    window.location.href = "{{ url_for('report_bp.report_cliente') }}";
+                }
+            }
+        ]
+    });
+});
+
+</script>
+
 {% endblock %}

@@ -1,38 +1,41 @@
-{% extends 'base.html' %}
+{% extends 'base_list.html' %}
 
 {% block title %}Encaminhamentos{% endblock %}
 
 {% block content %}
+
 <div class="container mt-5">
     <h2 class="text-center mb-4 mt-5">Encaminhamentos Realizados</h2>
-    <div class="row mt-4 mb-5">
-        <div class="col-md-12 text-end">
-            <a href="{{ url_for('report_bp.report_encaminhamento') }}" class="btn btn-md btn-warning">Relatório</a>
-        </div>
-    </div>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <ul class="list-group">
+    <div class="card-body">
+        <table id="table" class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Cód</th>
+                    <th>Cliente</th>
+                    <th>Profissional</th>
+                    <th>Especialidade</th>
+                    <th>Dt/Hr</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
                 {% for encaminhamento in encaminhamentos %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>CLIENTE: </strong>
-                            {{ encaminhamento.cliente.nome }}
-                            <br>
-                            <strong>PROFISSIONAL: </strong>
-                            {{ encaminhamento.profissional.nome }}
-                            <br>
-                        </div>
-                        <div>
-                            <a href="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="{{ url_for('encaminhamento_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger"data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ encaminhamento.id }}">Deletar</a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+                    <tr>
+                        <td>{{ encaminhamento.id }}</td>
+                        <td>{{ encaminhamento.cliente.nome }}</td>
+                        <td>{{ encaminhamento.profissional.nome }}</td>
+                        <td>{{ encaminhamento.profissional.graduacao }}</td>
+                        <td>{{ encaminhamento.dias_horas_atendimento }}</td>
+                        <td><a href="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
+                        <td><a href="{{ url_for('encaminhamento_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ encaminhamento.id }}">Deletar</a></td>
+                    </tr>
+                  {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
+<!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmarExclusao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -50,16 +53,50 @@
       </div>
     </div>
 </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var modal = document.getElementById("confirmarExclusao");
-      var confirmBtn = document.getElementById("confirmarExclusaoBtn");
-  
-      modal.addEventListener("show.bs.modal", function (event) {
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.getElementById("confirmarExclusao");
+    var confirmBtn = document.getElementById("confirmarExclusaoBtn");
+
+    modal.addEventListener("show.bs.modal", function (event) {
         var button = event.relatedTarget;
-        var clientId = button.getAttribute("data-id");
-        confirmBtn.href = "/deletar_encaminhamento/" + clientId;
-      });
+        if (button) {
+            var encaminhamentoID = button.getAttribute("data-id");
+            confirmBtn.href = "/deletar_encaminhamento/" + encaminhamentoID;
+        }
     });
-  </script>
+
+    // Inicializando DataTables com botões
+    $('#table').DataTable({
+        "pageLength": 10,
+        "lengthChange": false,
+        "language": {
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Próximo",
+                "previous": "Anterior"
+            },
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "search": "Buscar:",
+            "zeroRecords": "Nenhum registro encontrado",
+            "infoEmpty": "Nenhum registro disponível"
+        },
+        "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6 d-flex justify-content-end'<'me-2'f><'ms-2'B>>>" +
+               "<'row'<'col-sm-12'tr>>" +
+               "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        "buttons": [
+            {
+                text: "Relatório",
+                className: "btn btn-warning",
+                action: function () {
+                    window.location.href = "{{ url_for('report_bp.report_encaminhamento') }}";
+                }
+            }
+        ]
+    });
+});
+
+</script>
+
 {% endblock %}
