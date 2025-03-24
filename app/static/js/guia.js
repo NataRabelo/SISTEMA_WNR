@@ -40,7 +40,7 @@ function buscarProfissionais() {
             data.profissionais.forEach(profissional => {
                 let option = document.createElement("option");
                 option.value = profissional.id;
-                option.textContent = profissional.nome;
+                option.textContent = profissional.nome + ' - ' + profissional.graduacao;
                 select.appendChild(option);
             });
 

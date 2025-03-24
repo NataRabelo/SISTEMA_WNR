@@ -35,7 +35,7 @@ def buscar_profissionais(cliente_id):
     profissionais = [profissional for enc in encaminhamentos for profissional in Profissional.query.filter_by(id=enc.profissional_id).all()]
 
     return jsonify({
-        "profissionais": [{"id": p.id, "nome": p.nome} for p in profissionais]
+        "profissionais": [{"id": p.id, "nome": p.nome, "graduacao": p.graduacao} for p in profissionais]
     })
 
 
