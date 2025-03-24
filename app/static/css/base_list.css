@@ -1,0 +1,76 @@
+body {
+    display: flex;
+    margin: 0;
+    padding-top: 56px;
+    font-family: Arial, sans-serif;
+    background-color: #f1f3f5;
+}
+
+/* Navbar */
+.navbar .logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 100px;
+    height: 100vh;
+    background-color: #343a40;
+    color: white;
+    transition: width 0.3s ease-in-out;
+    position: fixed;
+    left: 0;
+    top: 85px; /* Ajuste para a navbar */
+    overflow: hidden;
+}
+
+.sidebar:hover {
+    width: 200px;
+}
+
+/* Links da sidebar */
+.sidebar .nav-link {
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.sidebar .nav-link i {
+    font-size: 26px;
+    margin-right: 10px;
+}
+
+.sidebar .text {
+    display: none;
+}
+
+.sidebar:hover .text {
+    display: inline;
+}
+
+/* Melhorando o campo de busca */
+.dataTables_filter input {
+    width: 300px !important;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+}
+/* Espaçamento entre busca e tabela */
+.dataTables_filter {
+    margin-bottom: 15px;
+}
+/* Fixando o footer da tabela */
+.dataTables_wrapper .dataTables_paginate {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 10px;
+    z-index: 10;
+}
+
+        

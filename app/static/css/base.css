@@ -1,27 +1,70 @@
-
 body {
-    background-color: #f4f4f4;
-    font-family: 'Arial', sans-serif;
+    display: flex;
     margin: 0;
-    padding: 0;
+    padding-top: 56px;
+    font-family: Arial, sans-serif;
+    background-color: #f1f3f5;
 }
 
+/* Navbar */
+.navbar .logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
 
-.navbar {
-    background-color: #1d3557;
+/* Sidebar */
+.sidebar {
+    width: 100px;
+    height: 100vh;
+    background-color: #343a40;
+    color: white;
+    transition: width 0.3s ease-in-out;
+    position: fixed;
+    left: 0;
+    top: 85px; /* Ajuste para a navbar */
+    overflow: hidden;
 }
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
+
+.sidebar:hover {
+    width: 200px;
 }
-.navbar .btn {
-    font-size: 1rem;
+
+/* Links da sidebar */
+.sidebar .nav-link {
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
     transition: 0.3s;
 }
-.navbar .btn:hover {
-    opacity: 0.8;
+
+.sidebar .nav-link i {
+    font-size: 26px;
+    margin-right: 10px;
 }
 
+.sidebar .text {
+    display: none;
+}
+
+.sidebar:hover .text {
+    display: inline;
+}
+
+/* Conteúdo principal ajustado */
+.content {
+    margin-left: 60px;
+    padding: 20px;
+    width: calc(100% - 60px);
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.sidebar:hover ~ .content {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+}
 
 .dashboard-container {
     min-height: calc(100vh - 100px);
@@ -55,7 +98,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Cores dos botões */
+/* Cores dos botões 
 .btn-cliente { background-color: #457b9d; color: white; }
 .btn-profissional { background-color: #e63946; color: white; }
 .btn-encaminhamento { background-color: #2a9d8f; color: white; }
@@ -65,7 +108,18 @@ body {
 .btn-profissional:hover { background-color: #c62839; }
 .btn-encaminhamento:hover { background-color: #21867a; }
 .btn-guia:hover { background-color: #d48b50; }
+*/
 
+/* Cores dos botões 457b9d  396a8f*/
+.btn-cliente { background-color: rgb(33, 37, 41); color: white; }
+.btn-profissional { background-color: rgb(33, 37, 41); color: white; }
+.btn-encaminhamento { background-color: rgb(33, 37, 41); color: white; }
+.btn-guia { background-color: rgb(33, 37, 41); color: white; }
+
+.btn-cliente:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
+.btn-profissional:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
+.btn-encaminhamento:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
+.btn-guia:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
 
 #flash-container {
     position: fixed;

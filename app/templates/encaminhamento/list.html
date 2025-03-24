@@ -13,6 +13,7 @@
                     <th>Cód</th>
                     <th>Cliente</th>
                     <th>Profissional</th>
+                    <th>Valor</th>
                     <th>Especialidade</th>
                     <th>Dt/Hr</th>
                     <th>Editar</th>
@@ -25,6 +26,7 @@
                         <td>{{ encaminhamento.id }}</td>
                         <td>{{ encaminhamento.cliente.nome }}</td>
                         <td>{{ encaminhamento.profissional.nome }}</td>
+                        <td>R$ {{ "%0.2f"|format(encaminhamento.valor) }}</td>
                         <td>{{ encaminhamento.profissional.graduacao }}</td>
                         <td>{{ encaminhamento.dias_horas_atendimento }}</td>
                         <td><a href="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
