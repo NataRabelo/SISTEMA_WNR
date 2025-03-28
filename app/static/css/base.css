@@ -7,6 +7,14 @@ body {
     background-color: #f1f3f5;
 }
 
+/* Conteúdo principal ajustado */
+.content {
+    margin-left: 60px;
+    padding: 20px;
+    width: calc(100% - 60px);
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
 
 .dashboard-container {
     min-height: calc(100vh - 100px);
