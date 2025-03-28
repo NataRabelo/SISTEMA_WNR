@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-center">Cliente</h2>
+    <h2 class="text-center">Editar Cliente</h2>
     <form id="meuFormulario" action="{{ url_for('client_bp.editar_cliente', id=cliente.id)}}" method="POST">
         <div class="container">
             <h2 class="mb-4"> Dados Pessoais </h2>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-2">
                     <label for="idade" class="form-label">Idade:</label>
-                    <input type="text" class="form-control" id="idade" name="idade" value="{{ cliente.idade }}" disabled>
+                    <input type="text" class="form-control" id="idade" name="idade" value="{{ cliente.idade }}">
                 </div>
             </div>
             <div id="campos_adicionais" style="display: none">
@@ -36,43 +36,26 @@
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
                         <select class="form-select" name="grau_parentesco" id="grau_parentesco">
                             <option value="">Selecione...</option>
-                            <option value="pai">Pai</option>
-                            <option value="mae">Mãe</option>
-                            <option value="avo">Avô</option>
-                            <option value="avo_f">Avó</option>
-                            <option value="bisavo">Bisavô</option>
-                            <option value="bisavo_f">Bisavó</option>
-                            <option value="trisavo">Trisavô</option>
-                            <option value="trisavo_f">Trisavó</option>
-                            <option value="filho">Filho</option>
-                            <option value="filha">Filha</option>
-                            <option value="neto">Neto</option>
-                            <option value="neta">Neta</option>
-                            <option value="bisneto">Bisneto</option>
-                            <option value="bisneta">Bisneta</option>
-                            <option value="trisneto">Trisneto</option>
-                            <option value="trisneta">Trisneta</option>
-                            <option value="irmao">Irmão</option>
-                            <option value="irma">Irmã</option>
-                            <option value="tio">Tio</option>
-                            <option value="tia">Tia</option>
-                            <option value="sobrinho">Sobrinho</option>
-                            <option value="sobrinha">Sobrinha</option>
-                            <option value="primo">Primo</option>
-                            <option value="prima">Prima</option>
-                            <option value="sogro">Sogro</option>
-                            <option value="sogra">Sogra</option>
-                            <option value="genro">Genro</option>
-                            <option value="nora">Nora</option>
-                            <option value="cunhado">Cunhado</option>
-                            <option value="cunhada">Cunhada</option>
-                            <option value="padrasto">Padrasto</option>
-                            <option value="madrasta">Madrasta</option>
-                            <option value="enteado">Enteado</option>
-                            <option value="enteada">Enteada</option>
-                            <option value="pais_adotivos">Pais adotivos</option>
-                            <option value="filhos_adotivos">Filhos adotivos</option>
-                            <option value="irmaos_criacao">Irmãos de criação</option>
+                            <option value="Pai/Mãe"{% if cliente.grau_parentesco == "Pai/Mãe" %}selected{% endif %}>Pai/Mãe</option>
+                            <option value="Avô/Avó"{% if cliente.grau_parentesco == "Avô/Avó" %}selected{% endif %}>Avô/Avó</option>
+                            <option value="Bisavô/Bisavó"{% if cliente.grau_parentesco == "Bisavô/Bisavó" %}selected{% endif %}>Bisavô/Bisavó</option>
+                            <option value="Trisavô/Trisavó"{% if cliente.grau_parentesco == "Trisavô/Trisavó" %}selected{% endif %}>Trisavô/Trisavó</option>
+                            <option value="Filho/Filha"{% if cliente.grau_parentesco == "Filho/Filha" %}selected{% endif %}>Filho/Filha</option>
+                            <option value="Neto/Neta"{% if cliente.grau_parentesco == "Neto/Neta" %}selected{% endif %}>Neto/Neta</option>
+                            <option value="Bisneto/Bisneta"{% if cliente.grau_parentesco == "Bisneto/Bisneta" %}selected{% endif %}>Bisneto/Bisneta</option>
+                            <option value="Trisneto/Trisneta"{% if cliente.grau_parentesco == "Trisneto/Trisneta" %}selected{% endif %}>Trisneto/Trisneta</option>
+                            <option value="Irmão/Irmã"{% if cliente.grau_parentesco == "Irmão/Irmã" %}selected{% endif %}>Irmão/Irmã</option>
+                            <option value="Tio/Tia"{% if cliente.grau_parentesco == "Tio/Tia" %}selected{% endif %}>Tio/Tia</option>
+                            <option value="Sobrinho/Sobrinha"{% if cliente.grau_parentesco == "Sobrinho/Sobrinha" %}selected{% endif %}>Sobrinho/Sobrinha</option>
+                            <option value="Primo/Prima"{% if cliente.grau_parentesco == "Primo/Prima" %}selected{% endif %}>Primo/Prima</option>
+                            <option value="Sogro/Sogra"{% if cliente.grau_parentesco == "Sogro/Sogra" %}selected{% endif %}>Sogro/Sogra</option>
+                            <option value="Genro/Nora"{% if cliente.grau_parentesco == "Genro/Nora" %}selected{% endif %}>Genro/Nora</option>
+                            <option value="Cunhado/Cunhada"{% if cliente.grau_parentesco == "Cunhado/Cunhada" %}selected{% endif %}>Cunhado/Cunhada</option>
+                            <option value="Padrasto/Madrasta"{% if cliente.grau_parentesco == "Padrasto/Madrasta" %}selected{% endif %}>Padrasto/Madrasta</option>
+                            <option value="Enteado/Enteada"{% if cliente.grau_parentesco == "Enteado/Enteada" %}selected{% endif %}>Enteado/Enteada</option>
+                            <option value="pais_adotivos"{% if cliente.grau_parentesco == "pais_adotivos" %}selected{% endif %}>Pais adotivos</option>
+                            <option value="filhos_adotivos"{% if cliente.grau_parentesco == "filhos_adotivos" %}selected{% endif %}>Filhos adotivos</option>
+                            <option value="irmaos_criacao"{% if cliente.grau_parentesco == "irmaos_criacao" %}selected{% endif %}>Irmãos de criação</option>
                           </select>                          
                     </div>
                 </div>

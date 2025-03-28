@@ -20,6 +20,8 @@ def cliente():
 @role_required('atendimento', 'financeiro', 'admin')
 def cadastrar_cliente():
     if request.method == 'POST':
+        idade = request.form.get('idade')
+        print(idade)
         cliente = Cliente(
             nome                = request.form.get('nome'),
             cpf                 = request.form.get('cpf'),
@@ -87,8 +89,10 @@ def editar_cliente(id):
     remuneracao_formatada = formatar_para_moeda(cliente.remuneracao)
     renda_familiar_formatada = formatar_para_moeda(cliente.renda_familiar)
     despesa_mensal_formatada = formatar_para_moeda(cliente.despesa_mensal)
-
     if request.method == 'POST':
+
+        idade = request.form.get('idade')
+        print(idade)
 
         cliente.nome = request.form.get('nome')
         cliente.cpf = request.form.get('cpf')
