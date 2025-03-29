@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 from app.models import Cliente, Encaminhamento, Guia, Profissional
 from app import db
 from app.utils.decorators import role_required
@@ -14,6 +14,7 @@ guide_bp = Blueprint('guide_bp', __name__)
 def guia():
     return render_template('guides/guide.html')
 
+# Essa rota é utilizada somente pelo fluxo interno
 @guide_bp.route('/emitir_guia', methods=['GET', 'POST'])
 def emitir_guia():
     if request.method == 'POST':
@@ -37,7 +38,8 @@ def emitir_guia():
             quantidade_emissoes=request.form.get('quantidade_emissoes'),
             tipo_pagamento=request.form.get('tipo_pagamento'),
             valor_unitario=valor_unitario,
-            valor_total = valor_total
+            valor_total = valor_total,
+            pago = "Aprovado"
         )
 
         db.session.add(guia)
@@ -54,7 +56,8 @@ def emitir_guia():
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_guia():
     guias = Guia.query.all()
-    return render_template('guides/list.html', guias = guias)
+    usuario = current_user
+    return render_template('guides/list.html', guias = guias, usuario=usuario)
 
 @guide_bp.route('/editar_guia/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -100,3 +103,11 @@ def filtrar_guia():
             for c in guias
         ])
     return jsonify([])
+
+@guide_bp.route('/aprovar_guia/<int:id>', methods=["GET", "POST"])
+def aprovar_guia(id):
+    guia = Guia.query.get_or_404(id)
+    guia.pago = "Aprovado"
+    db.session.commit()
+    flash('Guia aprovada com sucesso')
+    return redirect(url_for('guide_bp.listar_guia'))

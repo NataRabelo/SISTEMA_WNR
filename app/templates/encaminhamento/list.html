@@ -1,4 +1,4 @@
-{% extends 'base_list.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Encaminhamentos{% endblock %}
 
@@ -17,7 +17,9 @@
                     <th>Especialidade</th>
                     <th>Dt/Hr</th>
                     <th>Editar</th>
+                    {% if usuario.role == "admin" %}
                     <th>Excluir</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +32,9 @@
                         <td>{{ encaminhamento.profissional.graduacao }}</td>
                         <td>{{ encaminhamento.dias_horas_atendimento }}</td>
                         <td><a href="{{ url_for('encaminhamento_bp.editar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
+                        {% if usuario.role == "admin" %}
                         <td><a href="{{ url_for('encaminhamento_bp.deletar_encaminhamento', id=encaminhamento.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ encaminhamento.id }}">Deletar</a></td>
+                        {% endif %}
                     </tr>
                   {% endfor %}
             </tbody>

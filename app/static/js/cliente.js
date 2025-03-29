@@ -177,7 +177,6 @@ function buscarCEP() {
         });
 }
 
-
 // Função para calcular a idade
 function calcularIdade(dataNascimento) {
     const nascimento = new Date(dataNascimento);

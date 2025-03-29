@@ -42,22 +42,22 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Cliente</a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('client_bp.cadastrar_cliente')}}">Cadastrar Cliente</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('client_bp.cliente')}}">Central de Clientes</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('client_bp.cadastrar_cliente')}}">Cadastrar Novo Cliente</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Profissional</a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('professional_bp.cadastrar_profissional')}}">Cadastrar Profissional</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('professional_bp.profissional')}}">Central de Profissional</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('professional_bp.cadastrar_profissional')}}">Cadastrar Novo Profissional</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Encaminhamento</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url_for('encaminhamento_bp.encaminhamento')}}">Central de Encaminhamento</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('encaminhamento_bp.criar_encaminhamento')}}">Realizar Encaminhamento</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('encaminhamento_bp.encaminhamento')}}">Central de Encaminhamento</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -68,7 +68,7 @@
                     </ul>
                 </li>
             </ul>
-            <a href="{{ url_for('auth_bp.logout')}}" class="btn btn-danger">Sair</a>
+            <a href="{{ url_for('auth_bp.logout')}}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ConfirmarSair">Sair</a>
         </div>
     </nav>
 
@@ -90,6 +90,25 @@
         {% block content %}{% endblock %}
     </div>
 
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="ConfirmarSair" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Já vai embora?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Tem certeza que deseja sair?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <a id="confirmarSairBtn" href="#" class="btn btn-danger">Sair</a>
+            </div>
+        </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -99,6 +118,18 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function (){
+            var modal = document.getElementById("ConfirmarSair");
+            var confirmBtn = document.getElementById("confirmarSairBtn");
+
+            modal.addEventListener("show.bs.modal", function (event) {
+                var button = event.relatedTarget;
+                if (button) {
+                    confirmBtn.href = "/logout";
+                }
+            });
+        
+
         document.addEventListener('DOMContentLoaded', function(){
             let flashMessages = document.querySelectorAll('.flash-message');
     
@@ -111,6 +142,7 @@
                     });
                 }, 1500);
             }
+        });
         });
     </script>
     

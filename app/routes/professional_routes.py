@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.utils.edit_values import converter_para_float
 from app.utils.decorators import role_required
-from flask_login import login_required
+from flask_login import current_user, login_required
 from app.models import Profissional
 from datetime import datetime
 from app import db
@@ -64,7 +64,8 @@ def cadastrar_profissional():
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_profissional():
     profissionais = Profissional.query.all()
-    return render_template('professional/list.html', profissionais=profissionais)
+    usuario = current_user
+    return render_template('professional/list.html', profissionais=profissionais, usuario=usuario)
 
 @professional_bp.route('/editar_profissional/<int:id>', methods=['GET', 'POST'])
 @login_required

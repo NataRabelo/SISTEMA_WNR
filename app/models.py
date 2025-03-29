@@ -144,7 +144,7 @@ class Guia(db.Model):
     tipo_pagamento          = Column(String)
     valor_unitario          = Column(Float)
     valor_total             = Column(Float)
-    pago                    = Column(Boolean, default=False)
+    pago                    = Column(String)
 
     # Relacionamentos
     cliente = relationship("Cliente", back_populates="guias")

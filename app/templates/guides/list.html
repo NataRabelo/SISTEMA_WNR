@@ -15,8 +15,13 @@
                     <th>Profissional</th>
                     <th>Especialidade</th>
                     <th>Valor</th>
+                    <th>Status</th>
+                    {% if usuario.role == "admin" or usuario.role == "financeiro"%}
                     <th>Editar</th>
+                    {% endif %}
+                    {% if usuario.role == "admin" %}
                     <th>Excluir</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -27,8 +32,13 @@
                         <td>{{ guia.profissional.nome }}</td>
                         <td>{{ guia.profissional.graduacao }}</td>
                         <td>R$ {{ "%0.2f"|format(guia.valor_total) }}</td>
+                        <td>{{ guia.pago }}</td>
+                        {% if usuario.role == "admin" or usuario.role == "financeiro"%}
                         <td><a href="{{ url_for('guide_bp.editar_guia', id=guia.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
+                        {% endif %}
+                        {% if usuario.role == "admin" %}
                         <td><a href="{{ url_for('guide_bp.deletar_guia', id=guia.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ guia.id }}">Deletar</a></td>
+                        {% endif %}
                     </tr>
                   {% endfor %}
             </tbody>

@@ -32,10 +32,16 @@ function buscarProfissionais() {
         .then(data => {
             let select = document.getElementById("profissional_id");
 
+            // Limpa todas as opções antes de adicionar as novas
+            select.innerHTML = '';
+
             if (!data.profissionais || data.profissionais.length === 0) {
                 select.innerHTML = '<option value="">Nenhum profissional encontrado</option>';
                 return;
             }
+
+            // Adiciona uma opção padrão vazia
+            select.innerHTML = '<option value="">Selecione um profissional</option>';
 
             data.profissionais.forEach(profissional => {
                 let option = document.createElement("option");
@@ -55,6 +61,7 @@ function buscarProfissionais() {
             document.getElementById("profissional_id").innerHTML = '<option value="">Erro ao carregar profissionais</option>';
         });
 }
+
 
 
 document.getElementById('tipo_pagamento').addEventListener('change', buscarValor);

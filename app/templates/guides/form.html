@@ -39,16 +39,16 @@
                 </div>
                 <div class="col-md-2">
                     <label for="quantidade_emissoes" class="form-label">Quantidade:</label>
-                    <input type="text" id="quantidade_emissoes" name="quantidade_emissoes" class="form-control">
+                    <input type="text" id="quantidade_emissoes" name="quantidade_emissoes" class="form-control" required>
                 </div>
                 <div class="col-md-2">
                     <label for="valor_unitario" class="form-label">Valor Unitário:</label>
-                    <input type="text" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$ 0,00" >
+                    <input type="text" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$ 0,00" required>
                 </div>
                 <div class="col-md-2">
                     <label for="valor_total" class="form-label">Valor Total:</label>
                     <div class="input-group">
-                        <input type="text" id="valor_total" name="valor_total" class="form-control" placeholder="R$ 0,00" >
+                        <input type="text" id="valor_total" name="valor_total" class="form-control" placeholder="R$ 0,00" required>
                         <button type="button" name="valor_total_btn" id="valor_total_btn" class="btn btn-primary" onclick="calcularTotal()">Calcular</button>
                     </div>
                 </div>

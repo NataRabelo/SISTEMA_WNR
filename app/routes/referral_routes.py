@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.models import Encaminhamento, Cliente, Profissional
 from app.utils.decorators import role_required 
-from flask_login import login_required
+from flask_login import current_user, login_required
 from datetime import datetime
 from app import db
 from app.utils.edit_values import converter_para_float, formatar_para_moeda
@@ -60,7 +60,8 @@ def criar_encaminhamento():
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_encaminhamento():
     encaminhamentos = Encaminhamento.query.all()
-    return render_template('encaminhamento/list.html', encaminhamentos=encaminhamentos)
+    usuario = current_user
+    return render_template('encaminhamento/list.html', encaminhamentos=encaminhamentos, usuario=usuario)
 
 @encaminhamento_bp.route('/editar_encaminhamento/<int:id>', methods=['GET', 'POST'])
 @login_required

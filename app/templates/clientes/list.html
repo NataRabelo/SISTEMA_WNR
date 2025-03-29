@@ -15,7 +15,9 @@
                     <th>Email</th>
                     <th>Telefone</th>
                     <th>Editar</th>
+                    {% if usuario.role == "admin" %}
                     <th>Excluir</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +28,9 @@
                         <td>{{ cliente.email }}</td>
                         <td>{{ cliente.fone_contato }}</td>
                         <td><a href="{{ url_for('client_bp.editar_cliente', id=cliente.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
+                        {% if usuario.role == "admin" %}
                         <td><a href="{{ url_for('client_bp.deletar_cliente', id=cliente.id) }}" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-id="{{ cliente.id }}">Deletar</a></td>
+                        {% endif %}
                     </tr>
                   {% endfor %}
             </tbody>
