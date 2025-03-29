@@ -203,5 +203,14 @@ function atualizarIdade() {
     }
 }
 
+function toggleCampos() {
+    var campos = document.getElementById("campos_adicionais");
+    if (campos.style.display === "none" || campos.style.display === "") {
+        campos.style.display = "block";
+    } else {
+        campos.style.display = "none";
+    }
+}
+
 // Adiciona um evento para chamar a função quando o valor do campo de data for alterado
 document.getElementById('dt_nascimento').addEventListener('input', atualizarIdade);
