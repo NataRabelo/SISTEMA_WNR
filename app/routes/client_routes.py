@@ -69,7 +69,7 @@ def cadastrar_cliente():
         
         db.session.add(cliente)
         db.session.commit()
-        flash("Cadastro realizado com sucesso!", "success")  # Mensagem de sucesso com categoria
+        flash("Cadastro realizado com sucesso!", "success")
         return redirect(url_for('client_bp.cliente'))
     
     return render_template('clientes/form.html')
@@ -90,6 +90,7 @@ def editar_cliente(id):
     remuneracao_formatada = formatar_para_moeda(cliente.remuneracao)
     renda_familiar_formatada = formatar_para_moeda(cliente.renda_familiar)
     despesa_mensal_formatada = formatar_para_moeda(cliente.despesa_mensal)
+    idade = int(cliente.idade)
     if request.method == 'POST':
 
         idade = request.form.get('idade')
@@ -152,7 +153,7 @@ def editar_cliente(id):
         flash('Cliente atualizado com sucesso!', 'success')
         return redirect(url_for('client_bp.listar_cliente'))  
 
-    return render_template('clientes/form_edit.html', cliente=cliente, remuneracao=remuneracao_formatada, renda_familiar=renda_familiar_formatada, despesa_mensal=despesa_mensal_formatada)
+    return render_template('clientes/form_edit.html', cliente=cliente, remuneracao=remuneracao_formatada, renda_familiar=renda_familiar_formatada, despesa_mensal=despesa_mensal_formatada, idade=idade)
 
 @client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
 @login_required

@@ -43,7 +43,7 @@ def criar_encaminhamento():
         verifica_encaminnhamento = Encaminhamento.query.filter_by(cliente_id=cliente_id, profissional_id=profissional_id).first()
 
         if verifica_encaminnhamento:
-            flash('Cliente já encaminhado para esse profissional', 'error')
+            flash('Cliente já encaminhado para esse profissional', 'danger')
             return redirect(url_for('encaminhamento_bp.encaminhamento'))
 
         db.session.add(encaminhamento)

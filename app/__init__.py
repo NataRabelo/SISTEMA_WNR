@@ -38,6 +38,7 @@ def create_app():
     from app.routes.professional_routes import professional_bp
     from app.routes.report_routes import report_bp
     from app.routes.utils import utils_bp
+    from app.routes.adm_route import adm_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(client_bp)
@@ -48,5 +49,6 @@ def create_app():
     app.register_blueprint(professional_bp)
     app.register_blueprint(report_bp)
     app.register_blueprint(utils_bp)
+    app.register_blueprint(adm_bp)
 
     return app

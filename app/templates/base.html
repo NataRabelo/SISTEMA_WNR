@@ -68,6 +68,7 @@
                     </ul>
                 </li>
             </ul>
+            <a href="{{ url_for('')}}" class="btn btn-warning" >Adiministração</a>
             <a href="{{ url_for('auth_bp.logout')}}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ConfirmarSair">Sair</a>
         </div>
     </nav>
@@ -119,18 +120,18 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function (){
+            // Lógica do modal
             var modal = document.getElementById("ConfirmarSair");
             var confirmBtn = document.getElementById("confirmarSairBtn");
-
+    
             modal.addEventListener("show.bs.modal", function (event) {
                 var button = event.relatedTarget;
                 if (button) {
                     confirmBtn.href = "/logout";
                 }
             });
-        
-
-        document.addEventListener('DOMContentLoaded', function(){
+    
+            // Lógica para remover as flash messages
             let flashMessages = document.querySelectorAll('.flash-message');
     
             if (flashMessages.length > 0) {
@@ -138,13 +139,13 @@
                     flashMessages.forEach(msg => {
                         msg.style.transition = "opacity 0.5s ease";
                         msg.style.opacity = "0";
-                        setTimeout(() => msg.remove(), 1000);
+                        setTimeout(() => msg.remove(), 500);
                     });
-                }, 1500);
+                }, 5000);
             }
         });
-        });
     </script>
+    
     
 </body>
 </html>
