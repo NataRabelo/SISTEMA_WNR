@@ -7,28 +7,28 @@ from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 migrate = Migrate()
-login_manager = LoginManager()  # Inicializa o LoginManager
-bcrypt = Bcrypt()  # Inicializa o Bcrypt
+login_manager = LoginManager()
+bcrypt = Bcrypt()
 
-from app.models import Usuario  # Importe seu modelo de usuário
+from app.models import Usuario
 
 @login_manager.user_loader
 def load_user(id):
-    return Usuario.query.get(int(id))  # Converte para inteiro e busca no banco
+    return Usuario.query.get(int(id))
 
 
-def create_app():
+def create_app(config_class):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
-    # Inicializar extensões com o aplicativo
+    
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth_bp.login'  # Atualize a rota se necessário
+    login_manager.login_view = 'auth_bp.login'
     bcrypt.init_app(app)
 
-    # Importar e registrar os blueprints
+  
     from app.routes.autenticadores.autenticador import auth_bp
     from app.routes.cliente.cliente import client_bp
     from app.routes.encaminhamento.encaminhamento import encaminhamento_bp

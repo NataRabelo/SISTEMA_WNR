@@ -1,3 +1,5 @@
+# Vou manter o modelo de banco de dados em um arquivo único para facilitar a leitura e a manutenção do mesmo. 
+
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float
 from sqlalchemy.orm import relationship
 from app import db
