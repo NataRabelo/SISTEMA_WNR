@@ -29,21 +29,19 @@ def create_app():
     bcrypt.init_app(app)
 
     # Importar e registrar os blueprints
-    from app.routes.auth_routes import auth_bp
-    from app.routes.client_routes import client_bp
-    from app.routes.referral_routes import encaminhamento_bp
-    from app.routes.financial_routes import financial_bp
-    from app.routes.guide_routes import guide_bp
-    from app.routes.main_routes import main_bp
-    from app.routes.professional_routes import professional_bp
-    from app.routes.report_routes import report_bp
-    from app.routes.utils import utils_bp
-    from app.routes.adm_route import adm_bp
+    from app.routes.autenticadores.autenticador import auth_bp
+    from app.routes.cliente.cliente import client_bp
+    from app.routes.encaminhamento.encaminhamento import encaminhamento_bp
+    from app.routes.guia.guia import guide_bp
+    from app.routes.main.main import main_bp
+    from app.routes.profissional.profissional import professional_bp
+    from app.routes.relatorios.relatorios import report_bp
+    from app.routes.utilitares.utilitares import utils_bp
+    from app.routes.adiministracao.adiministracao import adm_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(client_bp)
     app.register_blueprint(encaminhamento_bp)
-    app.register_blueprint(financial_bp)
     app.register_blueprint(guide_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(professional_bp)
