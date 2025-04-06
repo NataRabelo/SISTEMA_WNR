@@ -2,7 +2,7 @@ from flask import Blueprint, flash, jsonify, render_template, request, redirect,
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Profissional, Cliente, Encaminhamento
-from app.utils.edit_values import formatar_para_moeda
+from app.utils.editor_valor import formatar_para_moeda
 
 utils_bp = Blueprint('utils_bp', __name__)
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
-from app.utils.edit_values import converter_para_float, formatar_para_moeda
+from app.utils.editor_valor import converter_para_float, formatar_para_moeda
 from app.utils.decorators import role_required
 from flask_login import current_user, login_required
 from app.models import Cliente

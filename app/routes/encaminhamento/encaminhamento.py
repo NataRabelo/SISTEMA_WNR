@@ -4,7 +4,7 @@ from app.utils.decorators import role_required
 from flask_login import current_user, login_required
 from datetime import datetime
 from app import db
-from app.utils.edit_values import converter_para_float, formatar_para_moeda
+from app.utils.editor_valor import converter_para_float, formatar_para_moeda
 
 
 encaminhamento_bp = Blueprint('encaminhamento_bp', __name__)

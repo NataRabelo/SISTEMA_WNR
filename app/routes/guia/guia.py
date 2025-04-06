@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from app.models import Cliente, Encaminhamento, Guia, Profissional
 from app import db
 from app.utils.decorators import role_required
-from app.utils.edit_values import converter_para_float, formatar_para_moeda
+from app.utils.editor_valor import converter_para_float, formatar_para_moeda
 
 guide_bp = Blueprint('guide_bp', __name__)
 
