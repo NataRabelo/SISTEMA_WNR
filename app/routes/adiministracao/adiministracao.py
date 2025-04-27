@@ -1,10 +1,16 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Usuario
 from app import bcrypt, db
 
 adm_bp = Blueprint('adm_bp', __name__)
+
+@adm_bp.route('/usuarios', methods=['GET'])
+@login_required
+@role_required('admin')
+def usuarios():
+    return render_template('administracao/usuarios.html')
 
 @adm_bp.route('/cadastrar_usuario', methods=['GET', 'POST'])
 @login_required
@@ -33,9 +39,11 @@ def cadastrar_usuario():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.usuarios'))
 
-    return render_template('usuarios/registrar_usuario.html')
+    return render_template('administracao/form.html')
 
 @adm_bp.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
+@login_required
+@role_required('admin')
 def editar_usuario(id):
     usuario = Usuario.query.get_or_404(id)
     if request.method == 'POST':
@@ -47,4 +55,33 @@ def editar_usuario(id):
         db.session.commit()
         flash('Usuario editado com sucesso', 'success')
         return redirect(url_for('main_bp.menu'))
-    return render_template('usuarios/editar_usuario.html', usuario=usuario)
+    return render_template('administracao/form_edit.html', usuario=usuario)
+
+@adm_bp.route('/listar_usuario', methods=['GET'])
+@login_required
+@role_required('admin')
+def listar_usuario():
+    usuarios = Usuario.query.all()
+    return render_template('administracao/list.html', usuarios=usuarios)
+
+@adm_bp.route('/deletar_usuario/<int:id>', methods=['POST'])
+@login_required
+@role_required('admin')
+def deletar_usuario(id):
+    usuario = Usuario.query.get_or_404(id)
+    db.session.delete(usuario)
+    db.session.commit()
+    flash('Usuario deletado com sucesso', 'success')
+    return redirect(url_for('adm_bp.usuarios'))
+
+@adm_bp.route("/filtra_usaurio", methods=["GET", "POST"])
+def filtra_usaurio():
+    query = request.args.get("q", "").strip()
+    if query:
+        usaurios = Usuario.query.filter(Usuario.nome.ilike(f"%{query}%")).limit(10).all()
+        return jsonify([
+            {"id": c.id, "nome": c.nome, "cpf": c.cpf, "email": c.email} 
+            for c in usaurios
+        ])
+    return jsonify([])
+

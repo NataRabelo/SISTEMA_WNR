@@ -12,7 +12,7 @@ guide_bp = Blueprint('guide_bp', __name__)
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')
 def guia():
-    return render_template('guides/guide.html')
+    return render_template('guia/guide.html')
 
 # Essa rota é utilizada somente pelo fluxo interno
 @guide_bp.route('/emitir_guia', methods=['GET', 'POST'])

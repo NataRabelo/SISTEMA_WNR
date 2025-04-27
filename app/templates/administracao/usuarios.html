@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuários{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Digite para pesquisar pelo usuario...">
+            </div>
+            <div id="searchResults" class="p-3 border bg-white rounded shadow">
+                <p class="text-muted">Resultados aparecerão aqui...</p>
+            </div>
+        </div>
+
+        <div class="col-md-2 d-flex flex-column gap-3">
+            <a class="btn btn-outline-success btn-lg" href="{{ url_for('adm_bp.cadastrar_usuario')}}">Novo Registro</a>
+            <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('adm_bp.listar_usuario')}}">Mostrar Grade</a>
+        </div>
+    </div>
+</div>
+  
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+    
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.trim();
+    
+            if (query.length > 0) {
+                fetch(`/filtra_usuario?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = "";
+                        
+                        if (data.length > 0) {
+                            data.forEach(usuario => {
+                                const item = document.createElement("div");
+                                item.classList.add("p-2", "border-bottom");
+    
+                                item.innerHTML = `
+                                    <a href="/editar_usuario/${usuario.id}" class="text-decoration-none text-dark">
+                                        <strong>${usuario.nome}</strong> <br>
+                                        <small>Role: ${usuario.role} | Email: ${usuario.email}</small>
+                                    </a>
+                                `;
+    
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = "<p class='text-muted'>Nenhum usuario encontrado...</p>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao buscar usuarios:", error);
+                    });
+            } else {
+                searchResults.innerHTML = "<p class='text-muted'>Resultados aparecerão aqui...</p>";
+            }
+        });
+    });
+    </script>    
+{% endblock %}

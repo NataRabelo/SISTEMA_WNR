@@ -1,20 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
-from app.utils.decorators import role_required
+from flask_login import current_user, login_user, logout_user, login_required
 from app.models import Usuario
 from app import bcrypt, db
 
 auth_bp = Blueprint('auth_bp', __name__)
-
-@auth_bp.route('/deletar_usuario/<int:id>', methods=['GET', 'POST'])
-@login_required
-@role_required('admin')
-def deletar_usuario(id):
-    usuario = Usuario.query.get_or_404(id)
-    db.session.delete(usuario)
-    db.session.commit()
-    flash('Usuario excluido com sucesso', 'success')
-    return redirect(url_for('main_bp.menu'))
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,6 +20,8 @@ def login():
             flash('E-mail ou senha inválidos.', 'error')
             return redirect(url_for('auth_bp.login'))
 
+    global usuario_logado
+    usuario_logado = current_user.is_authenticated
     return render_template('main/login.html')
 
 @auth_bp.route('/logout')

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 main_bp = Blueprint('main_bp', __name__)
 
@@ -10,4 +10,5 @@ def index():
 @main_bp.route('/menu')
 @login_required
 def menu():
-    return render_template('main/menu.html')
+    usuario = current_user
+    return render_template('main/menu.html', usuario=usuario)

@@ -6,15 +6,13 @@ from app.models import Profissional
 from datetime import datetime
 from app import db
 
-
-
 professional_bp = Blueprint('professional_bp', __name__)
 
 @professional_bp.route('/profissional', methods=['GET', 'POST'])
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')
 def profissional():
-    return render_template('professional/professional.html')
+    return render_template('profissional/professional.html')
 
 @professional_bp.route('/cadastrar_profissional', methods=['GET', 'POST'])
 @login_required
@@ -57,7 +55,7 @@ def cadastrar_profissional():
         db.session.commit()
         flash('Profissional cadastrado com sucesso!', 'success')
         return redirect(url_for('professional_bp.profissional'))
-    return render_template('professional/form.html')
+    return render_template('profissional/form.html')
 
 @professional_bp.route('/listar_profissional', methods=['GET', 'POST'])
 @login_required
@@ -65,7 +63,7 @@ def cadastrar_profissional():
 def listar_profissional():
     profissionais = Profissional.query.all()
     usuario = current_user
-    return render_template('professional/list.html', profissionais=profissionais, usuario=usuario)
+    return render_template('profissional/list.html', profissionais=profissionais, usuario=usuario)
 
 @professional_bp.route('/editar_profissional/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -104,7 +102,7 @@ def editar_profissional(id):
         db.session.commit()
         flash('Profissional atualizdo com sucesso!', 'success')
         return redirect(url_for('professional_bp.listar_profissional'))
-    return render_template('professional/form_edit.html', profissional=profissional)
+    return render_template('profissional/form_edit.html', profissional=profissional)
 
 @professional_bp.route('/deletar_profissional/<int:id>', methods=['GET', 'POST'])
 @login_required

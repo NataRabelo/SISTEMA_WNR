@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
+from flask import Blueprint, flash, jsonify, request
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Profissional, Cliente, Encaminhamento

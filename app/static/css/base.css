@@ -52,11 +52,13 @@ body {
 .btn-profissional { background-color: rgb(33, 37, 41); color: white; }
 .btn-encaminhamento { background-color: rgb(33, 37, 41); color: white; }
 .btn-guia { background-color: rgb(33, 37, 41); color: white; }
+.btn-adm { background-color: rgb(33, 37, 41); color: white; }
 
 .btn-cliente:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
 .btn-profissional:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
 .btn-encaminhamento:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
 .btn-guia:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
+.btn-adm:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
 
 #flash-container {
     position: fixed;
