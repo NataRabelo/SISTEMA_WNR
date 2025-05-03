@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from config import Config
+from config import DevelopmentConfig, ProductionConfig
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 
@@ -22,9 +22,9 @@ def load_user(id):
     return Usuario.query.get(int(id))
 
 
-def create_app(config_class=Config):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(DevelopmentConfig)
 
     
     db.init_app(app)

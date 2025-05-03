@@ -1,5 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from app import db
+from alembic.operations import Operations as op
+import sqlalchemy as sa
 
 # MODELOS DE APOIO
 class Sexo(db.Model):
@@ -53,14 +55,30 @@ class Situacao(db.Model):
 
 
 # USUÁRIO
-class Usuario(db.Model):
+class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     senha = db.Column(db.String(255), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
+    role = db.Column(db.String(50), nullable=False)  # 'admin', 'financeiro', 'atendimento'.
     is_active = db.Column(db.Boolean, default=True)
+    is_authenticated = db.Column(db.Boolean, default=False)
+    is_anonymous = db.Column(db.Boolean, default=False)
+    data_criacao = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    # Flask-Login methods
+    def get_id(self):
+        return str(self.id)
+    
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
 
 
 # CLIENTE
