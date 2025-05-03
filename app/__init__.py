@@ -10,16 +10,21 @@ migrate = Migrate()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 
-from app.models import Usuario
+from app.models import (
+    Usuario, Sexo, CondicaoHabitacao, TipoMoradia, TipoTransporte,
+    Escolaridade, MetodoPagamento, Situacao,
+    Cliente, Profissional, Encaminhamento, Guia
+)
+
 
 @login_manager.user_loader
 def load_user(id):
     return Usuario.query.get(int(id))
 
 
-def create_app(config_class):
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.config.from_object(Config)
 
     
     db.init_app(app)

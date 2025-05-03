@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
+from app.utils import calcular_idade
 from app.utils.editor_valor import converter_para_float, formatar_para_moeda
 from app.utils.decorators import role_required
 from flask_login import current_user, login_required
@@ -90,11 +91,15 @@ def editar_cliente(id):
     remuneracao_formatada = formatar_para_moeda(cliente.remuneracao)
     renda_familiar_formatada = formatar_para_moeda(cliente.renda_familiar)
     despesa_mensal_formatada = formatar_para_moeda(cliente.despesa_mensal)
-    idade = int(cliente.idade)
+    if cliente.idade is None:
+        idade = 00
+    else :
+        idade = int(cliente.idade)
+
+    print(idade)
     if request.method == 'POST':
 
         idade = request.form.get('idade')
-        print(idade)
 
         cliente.nome = request.form.get('nome')
         cliente.cpf = request.form.get('cpf')

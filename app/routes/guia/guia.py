@@ -49,7 +49,7 @@ def emitir_guia():
         
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
-    return render_template('guides/form.html', clientes=clientes)
+    return render_template('guia/form.html', clientes=clientes)
 
 @guide_bp.route('/listar_guia', methods=['GET', 'POST'])
 @login_required
@@ -57,7 +57,7 @@ def emitir_guia():
 def listar_guia():
     guias = Guia.query.all()
     usuario = current_user
-    return render_template('guides/list.html', guias = guias, usuario=usuario)
+    return render_template('guia/list.html', guias = guias, usuario=usuario)
 
 @guide_bp.route('/editar_guia/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -81,7 +81,7 @@ def editar_guia(id):
         db.session.commit()
         flash('Guia atualizada com sucessso', 'success')
         return redirect(url_for('guide_bp.guia'))
-    return render_template('guides/form_edit.html', guia = guia, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado, valor_total=valor_total)
+    return render_template('guia/form_edit.html', guia = guia, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado, valor_total=valor_total)
 
 @guide_bp.route('/deletar_guia/<int:id>', methods=['GET', 'POST'])
 @login_required

@@ -1,153 +1,130 @@
-# Vou manter o modelo de banco de dados em um arquivo único para facilitar a leitura e a manutenção do mesmo. 
-
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float
-from sqlalchemy.orm import relationship
+from flask_sqlalchemy import SQLAlchemy
 from app import db
 
-# Tabela Usuário
+# MODELOS DE APOIO
+class Sexo(db.Model):
+    __tablename__ = "sexo"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    clientes = db.relationship("Cliente", back_populates="sexo")
+
+
+class CondicaoHabitacao(db.Model):
+    __tablename__ = "condicao_habitacao"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    clientes = db.relationship("Cliente", back_populates="condicao_habitacao")
+
+
+class TipoMoradia(db.Model):
+    __tablename__ = "tipo_moradia"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    clientes = db.relationship("Cliente", back_populates="tipo_moradia")
+
+
+class TipoTransporte(db.Model):
+    __tablename__ = "tipo_transporte"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    clientes = db.relationship("Cliente", back_populates="tipo_transporte")
+
+
+class Escolaridade(db.Model):
+    __tablename__ = "escolaridade"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    clientes = db.relationship("Cliente", back_populates="escolaridade")
+
+
+class MetodoPagamento(db.Model):
+    __tablename__ = "metodo_pagamento"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    juros = db.Column(db.Float, nullable=False, default=0.0)
+    guias = db.relationship("Guia", back_populates="metodo_pagamento")
+
+
+class Situacao(db.Model):
+    __tablename__ = "situacao"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    guias = db.relationship("Guia", back_populates="situacao")
+
+
+# USUÁRIO
 class Usuario(db.Model):
     __tablename__ = "usuarios"
-
-    id                      = Column(Integer, primary_key=True, index=True)
-    nome                    = Column(String, index=True)
-    email                   = Column(String, unique=True, index=True)
-    senha                   = Column(String)
-    is_active               = Column(Boolean, default=True)
-    role                    = Column(String(10), nullable=False, default="user")
-
-    # Método obrigatório para Flask-Login
-    def get_id(self):
-        return str(self.id)
-    
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    senha = db.Column(db.String(255), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=True)
 
 
-
-
-# Tabela Cliente
+# CLIENTE
 class Cliente(db.Model):
     __tablename__ = "clientes"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    telefone = db.Column(db.String(20))
+    email = db.Column(db.String(255))
 
-    id                      = Column(Integer, primary_key=True, index=True)
-    nome                    = Column(String, index=True)
-    cpf                     = Column(String(11), unique=True, index=True)
-    email                   = Column(String, index=True)
-    data_nascimento         = Column(Date)
-    renda_familiar          = Column(Float)
-    bairro                  = Column(String)
-    canal_divulgacao        = Column(String)
-    cep                     = Column(String(8))
-    cidade                  = Column(String)
-    condicao_habitacao      = Column(String)
-    cpf_responsavel         = Column(String(11), nullable=True, default="")
-    complemento             = Column(String)
-    numero_cs               = Column(String)
-    despesa_mensal          = Column(Float)
-    escolaridade            = Column(String)
-    estado                  = Column(String)
-    endereco                = Column(String)
-    fone_contato            = Column(String)
-    fone_pessoal            = Column(String)
-    foto                    = Column(String)
-    grau_parentesco         = Column(String)
-    nome_plano_saude        = Column(String, default="Sem plano de Saúde")
-    nome_responsavel        = Column(String, default="")
-    numero_filhos           = Column(Integer, default=0)
-    possui_filhos           = Column(String)
-    plano_saude             = Column(String)
-    previdenciario          = Column(String)
-    profissao               = Column(String)
-    remuneracao             = Column(Float)
-    rg                      = Column(String)
-    saldo                   = Column(Float)
-    sexo                    = Column(String)
-    tipo_moradia            = Column(String)
-    transporte              = Column(String)
-    idade                   = Column(String)
+    sexo_id = db.Column(db.Integer, db.ForeignKey("sexo.id"))
+    condicao_habitacao_id = db.Column(db.Integer, db.ForeignKey("condicao_habitacao.id"))
+    tipo_moradia_id = db.Column(db.Integer, db.ForeignKey("tipo_moradia.id"))
+    tipo_transporte_id = db.Column(db.Integer, db.ForeignKey("tipo_transporte.id"))
+    escolaridade_id = db.Column(db.Integer, db.ForeignKey("escolaridade.id"))
 
-    # Relacionamentos
-    encaminhamentos = relationship("Encaminhamento", back_populates="cliente", cascade="all, delete-orphan")
-    guias = relationship("Guia", back_populates="cliente")
+    sexo = db.relationship("Sexo", back_populates="clientes")
+    condicao_habitacao = db.relationship("CondicaoHabitacao", back_populates="clientes")
+    tipo_moradia = db.relationship("TipoMoradia", back_populates="clientes")
+    tipo_transporte = db.relationship("TipoTransporte", back_populates="clientes")
+    escolaridade = db.relationship("Escolaridade", back_populates="clientes")
+
+    encaminhamentos = db.relationship("Encaminhamento", back_populates="cliente", cascade="all, delete-orphan")
+    guias = db.relationship("Guia", back_populates="cliente", cascade="all, delete-orphan")
 
 
-# Tabela Profissional
+# PROFISSIONAL
 class Profissional(db.Model):
     __tablename__ = "profissionais"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    especialidade = db.Column(db.String(255))
+    email = db.Column(db.String(255))
+    telefone = db.Column(db.String(20))
 
-    id                      = Column(Integer, primary_key=True, index=True)
-    nome                    = Column(String, index=True)
-    cpf                     = Column(String(11), unique=True, index=True)
-    email                   = Column(String, unique=True, index=True)
-    data_nascimento         = Column(Date)
-    bairro                  = Column(String)
-    banco                   = Column(String)
-    cep                     = Column(String(8))
-    cidade                  = Column(String)
-    complemento             = Column(String)
-    graduacao               = Column(String)
-    issqn                   = Column(String)
-    fone_pessoal            = Column(String)
-    fone_profissional       = Column(String)
-    foto                    = Column(String)
-    curriculum_lattes       = Column(String)
-    dias_horas_disponiveis  = Column(String)
-    endereco_profissional   = Column(String)
-    estado                  = Column(String)
-    observacoes             = Column(String)
-    pix                     = Column(String)
-    registro_profissional   = Column(String)
-    rg                      = Column(String)
-    valor_minimo            = Column(Float)
-
-    # Relacionamentos
-    encaminhamentos = relationship("Encaminhamento", back_populates="profissional", cascade="all, delete-orphan")
-    guias = relationship("Guia", back_populates="profissional")
+    encaminhamentos = db.relationship("Encaminhamento", back_populates="profissional", cascade="all, delete-orphan")
+    guias = db.relationship("Guia", back_populates="profissional", cascade="all, delete-orphan")
 
 
-# Tabela Encaminhamento
+# ENCAMINHAMENTO
 class Encaminhamento(db.Model):
     __tablename__ = "encaminhamentos"
+    id = db.Column(db.Integer, primary_key=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey("clientes.id", ondelete="CASCADE"))
+    profissional_id = db.Column(db.Integer, db.ForeignKey("profissionais.id", ondelete="CASCADE"))
+    data = db.Column(db.DateTime)
+    observacoes = db.Column(db.String(500))
 
-    id                      = Column(Integer, primary_key=True, index=True)
-    cliente_id              = Column(Integer, ForeignKey("clientes.id", ondelete="CASCADE"))
-    profissional_id         = Column(Integer, ForeignKey("profissionais.id", ondelete="CASCADE"))
-    convenio                = Column(String)
-    dias_horas_atendimento  = Column(String)
-    data_encaminhamento     = Column(Date)
-    observacoes_gerais      = Column(String)
-    queixa                  = Column(String)
-    situacao                = Column(String)
-    tipo_encaminhamento     = Column(String)
-    valor                   = Column(Float)
-
-    # Relacionamentos
-    cliente = relationship("Cliente", back_populates="encaminhamentos")
-    profissional = relationship("Profissional", back_populates="encaminhamentos")
+    cliente = db.relationship("Cliente", back_populates="encaminhamentos", passive_deletes=True)
+    profissional = db.relationship("Profissional", back_populates="encaminhamentos", passive_deletes=True)
 
 
-# Tabela Guia
+# GUIA
 class Guia(db.Model):
     __tablename__ = "guias"
+    id = db.Column(db.Integer, primary_key=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey("clientes.id", ondelete="CASCADE"))
+    profissional_id = db.Column(db.Integer, db.ForeignKey("profissionais.id", ondelete="CASCADE"))
+    metodo_pagamento_id = db.Column(db.Integer, db.ForeignKey("metodo_pagamento.id"))
+    situacao_id = db.Column(db.Integer, db.ForeignKey("situacao.id"))
+    data = db.Column(db.DateTime)
+    descricao = db.Column(db.String(500))
 
-    id                      = Column(Integer, primary_key=True, index=True)
-    cliente_id              = Column(Integer, ForeignKey("clientes.id"))
-    profissional_id         = Column(Integer, ForeignKey("profissionais.id"))
-    data_original           = Column(Date)
-    hora_emissao            = Column(String)
-    observacoes_gerais      = Column(String)
-    quantidade_emissoes     = Column(Integer)
-    tipo_pagamento          = Column(String)
-    valor_unitario          = Column(Float)
-    valor_total             = Column(Float)
-    pago                    = Column(String)
-
-    # Relacionamentos
-    cliente = relationship("Cliente", back_populates="guias")
-    profissional = relationship("Profissional", back_populates="guias")
+    cliente = db.relationship("Cliente", back_populates="guias", passive_deletes=True)
+    profissional = db.relationship("Profissional", back_populates="guias", passive_deletes=True)
+    metodo_pagamento = db.relationship("MetodoPagamento", back_populates="guias")
+    situacao = db.relationship("Situacao", back_populates="guias")

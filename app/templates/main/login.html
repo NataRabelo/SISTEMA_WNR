@@ -33,6 +33,23 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
+        #flash-containerf {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050;
+            width: 50%;
+        }
+
+        .flash-message {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
     </style>
 </head>
 <body>
@@ -50,5 +67,35 @@
             <button type="submit" class="btn btn-primary w-100">Entrar</button>
         </form>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="containerf">
+                <div class="row mb-3 align-items-center">
+                    <div id="flash-container">
+                        {% for category, message in messages %}
+                        <div class="flash-message alert alert-dark">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function (){
+        // Lógica para remover as flash messages
+        let flashMessages = document.querySelectorAll('.flash-message');
+
+        if (flashMessages.length > 0) {
+            setTimeout(() => {
+                flashMessages.forEach(msg => {
+                    msg.style.transition = "opacity 0.5s ease";
+                    msg.style.opacity = "0";
+                    setTimeout(() => msg.remove(), 500);
+                });
+            }, 3000);
+        }
+    });
+</script>
 </html>

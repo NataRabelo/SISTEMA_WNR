@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Menu do Sistema{% endblock %}
+{% block title %}Menu do Adiministrador{% endblock %}
 
 {% block content %}
     <!-- Container de Botões -->
     <div class="container dashboard-container mt-5">
         <div class="row">
-            <!-- Cliente -->
+
+            <!-- Usuarios -->
             <div class="col-md-3 mb-3">
-                <a href="{{ url_for('client_bp.cliente')}}" class="btn dashboard-btn btn-cliente">
-                    <i class="fas fa-user"></i> Clientes
+                <a href="{{ url_for('adm_bp.usuarios')}}" class="btn dashboard-btn btn-cliente">
+                    <i class="fas fa-user"></i> Usuarios
                 </a>
             </div>
 
-            <!-- Profissional -->
+            <!-- Serviços -->
             <div class="col-md-3 mb-3">
-                <a href="{{ url_for('professional_bp.profissional')}}" class="btn dashboard-btn btn-profissional">
-                    <i class="fas fa-user-md"></i> Profissionais
+                <a href="{{ url_for('adm_bp.usuarios')}}" class="btn dashboard-btn btn-cliente">
+                    <i class="fas fa-user"></i> Serviços
                 </a>
             </div>
 
@@ -33,16 +34,8 @@
                     <i class="fas fa-file-invoice"></i> Guias
                 </a>
             </div>
+
         </div>
-        <div class="row">
-            <!-- Adiministração -->
-             {% if usuario.role == "admin" %}
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('adm_bp.administracao')}}" class="btn dashboard-btn btn-adm">
-                    <i class="fas fa-file-invoice"></i> Adiministração
-                </a>
-            </div>
-            {% endif %}
-        </div>
+        
     </div>
 {% endblock %}
