@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Gerenciar Dados{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="abaGerenciamento" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="sexo-tab" data-bs-toggle="tab" data-bs-target="#sexo" type="button" role="tab">Sexos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="condicao_habitacao-tab" data-bs-toggle="tab" data-bs-target="#condicao_habitacao" type="button" role="tab">Condições de Habitação</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tipo_moradia-tab" data-bs-toggle="tab" data-bs-target="#tipo_moradia" type="button" role="tab">Tipo de Moradia</button>
+    </li>
+  </ul>
+
+  <!-- Tab content -->
+  <div class="tab-content mt-3" id="conteudoAbas">
+
+    <!-- Aba de Sexos -->
+    <div class="tab-pane fade show active" id="sexo" role="tabpanel">
+      {% include 'administracao/sexo_card.html' %}
+    </div>
+
+    <div class="tab-pane fade fade" id="condicao_habitacao" role="tabpanel">
+      {% include 'administracao/condicao_card.html' %}
+    </div>
+
+    <div class="tab-pane fade fade" id="tipo_moradia" role="tabpanel">
+      {% include 'administracao/moradia_card.html' %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Salva a aba ativa antes de sair da página
+  document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(tab => {
+    tab.addEventListener('shown.bs.tab', function (event) {
+      localStorage.setItem('ultimaAba', event.target.getAttribute('data-bs-target'));
+    });
+  });
+
+  // Ativa a aba anterior ao recarregar
+  window.addEventListener('DOMContentLoaded', function () {
+    const ultimaAba = localStorage.getItem('ultimaAba');
+    if (ultimaAba) {
+      const tabTrigger = document.querySelector(`button[data-bs-target="${ultimaAba}"]`);
+      if (tabTrigger) new bootstrap.Tab(tabTrigger).show();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+  // Código da aba Condições
+  const modalEditarCondicao = document.getElementById('modalEditarCondicao');
+  if (modalEditarCondicao) {
+    modalEditarCondicao.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const id = button.getAttribute('data-id');
+      const nome = button.getAttribute('data-nome');
+      const form = document.getElementById('formEditarCondicao');
+
+      modalEditarCondicao.querySelector('#editarCondicaoId').value = id;
+      modalEditarCondicao.querySelector('#editarCondicaoNome').value = nome;
+      form.action = `/editar_condicao/${id}`;
+    });
+  }
+
+  const modalConfirmarExclusaoCondicao = document.getElementById('modalConfirmarExclusaoCondicao');
+  if (modalConfirmarExclusaoCondicao) {
+    modalConfirmarExclusao.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const id = button.getAttribute('data-id');
+      const excluirBtn = document.getElementById('confirmarExclusaoBtnCondicao');
+      excluirBtn.setAttribute('href', `/deletar_condicao/${id}`);
+    });
+  }
+
+  // Código da aba sexo 
+  const modalEditarSexo = document.getElementById('modalEditarSexo');
+  if (modalEditarSexo){
+    modalEditarSexo.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const id = button.getAttribute('data-id');
+      const nome = button.getAttribute('data-nome');
+
+      const inputId = modalEditarSexo.querySelector('#editarSexoId');
+      const inputNome = modalEditarSexo.querySelector('#editarSexoNome');
+      const form = document.getElementById('formEditarSexo');
+
+      inputId.value = id;
+      inputNome.value = nome;
+      form.action = `/editar_sexo/${id}`;
+    });
+  }
+
+  const modalConfirmarExclusaoSexo = document.getElementById('modalConfirmarExclusaoSexo');
+  if (modalConfirmarExclusaoSexo) {
+    modalConfirmarExclusaoSexo.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const id = button.getAttribute('data-id');
+      const excluirBtn = document.getElementById('confirmarExclusaoBtnSexo');
+      excluirBtn.href = `/deletar_sexo/${id}`;
+    });
+  }
+});
+
+</script>
+{% endblock %}

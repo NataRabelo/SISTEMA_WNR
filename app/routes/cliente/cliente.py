@@ -58,7 +58,7 @@ def cadastrar_cliente():
             sexo                = request.form.get('sexo'),
             tipo_moradia        = request.form.get('tipo_moradia'),
             transporte          = request.form.get('transporte'),
-            idade               = request.form.get('idade')
+            idade               = int(request.form.get('idade'))
         )
         
         cpf = request.form.get('cpf')

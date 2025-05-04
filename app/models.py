@@ -3,7 +3,6 @@ from app import db
 from alembic.operations import Operations as op
 import sqlalchemy as sa
 
-# MODELOS DE APOIO
 class Sexo(db.Model):
     __tablename__ = "sexo"
     id = db.Column(db.Integer, primary_key=True)
@@ -86,8 +85,36 @@ class Cliente(db.Model):
     __tablename__ = "clientes"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
-    telefone = db.Column(db.String(20))
+    cpf = db.Column(db.String(14), unique=True, nullable=False)
     email = db.Column(db.String(255))
+    data_nascimento = db.Column(db.DateTime)
+    renda_familiar = db.Column(db.Float, nullable=False, default=0.0)
+    bairro = db.Column(db.String(255))
+    canal_divulgacao = db.Column(db.String(255))
+    cep = db.Column(db.String(10))
+    cidade = db.Column(db.String(255))
+    cpf_responsavel = db.Column(db.String(14))
+    complemento = db.Column(db.String(255))
+    numero_cs = db.Column(db.String(20))
+    despesa_mensal = db.Column(db.Float, nullable=False, default=0.0)
+    estado = db.Column(db.String(255))
+    endereco = db.Column(db.String(255))
+    fone_contato = db.Column(db.String(20))
+    fone_pessoal = db.Column(db.String(20))
+    grau_parentesco = db.Column(db.String(255))
+    nome_plano_saude = db.Column(db.String(255))
+    plano_saude = db.Column(db.String(255))
+    nome_responsavel = db.Column(db.String(255))
+    possui_filhos = db.Column(db.String(255))
+    numero_filhos = db.Column(db.Integer, default=0)
+    previdenciario = db.Column(db.String(255))
+    profissao = db.Column(db.String(255))
+    remuneracao = db.Column(db.Float, nullable=False, default=0.0)
+    rg = db.Column(db.String(20))
+    saldo = db.Column(db.Float, nullable=False, default=0.0)
+    idade = db.Column(db.Integer, default=0)
+    telefone = db.Column(db.String(20))
+    
 
     sexo_id = db.Column(db.Integer, db.ForeignKey("sexo.id"))
     condicao_habitacao_id = db.Column(db.Integer, db.ForeignKey("condicao_habitacao.id"))
