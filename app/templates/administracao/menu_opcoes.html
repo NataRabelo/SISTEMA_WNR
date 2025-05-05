@@ -15,6 +15,18 @@
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="tipo_moradia-tab" data-bs-toggle="tab" data-bs-target="#tipo_moradia" type="button" role="tab">Tipo de Moradia</button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="situacao-tab" data-bs-toggle="tab" data-bs-target="#situacao" type="button" role="tab">Situação</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="transporte-tab" data-bs-toggle="tab" data-bs-target="#transporte" type="button" role="tab">Tipo de Transporte</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="escolariedade-tab" data-bs-toggle="tab" data-bs-target="#escolariedade" type="button" role="tab">Escolariedade</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pagamento-tab" data-bs-toggle="tab" data-bs-target="#pagamento" type="button" role="tab">Método de Pagamento</button>
+    </li>
   </ul>
 
   <!-- Tab content -->
@@ -31,6 +43,41 @@
 
     <div class="tab-pane fade fade" id="tipo_moradia" role="tabpanel">
       {% include 'administracao/moradia_card.html' %}
+    </div>
+
+    <div class="tab-pane fade fade" id="situacao" role="tabpanel">
+      {% include 'administracao/situacao_card.html' %}
+    </div>
+
+    <div class="tab-pane fade fade" id="transporte" role="tabpanel">
+      {% include 'administracao/transporte_card.html' %}
+    </div>
+
+    <div class="tab-pane fade fade" id="escolariedade" role="tabpanel">
+      {% include 'administracao/escolariedade_card.html' %}
+    </div>
+
+    <div class="tab-pane fade fade" id="pagamento" role="tabpanel">
+      {% include 'administracao/pagamento_card.html' %}
+    </div>
+  </div>
+</div>
+
+<!-- Modal Confirmar Exclusão Condição -->
+<div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir ?
+      </div>
+      <div class="modal-footer">
+        <a id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -52,60 +99,19 @@
     }
   });
 
+  // Confirmar Exclusão
   document.addEventListener('DOMContentLoaded', function () {
-  // Código da aba Condições
-  const modalEditarCondicao = document.getElementById('modalEditarCondicao');
-  if (modalEditarCondicao) {
-    modalEditarCondicao.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute('data-id');
-      const nome = button.getAttribute('data-nome');
-      const form = document.getElementById('formEditarCondicao');
+    const modalConfirmarExclusao = document.getElementById('modalConfirmarExclusao');
+    if (modalConfirmarExclusao) {
+      modalConfirmarExclusao.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Botão que abriu o modal
+        const id = button.getAttribute('data-bs-id'); // Pega o ID do botão de exclusão
+        const url = button.getAttribute('data-bs-url'); // Pega a URL do botão de exclusão
 
-      modalEditarCondicao.querySelector('#editarCondicaoId').value = id;
-      modalEditarCondicao.querySelector('#editarCondicaoNome').value = nome;
-      form.action = `/editar_condicao/${id}`;
-    });
-  }
-
-  const modalConfirmarExclusaoCondicao = document.getElementById('modalConfirmarExclusaoCondicao');
-  if (modalConfirmarExclusaoCondicao) {
-    modalConfirmarExclusao.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute('data-id');
-      const excluirBtn = document.getElementById('confirmarExclusaoBtnCondicao');
-      excluirBtn.setAttribute('href', `/deletar_condicao/${id}`);
-    });
-  }
-
-  // Código da aba sexo 
-  const modalEditarSexo = document.getElementById('modalEditarSexo');
-  if (modalEditarSexo){
-    modalEditarSexo.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute('data-id');
-      const nome = button.getAttribute('data-nome');
-
-      const inputId = modalEditarSexo.querySelector('#editarSexoId');
-      const inputNome = modalEditarSexo.querySelector('#editarSexoNome');
-      const form = document.getElementById('formEditarSexo');
-
-      inputId.value = id;
-      inputNome.value = nome;
-      form.action = `/editar_sexo/${id}`;
-    });
-  }
-
-  const modalConfirmarExclusaoSexo = document.getElementById('modalConfirmarExclusaoSexo');
-  if (modalConfirmarExclusaoSexo) {
-    modalConfirmarExclusaoSexo.addEventListener('show.bs.modal', function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute('data-id');
-      const excluirBtn = document.getElementById('confirmarExclusaoBtnSexo');
-      excluirBtn.href = `/deletar_sexo/${id}`;
-    });
-  }
-});
-
+        const confirmarExclusaoBtn = modalConfirmarExclusao.querySelector('#confirmarExclusaoBtn');
+        confirmarExclusaoBtn.setAttribute('href', url); // Atualiza o link de exclusão
+      });
+    }
+  });
 </script>
 {% endblock %}

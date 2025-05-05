@@ -34,8 +34,6 @@ def opcoes():
                            pagamentos=pagamentos)
 
 # SEXO
-
-
 @adm_bp.route('/cadastrar_sexo', methods=['GET', 'POST'])
 @login_required
 @role_required('admin')
@@ -95,6 +93,7 @@ def cadastrar_situacao():
         db.session.add(situacao)
         db.session.commit()
         flash('Registro realizado com sucesso!', 'success')
+        return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
 
 @adm_bp.route('/editar_situacao/<int:id>', methods=['GET', 'POST'])
@@ -235,6 +234,7 @@ def cadastrar_transporte():
         db.session.add(transporte)
         db.session.commit()
         flash('Registro realizado com sucesso!', 'success')
+        return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
 
 @adm_bp.route('/editar_transporte/<int:id>', methods=['GET', 'POST'])
@@ -280,6 +280,7 @@ def cadastrar_escolaridade():
         db.session.add(escolaridade)
         db.session.commit()
         flash('Registro realizado com sucesso!', 'success')
+        return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
 
 @adm_bp.route('/editar_escolaridade/<int:id>', methods=['GET', 'POST'])
@@ -329,6 +330,7 @@ def cadastrar_pagamento():
         db.session.add(pagamento)
         db.session.commit()
         flash('Registro realizado com sucesso!', 'success')
+        return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
 
 @adm_bp.route('/editar_pagamento/<int:id>', methods=['GET', 'POST'])

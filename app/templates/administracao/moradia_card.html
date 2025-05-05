@@ -28,7 +28,8 @@
   
           <button class="btn btn-sm btn-danger btn-excluir" 
             data-bs-toggle="modal" 
-            data-bs-target="#modalConfirmarExclusaoMoradia" 
+            data-bs-url="/deletar_moradia/{{ moradia.id }}"
+            data-bs-target="#modalConfirmarExclusao" 
             data-id="{{ moradia.id }}"
           >Excluir</button>
         </td>
@@ -86,50 +87,23 @@
     </div>
   </div>
   
-  <!-- Modal Confirmar Exclusão -->
-  <div class="modal fade" id="modalConfirmarExclusaoMoradia" tabindex="-1" aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirmar Exclusão</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          Tem certeza que deseja excluir este item?
-        </div>
-        <div class="modal-footer">
-          <a id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Scripts -->
   <script>
-      document.addEventListener('DOMContentLoaded', function () {
-      const modalEditarMoradia = document.getElementById('modalEditarMoradia');
+    document.addEventListener('DOMContentLoaded', function () {
+    const modalEditarMoradia = document.getElementById('modalEditarMoradia');
+    if (modalEditarMoradia) {
       modalEditarMoradia.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const id = button.getAttribute('data-id');
-        const nome = button.getAttribute('data-nome');
-  
+        const button = event.relatedTarget; 
+        const id = button.getAttribute('data-id');  
+        const nome = button.getAttribute('data-nome');  
+    
         const inputId = modalEditarMoradia.querySelector('#editarMoradiaId');
         const inputNome = modalEditarMoradia.querySelector('#editarMoradiaNome');
         const form = document.getElementById('formEditarMoradia');
-  
-        inputId.value = id;
-        inputNome.value = nome;
-        form.action = `/editar_moradia/${id}`;
+    
+        inputId.value = id;  
+        inputNome.value = nome;  
+        form.action = `/editar_moradia/${id}`;  
       });
-  
-      const modalConfirmarExclusao = document.getElementById('modalConfirmarExclusaoMoradia');
-      modalConfirmarExclusao.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const id = button.getAttribute('data-id');
-        const excluirBtn = document.getElementById('confirmarExclusaoBtn');
-        excluirBtn.href = `/deletar_moradia/${id}`;
-      });
-    });
-  </script>
+    }});
+    </script>
   

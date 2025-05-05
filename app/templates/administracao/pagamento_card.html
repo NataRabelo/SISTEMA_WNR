@@ -1,0 +1,121 @@
+<!-- Botão Adicionar -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5>Gerenciar Pagamentos</h5>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCadastrarPagamento">Adicionar Pagamento</button>
+  </div>
+  
+  <!-- Tabela -->
+  <table id="tabela-pagamentos" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Juros</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pagamento in pagamentos %}
+      <tr>
+        <td>{{ pagamento.id }}</td>
+        <td>{{ pagamento.nome }}</td>
+        <td>{{ pagamento.juros }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning btn-editar" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalEditarPagamento"
+            data-id="{{ pagamento.id }}"
+            data-nome="{{ pagamento.nome }}"
+            data-juros="{{ pagamento.juros }}"
+          >Editar</button>
+  
+          <button class="btn btn-sm btn-danger btn-excluir" 
+            data-bs-toggle="modal"
+            data-bs-url="/deletar_pagamento/{{ pagamento.id }}"
+            data-bs-target="#modalConfirmarExclusao" 
+            data-id="{{ pagamento.id }}"
+          >Excluir</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <!-- Modal Cadastrar -->
+  <div class="modal fade" id="modalCadastrarPagamento" tabindex="-1" aria-labelledby="modalCadastrarPagamentoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" action="/cadastrar_pagamento">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastrar Pagamento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="novoPagamentoNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="novoPagamentoNome" name="nome" required>
+            </div>
+            <div class="mb-3">
+                <label for="novoPagamentoJuros" class="form-label">Juros</label>
+                <input type="text" class="form-control" id="novoPagamentoJuros" name="juros" required>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Modal Editar -->
+  <div class="modal fade" id="modalEditarPagamento" tabindex="-1" aria-labelledby="modalEditarPagamentoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" id="formEditarPagamento">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Pagamento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id" id="editarPagamentoId">
+            <div class="mb-3">
+              <label for="editarPagamentoNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="editarPagamentoNome" name="nome" required>
+            </div>
+            <div class="mb-3">
+                <label for="editarPagamentoJuros" class="form-label">Juros</label>
+                <input type="text" class="form-control" id="editarPagamentoJuros" name="juros" required>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Atualizar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalEditarPagamento = document.getElementById('modalEditarPagamento');
+      if (modalEditarPagamento) {
+        modalEditarPagamento.addEventListener('show.bs.modal', function (event) {
+          const button = event.relatedTarget;
+          const id = button.getAttribute('data-id');
+          const nome = button.getAttribute('data-nome');
+          const juros = button.getAttribute('data-juros');
+    
+          document.getElementById('editarPagamentoId').value = id;
+          document.getElementById('editarPagamentoNome').value = nome;
+          document.getElementById('editarPagamentoJuros').value = juros;
+    
+          const form = document.getElementById('formEditarPagamento');
+          form.action = `/editar_pagamento/${id}`;
+        });
+      }
+    });
+    </script>
+    

@@ -1,0 +1,108 @@
+<!-- Botão Adicionar -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5>Gerenciar Escolaridade</h5>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCadastrarEscolaridade">Adicionar Escolaridade</button>
+  </div>
+  
+  <!-- Tabela -->
+  <table id="tabela-escolaridades" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for escolaridade in escolaridades %}
+      <tr>
+        <td>{{ escolaridade.id }}</td>
+        <td>{{ escolaridade.nome }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning btn-editar" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalEditarEscolaridade"
+            data-id="{{ escolaridade.id }}"
+            data-nome="{{ escolaridade.nome }}"
+          >Editar</button>
+  
+          <button class="btn btn-sm btn-danger btn-excluir" 
+            data-bs-toggle="modal"
+            data-bs-url="/deletar_escolaridade/{{ escolaridade.id }}"
+            data-bs-target="#modalConfirmarExclusao" 
+            data-id="{{ escolaridade.id }}"
+          >Excluir</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <!-- Modal Cadastrar -->
+  <div class="modal fade" id="modalCadastrarEscolaridade" tabindex="-1" aria-labelledby="modalCadastrarEscolaridadeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" action="/cadastrar_escolaridade">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastrar Escolaridade</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="novaEscolaridadeNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="novaEscolaridadeNome" name="nome" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Modal Editar -->
+  <div class="modal fade" id="modalEditarEscolaridade" tabindex="-1" aria-labelledby="modalEditarEscolaridadeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" id="formEditarEscolaridade">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Escolaridade</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id" id="editarEscolaridadeId">
+            <div class="mb-3">
+              <label for="editarEscolaridadeNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="editarEscolaridadeNome" name="nome" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Atualizar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalEditarEscolaridade = document.getElementById('modalEditarEscolaridade');
+      if (modalEditarEscolaridade) {
+        modalEditarEscolaridade.addEventListener('show.bs.modal', function (event) {
+          const button = event.relatedTarget;
+          const id = button.getAttribute('data-id');
+          const nome = button.getAttribute('data-nome');
+    
+          document.getElementById('editarEscolaridadeId').value = id;
+          document.getElementById('editarEscolaridadeNome').value = nome;
+    
+          const form = document.getElementById('formEditarEscolaridade');
+          form.action = `/editar_escolaridade/${id}`;
+        });
+      }
+    });
+    </script>
+    
