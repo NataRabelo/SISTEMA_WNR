@@ -91,6 +91,15 @@
         </div>
     </nav>
 
+    {% if request.endpoint != 'main_bp.menu' %}
+    <div class="container mt-5 pt-3">
+        <a href="{{ url_for('main_bp.menu') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+    {% endif %}
+
+
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="container">
@@ -162,6 +171,13 @@
                 }, 3000);
             }
         });
+
+        window.onbeforeunload = function() {
+            // Enviar um pedido para o servidor para limpar a sessão quando a aba for fechada
+            fetch('/logout', {
+                method: 'POST',
+            });
+        };
     </script>
     
     

@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="dt_nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento"  onchange="verificarIdade()" required value="{{ cliente.data_nascimento }}">
+                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="{{ cliente.data_nascimento.strftime('%Y-%m-%d') if cliente.data_nascimento else '' }}" onchange="verificarIdade()" required >
                 </div>
                 <div class="col-md-2">
                     <label for="idade" class="form-label">Idade:</label>
@@ -40,27 +40,9 @@
                     <div class="col-md-3">
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
                         <select class="form-select" name="grau_parentesco" id="grau_parentesco">
-                            <option value="">Selecione...</option>
-                            <option value="Pai/Mãe"{% if cliente.grau_parentesco == "Pai/Mãe" %}selected{% endif %}>Pai/Mãe</option>
-                            <option value="Avô/Avó"{% if cliente.grau_parentesco == "Avô/Avó" %}selected{% endif %}>Avô/Avó</option>
-                            <option value="Bisavô/Bisavó"{% if cliente.grau_parentesco == "Bisavô/Bisavó" %}selected{% endif %}>Bisavô/Bisavó</option>
-                            <option value="Trisavô/Trisavó"{% if cliente.grau_parentesco == "Trisavô/Trisavó" %}selected{% endif %}>Trisavô/Trisavó</option>
-                            <option value="Filho/Filha"{% if cliente.grau_parentesco == "Filho/Filha" %}selected{% endif %}>Filho/Filha</option>
-                            <option value="Neto/Neta"{% if cliente.grau_parentesco == "Neto/Neta" %}selected{% endif %}>Neto/Neta</option>
-                            <option value="Bisneto/Bisneta"{% if cliente.grau_parentesco == "Bisneto/Bisneta" %}selected{% endif %}>Bisneto/Bisneta</option>
-                            <option value="Trisneto/Trisneta"{% if cliente.grau_parentesco == "Trisneto/Trisneta" %}selected{% endif %}>Trisneto/Trisneta</option>
-                            <option value="Irmão/Irmã"{% if cliente.grau_parentesco == "Irmão/Irmã" %}selected{% endif %}>Irmão/Irmã</option>
-                            <option value="Tio/Tia"{% if cliente.grau_parentesco == "Tio/Tia" %}selected{% endif %}>Tio/Tia</option>
-                            <option value="Sobrinho/Sobrinha"{% if cliente.grau_parentesco == "Sobrinho/Sobrinha" %}selected{% endif %}>Sobrinho/Sobrinha</option>
-                            <option value="Primo/Prima"{% if cliente.grau_parentesco == "Primo/Prima" %}selected{% endif %}>Primo/Prima</option>
-                            <option value="Sogro/Sogra"{% if cliente.grau_parentesco == "Sogro/Sogra" %}selected{% endif %}>Sogro/Sogra</option>
-                            <option value="Genro/Nora"{% if cliente.grau_parentesco == "Genro/Nora" %}selected{% endif %}>Genro/Nora</option>
-                            <option value="Cunhado/Cunhada"{% if cliente.grau_parentesco == "Cunhado/Cunhada" %}selected{% endif %}>Cunhado/Cunhada</option>
-                            <option value="Padrasto/Madrasta"{% if cliente.grau_parentesco == "Padrasto/Madrasta" %}selected{% endif %}>Padrasto/Madrasta</option>
-                            <option value="Enteado/Enteada"{% if cliente.grau_parentesco == "Enteado/Enteada" %}selected{% endif %}>Enteado/Enteada</option>
-                            <option value="pais_adotivos"{% if cliente.grau_parentesco == "pais_adotivos" %}selected{% endif %}>Pais adotivos</option>
-                            <option value="filhos_adotivos"{% if cliente.grau_parentesco == "filhos_adotivos" %}selected{% endif %}>Filhos adotivos</option>
-                            <option value="irmaos_criacao"{% if cliente.grau_parentesco == "irmaos_criacao" %}selected{% endif %}>Irmãos de criação</option>
+                            {% for parentesco in parentescos %}
+                            <option value="{{ parentesco.id }}" {% if cliente.grau_parentesco_id == parentesco.id %}selected{% endif %}>{{ parentesco.nome }}</option>
+                            {% endfor %}
                           </select>                          
                     </div>
                 </div>
@@ -78,9 +60,9 @@
                     <label for="sexo" class="form-label">Sexo:</label>
                     <select class="form-select campoObrigatorio" id="sexo" name="sexo" required>
                         <option value="">Selecione...</option>
-                        <option value="Masculino" {% if cliente.sexo == "Masculino" %}selected{% endif %}>Masculino</option>
-                        <option value="Feminino" {% if cliente.sexo == "Feminino" %}selected{% endif %}>Feminino</option>
-                        <option value="Outro" {% if cliente.sexo == "Outro" %}selected{% endif %}>Outro</option>
+                        {% for sexo in sexos %}
+                        <option value="{{ sexo.id }}" {% if cliente.sexo_id == sexo.id %}selected{% endif %}>{{ sexo.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -142,42 +124,18 @@
                 <div class="col-md-3">
                     <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
                     <select class="form-select campoObrigatorio" name="condicao_habitacao" required>
-                        <option value="">Selecione...</option>
-                        <option  value="Alugada"{% if cliente.condicao_habitacao == "Alugada" %}selected{% endif %}>Alugada</option>
-                        <option  value="Própria"{% if cliente.condicao_habitacao == "Própria" %}selected{% endif %}>Própria</option>
-                        <option  value="Financiada"{% if cliente.condicao_habitacao == "Financiada" %}selected{% endif %}>Financiada</option>
-                        <option  value="Cedida"{% if cliente.condicao_habitacao == "Cedida" %}selected{% endif %}>Cedida</option>
-                        <option  value="Compartilhada"{% if cliente.condicao_habitacao == "Compartilhada" %}selected{% endif %}>Compartilhada</option>
-                        <option  value="Ocupação Irregular"{% if cliente.condicao_habitacao == "Ocupação Irregular" %}selected{% endif %}>Ocupação Irregular</option>
-                        <option  value="Sublugada"{% if cliente.condicao_habitacao == "Sublugada" %}selected{% endif %}>Sublugada</option>
-                        <option  value="Cohab"{% if cliente.condicao_habitacao == "Cohab" %}selected{% endif %}>Cohab</option>
-                        <option  value="Temporária"{% if cliente.condicao_habitacao == "Temporária" %}selected{% endif %}>Temporária</option>
-                        <option  value="Comodatária"{% if cliente.condicao_habitacao == "Comodatária" %}selected{% endif %}>Comodatária</option>
+                        {% for condicao in condicoes %}
+                        <option value="{{ condicao.id }}" {% if cliente.condicao_id == condicao.id %}selected{% endif %}>{{ condicao.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
                     <select class="form-select campoObrigatorio" name="tipo_moradia" required>
                         <option value="">Selecione...</option>
-                        <option value="Apartamento"{% if cliente.tipo_moradia == "Apartamento" %}selected{% endif %}>Apartamento</option>
-                        <option value="Casa"{% if cliente.tipo_moradia == "Casa" %}selected{% endif %}>Casa</option>
-                        <option value="Sobrado"{% if cliente.tipo_moradia == "Sobrado" %}selected{% endif %}>Sobrado</option>
-                        <option value="Cortiço"{% if cliente.tipo_moradia == "Cortiço" %}selected{% endif %}>Cortiço</option>
-                        <option value="Chale"{% if cliente.tipo_moradia == "Chale" %}selected{% endif %}>Chale</option>
-                        <option value="Studio"{% if cliente.tipo_moradia == "Studio" %}selected{% endif %}>Studio</option>
-                        <option value="Kitnet"{% if cliente.tipo_moradia == "Kitnet" %}selected{% endif %}>Kitnet</option>
-                        <option value="Residencia"{% if cliente.tipo_moradia == "Residencia" %}selected{% endif %}>Residencia</option>
-                        <option value="Condominio"{% if cliente.tipo_moradia == "Condominio" %}selected{% endif %}>Condominio</option>
-                        <option value="Barraco"{% if cliente.tipo_moradia == "Barraco" %}selected{% endif %}>Barraco</option>
-                        <option value="Albergue"{% if cliente.tipo_moradia == "Albergue" %}selected{% endif %}>Albergue</option>
-                        <option value="Predio"{% if cliente.tipo_moradia == "Predio" %}selected{% endif %}>Prédio</option>
-                        <option value="Sitio"{% if cliente.tipo_moradia == "Sitio" %}selected{% endif %}>Sitio</option>
-                        <option value="Chacara"{% if cliente.tipo_moradia == "Chacara" %}selected{% endif %}>Chacara</option>
-                        <option value="Fazenda"{% if cliente.tipo_moradia == "Fazenda" %}selected{% endif %}>Fazenda</option>
-                        <option value="Rancho"{% if cliente.tipo_moradia == "Rancho" %}selected{% endif %}>Rancho</option>
-                        <option value="Moradia Estudantil"{% if cliente.tipo_moradia == "Moradia Estudantil" %}selected{% endif %}>Moradia Estudantil</option>
-                        <option value="Cohab"{% if cliente.tipo_moradia == "Cohab" %}selected{% endif %}>Cohab</option>
-                        <option value="Vila"{% if cliente.tipo_moradia == "Vila" %}selected{% endif %}>Vila</option>
+                        {% for moradia in moradias %}
+                        <option value="{{ moradia.id }}" {% if cliente.tipo_moradia_id == moradia.id %}selected{% endif %}>{{ moradia.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -187,10 +145,9 @@
                     <label for="transporte" class="custom-label">Meio de Transporte:</label>
                     <select class="form-select campoObrigatorio" name="transporte" required>
                         <option value="">Selecione...</option>
-                        <option value="Transporte Publico"{% if cliente.transporte == "Transporte Publico" %}selected{% endif %}>Transporte Público</option>
-                        <option value="Bicicleta"{% if cliente.transporte == "Bicicleta" %}selected{% endif %}>Bicicleta</option>
-                        <option value="Carro"{% if cliente.transporte == "Carro" %}selected{% endif %}>Carro</option>
-                        <option value="Moto"{% if cliente.transporte == "Moto" %}selected{% endif %}>Moto</option>
+                        {% for transporte in transportes %}
+                        <option value="{{ transporte.id }}" {% if cliente.tipo_transporte_id == transporte.id %}selected{% endif %}>{{ transporte.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -199,14 +156,9 @@
                     <label for="escolaridade" class="custom-label">escolaridade:</label>
                     <select class="form-select campoObrigatorio" id="escolaridade" name="escolaridade">
                         <option value="">Selecione...</option>
-                        <option value="Não Alfabetizado" {% if cliente.escolaridade == "Não Alfabetizado" %}selected{% endif %}>Não Alfabetizado</option>
-                        <option value="Ensino Fundamental" {% if cliente.escolaridade == "Ensino Fundamental" %}selected{% endif %}>Ensino Fundamental</option>
-                        <option value="Ensino Médio" {% if cliente.escolaridade == "Ensino Médio" %}selected{% endif %}>Ensino Médio</option>
-                        <option value="Ensino Superior" {% if cliente.escolaridade == "Ensino Superior" %}selected{% endif %}>Ensino Superior</option>
-                        <option value="Pós Graduação" {% if cliente.escolaridade == "Pós Graduação" %}selected{% endif %}>Pós Graduação</option>
-                        <option value="Mestrado" {% if cliente.escolaridade == "Mestrado" %}selected{% endif %}>Mestrado</option>
-                        <option value="Doutorado" {% if cliente.escolaridade == "Doutorado" %}selected{% endif %}>Doutorado</option>
-                        <option value="PhD" {% if cliente.escolaridade == "PhD" %}selected{% endif %}>PhD</option>
+                        {% for escolaridade in escolaridades %}
+                        <option value="{{ escolaridade.id }}" {% if cliente.escolaridade_id == escolaridade.id %}selected{% endif %}>{{ escolaridade.nome }}</option>
+                        {% endfor %}
                     </select>                    
                 </div>
                 <div class="col-md-3">
@@ -270,7 +222,7 @@
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12 text-end">
-                    <a href="{{ url_for('client_bp.cliente') }}" class="btn btn-danger">Cancelar</a>
+                    <a href="{{ url_for('client_bp.listar_cliente') }}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div>                        

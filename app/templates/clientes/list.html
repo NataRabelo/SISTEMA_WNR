@@ -89,6 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         "buttons": [
             {
+                text: "Adicionar",
+                className: "btn btn-success me-1",
+                action: function () {
+                    window.location.href = "{{ url_for('client_bp.cadastrar_cliente') }}";
+                }
+            },
+            {
                 text: "Relatório",
                 className: "btn btn-warning",
                 action: function () {

@@ -36,26 +36,9 @@
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
                         <select class="form-select" name="grau_parentesco" id="grau_parentesco">
                             <option value="">Selecione...</option>
-                            <option value="Pai/Mãe">Pai/Mãe</option>
-                            <option value="Avô/Avó">Avô/Avó</option>
-                            <option value="Bisavô/Bisavó">Bisavô/Bisavó</option>
-                            <option value="Trisavô/Trisavó">Trisavô/Trisavó</option>
-                            <option value="Filho/Filha">Filho/Filha</option>
-                            <option value="Neto/Neta">Neto/Neta</option>
-                            <option value="Bisneto/Bisneta">Bisneto/Bisneta</option>
-                            <option value="Trisneto/Trisneta">Trisneto/Trisneta</option>
-                            <option value="Irmão/Irmã">Irmão/Irmã</option>
-                            <option value="Tio/Tia">Tio/Tia</option>
-                            <option value="Sobrinho/Sobrinha">Sobrinho/Sobrinha</option>
-                            <option value="Primo/Prima">Primo/Prima</option>
-                            <option value="Sogro/Sogra">Sogro/Sogra</option>
-                            <option value="Genro/Nora">Genro/Nora</option>
-                            <option value="Cunhado/Cunhada">Cunhado/Cunhada</option>
-                            <option value="Padrasto/Madrasta">Padrasto/Madrasta</option>
-                            <option value="Enteado/Enteada">Enteado/Enteada</option>
-                            <option value="pais_adotivos">Pais adotivos</option>
-                            <option value="filhos_adotivos">Filhos adotivos</option>
-                            <option value="irmaos_criacao">Irmãos de criação</option>
+                            {% for parentesco in parentescos %}
+                            <option value="{{ parentesco.id }}">{{ parentesco.nome }}</option>
+                            {% endfor %}
                           </select>                          
                     </div>
                 </div>
@@ -73,9 +56,9 @@
                     <label for="sexo" class="form-label">Sexo:</label>
                     <select class="form-select campoObrigatorio" id="sexo" name="sexo" required>
                         <option value="">Selecione...</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Feminino">Feminino</option>
-                        <option value="Outro">Outro</option>
+                        {% for sexo in sexos %}
+                        <option value="{{ sexo.id }}">{{ sexo.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -139,41 +122,18 @@
                     <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
                     <select class="form-select campoObrigatorio" name="condicao_habitacao" required>
                         <option value="">Selecione...</option>
-                        <option  value="Alugada">Alugada</option>
-                        <option  value="Própria">Própria</option>
-                        <option  value="Financiada">Financiada</option>
-                        <option  value="Cedida">Cedida</option>
-                        <option  value="Compartilhada">Compartilhada</option>
-                        <option  value="Ocupação Irregular">Ocupação Irregular</option>
-                        <option  value="Sublugada">Sublugada</option>
-                        <option  value="Cohab">Cohab</option>
-                        <option  value="Temporária">Temporária</option>
-                        <option  value="Comodatária">Comodatária</option>
+                        {% for condicao in condicoes %}
+                        <option value="{{ condicao.id }}">{{ condicao.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
                     <select class="form-select campoObrigatorio" name="tipo_moradia" required>
                         <option value="">Selecione...</option>
-                        <option value="Apartamento">Apartamento</option>
-                        <option value="Casa">Casa</option>
-                        <option value="Sobrado">Sobrado</option>
-                        <option value="Cortiço">Cortiço</option>
-                        <option value="Chale">Chale</option>
-                        <option value="Studio">Studio</option>
-                        <option value="Kitnet">Kitnet</option>
-                        <option value="Residencia">Residencia</option>
-                        <option value="Condominio">Condominio</option>
-                        <option value="Barraco">Barraco</option>
-                        <option value="Albergue">Albergue</option>
-                        <option value="Predio">Prédio</option>
-                        <option value="Sitio">Sitio</option>
-                        <option value="Chacara">Chacara</option>
-                        <option value="Fazenda">Fazenda</option>
-                        <option value="Rancho">Rancho</option>
-                        <option value="Moradia Estudantil">Moradia Estudantil</option>
-                        <option value="Cohab">Cohab</option>
-                        <option value="Vila">Vila</option>
+                        {% for moradia in moradias %}
+                        <option value="{{ moradia.id }}">{{ moradia.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -183,10 +143,9 @@
                     <label for="transporte" class="custom-label">Meio de Transporte:</label>
                     <select class="form-select campoObrigatorio" name="transporte" required>
                         <option value="">Selecione...</option>
-                        <option value="Transporte Publico">Transporte Público</option>
-                        <option value="Bicicleta">Bicicleta</option>
-                        <option value="Carro">Carro</option>
-                        <option value="Moto">Moto</option>
+                        {% for transporte in transportes %}
+                        <option value="{{ transporte.id }}">{{ transporte.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -195,14 +154,9 @@
                     <label for="escolaridade" class="custom-label">escolaridade:</label>
                     <select class="form-select campoObrigatorio" id="escolaridade" name="escolaridade">
                         <option value="">Selecione...</option>
-                        <option vlaue="Não Alfabetizado">Não Alfabetizado</option>
-                        <option vlaue="Ensino Fundamental">Ensino Fundamental</option>
-                        <option vlaue="Ensino Mêdio">Ensino Mêdio</option>
-                        <option vlaue="Ensino Superior">Ensino Superior</option>
-                        <option vlaue="Pós Graduação">Pós Graduação</option>
-                        <option vlaue="Mestado">Mestrado</option>
-                        <option vlaue="Doutorado">Doutorado</option>
-                        <option vlaue="PhD">PhD</option>
+                        {% for escolaridade in escolaridades %}
+                        <option value="{{ escolaridade.id }}">{{ escolaridade.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-3">

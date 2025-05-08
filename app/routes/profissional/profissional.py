@@ -1,21 +1,22 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.utils.editor_valor import converter_para_float
 from app.utils.decorators import role_required
-from flask_login import current_user, login_required
+from flask_login import current_user
 from app.models import Profissional
 from datetime import datetime
 from app import db
+from app.utils.login_required import required_login
 
 professional_bp = Blueprint('professional_bp', __name__)
 
 @professional_bp.route('/profissional', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def profissional():
     return render_template('profissional/professional.html')
 
 @professional_bp.route('/cadastrar_profissional', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def cadastrar_profissional():
     if request.method == 'POST':
@@ -34,7 +35,6 @@ def cadastrar_profissional():
             issqn                   = request.form.get('issqn'),
             fone_pessoal            = request.form.get('fone_pessoal'),
             fone_profissional       = request.form.get('fone_profissional'),
-            foto                    = request.form.get('foto'),
             curriculum_lattes       = request.form.get('curriculum_lattes'),
             dias_horas_disponiveis  = request.form.get('dias_horas_disponiveis'),
             endereco_profissional   = request.form.get('endereco_profissional'),
@@ -58,7 +58,7 @@ def cadastrar_profissional():
     return render_template('profissional/form.html')
 
 @professional_bp.route('/listar_profissional', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_profissional():
     profissionais = Profissional.query.all()
@@ -66,7 +66,7 @@ def listar_profissional():
     return render_template('profissional/list.html', profissionais=profissionais, usuario=usuario)
 
 @professional_bp.route('/editar_profissional/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_profissional(id):
     profissional = Profissional.query.get_or_404(id)
@@ -105,7 +105,7 @@ def editar_profissional(id):
     return render_template('profissional/form_edit.html', profissional=profissional)
 
 @professional_bp.route('/deletar_profissional/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('admin')
 def deletar_profissional(id):
     profissional = Profissional.query.get_or_404(id)

@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
-from app.models import Encaminhamento, Cliente, Profissional
+from app.models import Encaminhamento, Cliente, Profissional, Situacao, TipoEncaminhamento
 from app.utils.decorators import role_required 
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -19,6 +19,9 @@ def encaminhamento():
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')
 def criar_encaminhamento():
+    situacoes = Situacao.query.all()
+    tencaminhamentos = TipoEncaminhamento.query.all()
+
     if request.method == 'POST':
         cliente_id = request.form.get('cliente_id')
         profissional_id = request.form.get('profissional_id')
@@ -34,9 +37,9 @@ def criar_encaminhamento():
             dias_horas_atendimento=request.form.get('dias_horas_atendimento'),
             data_encaminhamento=datetime.utcnow(),
             observacoes_gerais=request.form.get('observacoes_gerais'),
-            queixa=request.form.get('queixa'),
-            situacao=request.form.get('situacao'),
-            tipo_encaminhamento=request.form.get('tipo_encaminhamento'),
+            queixa= request.form.get('queixa'),
+            situacao_id=int(request.form.get('situacao')),
+            tipo_encaminhamento_id=int(request.form.get('tipo_encaminhamento')),
             valor= converter_para_float(request.form.get('valor'))
         )
 
@@ -53,7 +56,11 @@ def criar_encaminhamento():
 
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
-    return render_template('encaminhamento/form.html', clientes=clientes, profissionais=profissionais)
+    return render_template('encaminhamento/form.html',
+                            clientes=clientes,
+                            profissionais=profissionais,
+                            tencaminhamentos=tencaminhamentos,
+                            situacoes=situacoes)
 
 @encaminhamento_bp.route('/listar_encaminhamento', methods=['GET', 'POST'])
 @login_required
@@ -67,6 +74,8 @@ def listar_encaminhamento():
 @login_required
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_encaminhamento(id):
+    tencaminhameos = TipoEncaminhamento.query.all()
+    situacoes = Situacao.query.all()
     encaminhamento = Encaminhamento.query.get_or_404(id)
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
@@ -79,15 +88,21 @@ def editar_encaminhamento(id):
         encaminhamento.dias_horas_atendimento = request.form.get('dias_horas_atendimento')
         encaminhamento.observacoes_gerais = request.form.get('observacoes_gerais')
         encaminhamento.queixa = request.form.get('queixa')
-        encaminhamento.situacao = request.form.get('situacao')
-        encaminhamento.tipo_encaminhamento = request.form.get('tipo_encaminhamento')
+        encaminhamento.situacao_id = int(request.form.get('situacao'))
+        encaminhamento.tipo_encaminhamento_id = int(request.form.get('tipo_encaminhamento'))
         encaminhamento.valor = converter_para_float(request.form.get('valor'))
         
         db.session.commit()
         flash('Encaminhamento atualizado com sucesso!', 'success')
         return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
     return render_template(
-        'encaminhamento/form_edit.html', encaminhamento=encaminhamento, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado)
+        'encaminhamento/form_edit.html',
+        encaminhamento=encaminhamento,
+        clientes=clientes,
+        profissionais=profissionais,
+        valor_formatado=valor_formatado,
+        tencaminhamentos=tencaminhameos,
+        situacoes=situacoes)
 
 @encaminhamento_bp.route('/deletar_encaminhamento/<int:id>')
 @login_required

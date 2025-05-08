@@ -42,19 +42,18 @@
                     <label for="situacao" class="form-label">Situação:</label>
                     <select class="form-select campoObrigatorio" name="situacao" id="situacao">
                         <option value="">Selecione...</option>
-                        <option value="Pendente" {% if encaminhamento.situacao == "Pendente" %}selected{% endif %}>Pendente</option>
-                        <option value="Ativo"{% if encaminhamento.situacao == "Ativo" %}selected{% endif %}>Ativo</option>
-                        <option value="Inativo"{% if encaminhamento.situacao == "Inativo" %}selected{% endif %}>Inativo</option>
-                        <option value="Retorno"{% if encaminhamento.situacao == "Retorno" %}selected{% endif %}>Retorno</option>
-                        <option value="Em andamento"{% if encaminhamento.situacao == "Em andamento" %}selected{% endif %}>Em andamento</option>
+                        {% for situacao in situacoes %}
+                        <option value="{{ situacao.id }}" {% if encaminhamento.situacao_id == situacao.id %}selected{% endif %}>{{ situacao.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
                     <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento">
                         <option value="">Selecione...</option>
-                        <option value="Rodizio"{% if encaminhamento.tipo_encaminhamento == "Rodizio" %}selected{% endif %}>Rodizio</option>
-                        <option value="Indicação"{% if encaminhamento.tipo_encaminhamento == "Indicação" %}selected{% endif %}>Indicação</option>
+                        {% for tencaminhamento in tencaminhamentos %}
+                        <option value="{{ tencaminhamento.id }}" {% if encaminhamento.tipo_encaminhamento_id == tencaminhamento.id %}selected{% endif %}>{{ tencaminhamento.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -80,7 +79,7 @@
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-md-12 text-end">
-                    <a href="{{ url_for('encaminhamento_bp.encaminhamento') }}" class="btn btn-danger">Cancelar</a>
+                    <a href="{{ url_for('encaminhamento_bp.listar_encaminhamento') }}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div> 

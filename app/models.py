@@ -50,8 +50,19 @@ class Situacao(db.Model):
     __tablename__ = "situacao"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
-    guias = db.relationship("Guia", back_populates="situacao")
+    encaminhamentos = db.relationship("Encaminhamento", back_populates="situacao")
 
+class GrauParentesco(db.Model):
+    __tablename__ = "grau_parentesco"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    clientes = db.relationship("Cliente", back_populates="grau_parentesco")
+
+class TipoEncaminhamento(db.Model):
+    __tablename__ = "tipo_encaminhamento"
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255), nullable=False)
+    encaminhamento = db.relationship("Encaminhamento", back_populates="tipo_encaminhamento")
 
 # USUÁRIO
 class Usuario(UserMixin, db.Model):
@@ -101,10 +112,9 @@ class Cliente(db.Model):
     endereco = db.Column(db.String(255))
     fone_contato = db.Column(db.String(20))
     fone_pessoal = db.Column(db.String(20))
-    grau_parentesco = db.Column(db.String(255))
     nome_plano_saude = db.Column(db.String(255))
     plano_saude = db.Column(db.String(255))
-    nome_responsavel = db.Column(db.String(255))
+    nome_responsavel = db.Column(db.String(255), default="")
     possui_filhos = db.Column(db.String(255))
     numero_filhos = db.Column(db.Integer, default=0)
     previdenciario = db.Column(db.String(255))
@@ -113,7 +123,6 @@ class Cliente(db.Model):
     rg = db.Column(db.String(20))
     saldo = db.Column(db.Float, nullable=False, default=0.0)
     idade = db.Column(db.Integer, default=0)
-    telefone = db.Column(db.String(20))
     
 
     sexo_id = db.Column(db.Integer, db.ForeignKey("sexo.id"))
@@ -121,12 +130,15 @@ class Cliente(db.Model):
     tipo_moradia_id = db.Column(db.Integer, db.ForeignKey("tipo_moradia.id"))
     tipo_transporte_id = db.Column(db.Integer, db.ForeignKey("tipo_transporte.id"))
     escolaridade_id = db.Column(db.Integer, db.ForeignKey("escolaridade.id"))
+    grau_parentesco_id = db.Column(db.Integer, db.ForeignKey("grau_parentesco.id"))
 
     sexo = db.relationship("Sexo", back_populates="clientes")
     condicao_habitacao = db.relationship("CondicaoHabitacao", back_populates="clientes")
     tipo_moradia = db.relationship("TipoMoradia", back_populates="clientes")
     tipo_transporte = db.relationship("TipoTransporte", back_populates="clientes")
     escolaridade = db.relationship("Escolaridade", back_populates="clientes")
+    grau_parentesco = db.relationship("GrauParentesco", back_populates="clientes")
+
 
     encaminhamentos = db.relationship("Encaminhamento", back_populates="cliente", cascade="all, delete-orphan")
     guias = db.relationship("Guia", back_populates="cliente", cascade="all, delete-orphan")
@@ -137,9 +149,27 @@ class Profissional(db.Model):
     __tablename__ = "profissionais"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
-    especialidade = db.Column(db.String(255))
+    cpf = db.Column(db.String(14), unique=True, nullable=False)
     email = db.Column(db.String(255))
-    telefone = db.Column(db.String(20))
+    data_nascimento = db.Column(db.DateTime)
+    bairro = db.Column(db.String)
+    banco = db.Column(db.String)
+    cep = db.Column(db.String)
+    cidade = db.Column(db.String)
+    complemento = db.Column(db.String)
+    graduacao = db.Column(db.String)
+    issqn = db.Column(db.String)
+    fone_pessoal = db.Column(db.String)
+    fone_profissional = db.Column(db.String)
+    curriculum_lattes = db.Column(db.String)
+    dias_horas_disponiveis = db.Column(db.String)
+    endereco_profissional = db.Column(db.String)
+    estado = db.Column(db.String)
+    observacoes = db.Column(db.String)
+    pix = db.Column(db.String)
+    registro_profissional = db.Column(db.String)
+    rg = db.Column(db.String(11), unique=True, nullable=False)
+    valor_minimo = db.Column(db.Float)
 
     encaminhamentos = db.relationship("Encaminhamento", back_populates="profissional", cascade="all, delete-orphan")
     guias = db.relationship("Guia", back_populates="profissional", cascade="all, delete-orphan")
@@ -149,11 +179,20 @@ class Profissional(db.Model):
 class Encaminhamento(db.Model):
     __tablename__ = "encaminhamentos"
     id = db.Column(db.Integer, primary_key=True)
+    convenio = db.Column(db.String)
+    dias_horas_atendimento = db.Column(db.String)
+    data_encaminhamento = db.Column(db.DateTime, default=db.func.current_timestamp())
+    observacoes_gerais = db.Column(db.String)
+    queixa = db.Column(db.String)
+    valor = db.Column(db.Float)
+
     cliente_id = db.Column(db.Integer, db.ForeignKey("clientes.id", ondelete="CASCADE"))
     profissional_id = db.Column(db.Integer, db.ForeignKey("profissionais.id", ondelete="CASCADE"))
-    data = db.Column(db.DateTime)
-    observacoes = db.Column(db.String(500))
+    situacao_id = db.Column(db.Integer, db.ForeignKey("situacao.id"))
+    tipo_encaminhamento_id = db.Column(db.Integer, db.ForeignKey("tipo_encaminhamento.id"))
 
+    situacao = db.relationship("Situacao", back_populates="encaminhamentos")
+    tipo_encaminhamento = db.relationship("TipoEncaminhamento", back_populates="encaminhamento")
     cliente = db.relationship("Cliente", back_populates="encaminhamentos", passive_deletes=True)
     profissional = db.relationship("Profissional", back_populates="encaminhamentos", passive_deletes=True)
 
@@ -172,4 +211,3 @@ class Guia(db.Model):
     cliente = db.relationship("Cliente", back_populates="guias", passive_deletes=True)
     profissional = db.relationship("Profissional", back_populates="guias", passive_deletes=True)
     metodo_pagamento = db.relationship("MetodoPagamento", back_populates="guias")
-    situacao = db.relationship("Situacao", back_populates="guias")

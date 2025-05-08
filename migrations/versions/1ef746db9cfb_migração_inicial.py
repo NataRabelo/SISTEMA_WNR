@@ -1,8 +1,8 @@
-"""Criando banco de dados 2.0
+"""Migração Inicial
 
-Revision ID: 786ffeb6bd1a
+Revision ID: 1ef746db9cfb
 Revises: 
-Create Date: 2025-05-03 15:21:55.345482
+Create Date: 2025-05-07 17:42:53.873679
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '786ffeb6bd1a'
+revision = '1ef746db9cfb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('escolaridade',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('nome', sa.String(length=255), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('grau_parentesco',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nome', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id')
@@ -75,19 +80,47 @@ def upgrade():
     op.create_table('clientes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nome', sa.String(length=255), nullable=False),
-    sa.Column('telefone', sa.String(length=20), nullable=True),
+    sa.Column('cpf', sa.String(length=14), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=True),
+    sa.Column('data_nascimento', sa.DateTime(), nullable=True),
+    sa.Column('renda_familiar', sa.Float(), nullable=False),
+    sa.Column('bairro', sa.String(length=255), nullable=True),
+    sa.Column('canal_divulgacao', sa.String(length=255), nullable=True),
+    sa.Column('cep', sa.String(length=10), nullable=True),
+    sa.Column('cidade', sa.String(length=255), nullable=True),
+    sa.Column('cpf_responsavel', sa.String(length=14), nullable=True),
+    sa.Column('complemento', sa.String(length=255), nullable=True),
+    sa.Column('numero_cs', sa.String(length=20), nullable=True),
+    sa.Column('despesa_mensal', sa.Float(), nullable=False),
+    sa.Column('estado', sa.String(length=255), nullable=True),
+    sa.Column('endereco', sa.String(length=255), nullable=True),
+    sa.Column('fone_contato', sa.String(length=20), nullable=True),
+    sa.Column('fone_pessoal', sa.String(length=20), nullable=True),
+    sa.Column('nome_plano_saude', sa.String(length=255), nullable=True),
+    sa.Column('plano_saude', sa.String(length=255), nullable=True),
+    sa.Column('nome_responsavel', sa.String(length=255), nullable=True),
+    sa.Column('possui_filhos', sa.String(length=255), nullable=True),
+    sa.Column('numero_filhos', sa.Integer(), nullable=True),
+    sa.Column('previdenciario', sa.String(length=255), nullable=True),
+    sa.Column('profissao', sa.String(length=255), nullable=True),
+    sa.Column('remuneracao', sa.Float(), nullable=False),
+    sa.Column('rg', sa.String(length=20), nullable=True),
+    sa.Column('saldo', sa.Float(), nullable=False),
+    sa.Column('idade', sa.Integer(), nullable=True),
     sa.Column('sexo_id', sa.Integer(), nullable=True),
     sa.Column('condicao_habitacao_id', sa.Integer(), nullable=True),
     sa.Column('tipo_moradia_id', sa.Integer(), nullable=True),
     sa.Column('tipo_transporte_id', sa.Integer(), nullable=True),
     sa.Column('escolaridade_id', sa.Integer(), nullable=True),
+    sa.Column('grau_parentesco_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['condicao_habitacao_id'], ['condicao_habitacao.id'], ),
     sa.ForeignKeyConstraint(['escolaridade_id'], ['escolaridade.id'], ),
+    sa.ForeignKeyConstraint(['grau_parentesco_id'], ['grau_parentesco.id'], ),
     sa.ForeignKeyConstraint(['sexo_id'], ['sexo.id'], ),
     sa.ForeignKeyConstraint(['tipo_moradia_id'], ['tipo_moradia.id'], ),
     sa.ForeignKeyConstraint(['tipo_transporte_id'], ['tipo_transporte.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('cpf')
     )
     op.create_table('encaminhamentos',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -128,6 +161,7 @@ def downgrade():
     op.drop_table('sexo')
     op.drop_table('profissionais')
     op.drop_table('metodo_pagamento')
+    op.drop_table('grau_parentesco')
     op.drop_table('escolaridade')
     op.drop_table('condicao_habitacao')
     # ### end Alembic commands ###

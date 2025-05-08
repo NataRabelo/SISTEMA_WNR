@@ -1,0 +1,109 @@
+<!-- Botão Adicionar -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5>Gerenciar Grau de Parentesco</h5>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCadastrarParentesco">Adicionar Grau de Parentesco</button>
+  </div>
+  
+  <!-- Tabela -->
+  <table id="tabela-parentesco" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for parentesco in parentescos %}
+      <tr>
+        <td>{{ parentesco.id }}</td>
+        <td>{{ parentesco.nome }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning btn-editar" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalEditarParentesco"
+            data-id="{{ parentesco.id }}"
+            data-nome="{{ parentesco.nome }}"
+          >Editar</button>
+  
+          <button class="btn btn-sm btn-danger btn-excluir" 
+            data-bs-toggle="modal" 
+            data-bs-url="/deletar_parentesco/{{ parentesco.id }}"
+            data-bs-target="#modalConfirmarExclusao" 
+            data-id="{{ parentesco.id }}"
+          >Excluir</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <!-- Modal Cadastrar -->
+  <div class="modal fade" id="modalCadastrarParentesco" tabindex="-1" aria-labelledby="modalCadastrarParentescoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" action="/cadastrar_parentesco">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastrar Tipo de Parentesco</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="novaParentescoNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="novaParentescoNome" name="nome" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Modal Editar -->
+  <div class="modal fade" id="modalEditarParentesco" tabindex="-1" aria-labelledby="modalEditarParentescoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" id="formEditarParentesco">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Parentesco</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id" id="editarParentescoId">
+            <div class="mb-3">
+              <label for="editarParentescoNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="editarParentescoNome" name="nome" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Atualizar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const modalEditarParentesco = document.getElementById('modalEditarParentesco');
+    if (modalEditarParentesco) {
+      modalEditarParentesco.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; 
+        const id = button.getAttribute('data-id');  
+        const nome = button.getAttribute('data-nome');  
+    
+        const inputId = modalEditarParentesco.querySelector('#editarParentescoId');
+        const inputNome = modalEditarParentesco.querySelector('#editarParentescoNome');
+        const form = document.getElementById('formEditarParentesco');
+    
+        inputId.value = id;  
+        inputNome.value = nome;  
+        form.action = `/editar_parentesco/${id}`;  
+      });
+    }});
+    </script>
+  
