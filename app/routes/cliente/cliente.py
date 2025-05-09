@@ -2,22 +2,23 @@ from flask import Blueprint, jsonify, render_template, request, redirect, sessio
 from app.utils import calcular_idade
 from app.utils.editor_valor import converter_para_float, formatar_para_moeda
 from app.utils.decorators import role_required
-from flask_login import current_user, login_required
+from flask_login import current_user
 from app.models import Cliente, CondicaoHabitacao, Escolaridade, GrauParentesco, Sexo, TipoMoradia, TipoTransporte
 from datetime import datetime
 from app import db
+from app.utils.login_required import required_login
 
 
 client_bp = Blueprint('client_bp', __name__)
 
 @client_bp.route('/cliente', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def cliente():
     return render_template('clientes/cliente.html')
 
 @client_bp.route('/cadastrar_cliente', methods=['GET','POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def cadastrar_cliente():
     sexos = Sexo.query.all()
@@ -89,7 +90,7 @@ def cadastrar_cliente():
                             parentescos=parentescos)
 
 @client_bp.route('/listar_cliente', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_cliente():
     clientes = Cliente.query.all()
@@ -97,7 +98,7 @@ def listar_cliente():
     return render_template('clientes/list.html', clientes=clientes, usuario=usuario)
 
 @client_bp.route('/editar_cliente/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_cliente(id):
     sexos = Sexo.query.all()
@@ -198,7 +199,7 @@ def editar_cliente(id):
                            parentescos=parentescos)
 
 @client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('admin')
 def deletar_cliente(id):
     cliente = Cliente.query.get_or_404(id)

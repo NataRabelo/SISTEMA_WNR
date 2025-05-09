@@ -5,6 +5,6 @@ def required_login(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
-            return redirect(url_for('auth_bp.login'))  # ou o nome da sua rota de login
+            return redirect(url_for('auth_bp.login'))
         return f(*args, **kwargs)
     return decorated_function

@@ -28,8 +28,7 @@ def login():
     return render_template('main/login.html')
 
 @auth_bp.route('/logout')
-@login_required
 def logout():
-    logout_user()
     session.clear()
+    logout_user()
     return redirect(url_for('main_bp.index'))

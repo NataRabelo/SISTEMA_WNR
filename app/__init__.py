@@ -26,8 +26,8 @@ def load_user(id):
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(DevelopmentConfig)
-    app.config['SESSION_PERMANENT'] = False
-    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+    app.config['SESSION_PERMANENT'] = True
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=2)
 
     
     db.init_app(app)

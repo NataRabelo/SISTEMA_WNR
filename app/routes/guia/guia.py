@@ -1,15 +1,16 @@
 from datetime import datetime
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
-from flask_login import current_user, login_required
+from flask_login import current_user
 from app.models import Cliente, Encaminhamento, Guia, Profissional
 from app import db
 from app.utils.decorators import role_required
 from app.utils.editor_valor import converter_para_float, formatar_para_moeda
+from app.utils.login_required import required_login
 
 guide_bp = Blueprint('guide_bp', __name__)
 
 @guide_bp.route('/guia', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def guia():
     return render_template('guia/guide.html')
@@ -52,7 +53,7 @@ def emitir_guia():
     return render_template('guia/form.html', clientes=clientes)
 
 @guide_bp.route('/listar_guia', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_guia():
     guias = Guia.query.all()
@@ -60,7 +61,7 @@ def listar_guia():
     return render_template('guia/list.html', guias = guias, usuario=usuario)
 
 @guide_bp.route('/editar_guia/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('financeiro', 'admin')
 def editar_guia(id):
     guia = Guia.query.get_or_404(id)
@@ -84,7 +85,7 @@ def editar_guia(id):
     return render_template('guia/form_edit.html', guia = guia, clientes=clientes, profissionais=profissionais, valor_formatado=valor_formatado, valor_total=valor_total)
 
 @guide_bp.route('/deletar_guia/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('admin')
 def deletar_guia(id):
     guia = Guia.query.get_or_404(id)

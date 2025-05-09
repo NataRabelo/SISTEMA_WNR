@@ -1,22 +1,23 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.models import Encaminhamento, Cliente, Profissional, Situacao, TipoEncaminhamento
 from app.utils.decorators import role_required 
-from flask_login import current_user, login_required
+from flask_login import current_user
 from datetime import datetime
 from app import db
 from app.utils.editor_valor import converter_para_float, formatar_para_moeda
+from app.utils.login_required import required_login
 
 
 encaminhamento_bp = Blueprint('encaminhamento_bp', __name__)
 
 @encaminhamento_bp.route('/encaminhamento', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def encaminhamento():
     return render_template('encaminhamento/encaminhamento.html')
 
 @encaminhamento_bp.route('/criar_encaminhamento', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def criar_encaminhamento():
     situacoes = Situacao.query.all()
@@ -63,7 +64,7 @@ def criar_encaminhamento():
                             situacoes=situacoes)
 
 @encaminhamento_bp.route('/listar_encaminhamento', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def listar_encaminhamento():
     encaminhamentos = Encaminhamento.query.all()
@@ -71,7 +72,7 @@ def listar_encaminhamento():
     return render_template('encaminhamento/list.html', encaminhamentos=encaminhamentos, usuario=usuario)
 
 @encaminhamento_bp.route('/editar_encaminhamento/<int:id>', methods=['GET', 'POST'])
-@login_required
+@required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_encaminhamento(id):
     tencaminhameos = TipoEncaminhamento.query.all()
@@ -105,7 +106,7 @@ def editar_encaminhamento(id):
         situacoes=situacoes)
 
 @encaminhamento_bp.route('/deletar_encaminhamento/<int:id>')
-@login_required
+@required_login
 @role_required('admin')
 def deletar_encaminhamento(id):
     encaminhamento = Encaminhamento.query.get_or_404(id)
