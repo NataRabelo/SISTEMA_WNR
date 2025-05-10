@@ -472,8 +472,7 @@ def usuarios():
     return render_template('administracao/usuarios.html')
 
 @adm_bp.route('/cadastrar_usuario', methods=['GET', 'POST'])
-@required_login
-@role_required('admin')
+
 def cadastrar_usuario():
     if request.method == 'POST':
         nome = request.form.get('name')

@@ -1,8 +1,8 @@
 """Migração Inicial
 
-Revision ID: 1ef746db9cfb
+Revision ID: cc19d2f2b1d7
 Revises: 
-Create Date: 2025-05-07 17:42:53.873679
+Create Date: 2025-05-10 00:52:51.155070
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1ef746db9cfb'
+revision = 'cc19d2f2b1d7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,10 +42,30 @@ def upgrade():
     op.create_table('profissionais',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nome', sa.String(length=255), nullable=False),
-    sa.Column('especialidade', sa.String(length=255), nullable=True),
+    sa.Column('cpf', sa.String(length=14), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=True),
-    sa.Column('telefone', sa.String(length=20), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('data_nascimento', sa.DateTime(), nullable=True),
+    sa.Column('bairro', sa.String(), nullable=True),
+    sa.Column('banco', sa.String(), nullable=True),
+    sa.Column('cep', sa.String(), nullable=True),
+    sa.Column('cidade', sa.String(), nullable=True),
+    sa.Column('complemento', sa.String(), nullable=True),
+    sa.Column('graduacao', sa.String(), nullable=True),
+    sa.Column('issqn', sa.String(), nullable=True),
+    sa.Column('fone_pessoal', sa.String(), nullable=True),
+    sa.Column('fone_profissional', sa.String(), nullable=True),
+    sa.Column('curriculum_lattes', sa.String(), nullable=True),
+    sa.Column('dias_horas_disponiveis', sa.String(), nullable=True),
+    sa.Column('endereco_profissional', sa.String(), nullable=True),
+    sa.Column('estado', sa.String(), nullable=True),
+    sa.Column('observacoes', sa.String(), nullable=True),
+    sa.Column('pix', sa.String(), nullable=True),
+    sa.Column('registro_profissional', sa.String(), nullable=True),
+    sa.Column('rg', sa.String(length=11), nullable=False),
+    sa.Column('valor_minimo', sa.Float(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('cpf'),
+    sa.UniqueConstraint('rg')
     )
     op.create_table('sexo',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -53,6 +73,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('situacao',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('nome', sa.String(length=255), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('tipo_encaminhamento',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nome', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id')
@@ -124,12 +149,20 @@ def upgrade():
     )
     op.create_table('encaminhamentos',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('convenio', sa.String(), nullable=True),
+    sa.Column('dias_horas_atendimento', sa.String(), nullable=True),
+    sa.Column('data_encaminhamento', sa.DateTime(), nullable=True),
+    sa.Column('observacoes_gerais', sa.String(), nullable=True),
+    sa.Column('queixa', sa.String(), nullable=True),
+    sa.Column('valor', sa.Float(), nullable=True),
     sa.Column('cliente_id', sa.Integer(), nullable=True),
     sa.Column('profissional_id', sa.Integer(), nullable=True),
-    sa.Column('data', sa.DateTime(), nullable=True),
-    sa.Column('observacoes', sa.String(length=500), nullable=True),
+    sa.Column('situacao_id', sa.Integer(), nullable=True),
+    sa.Column('tipo_encaminhamento_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['cliente_id'], ['clientes.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['profissional_id'], ['profissionais.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['situacao_id'], ['situacao.id'], ),
+    sa.ForeignKeyConstraint(['tipo_encaminhamento_id'], ['tipo_encaminhamento.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('guias',
@@ -137,13 +170,16 @@ def upgrade():
     sa.Column('cliente_id', sa.Integer(), nullable=True),
     sa.Column('profissional_id', sa.Integer(), nullable=True),
     sa.Column('metodo_pagamento_id', sa.Integer(), nullable=True),
-    sa.Column('situacao_id', sa.Integer(), nullable=True),
-    sa.Column('data', sa.DateTime(), nullable=True),
-    sa.Column('descricao', sa.String(length=500), nullable=True),
+    sa.Column('data_original', sa.DateTime(), nullable=True),
+    sa.Column('hora_emissao', sa.String(length=10), nullable=True),
+    sa.Column('observacoes_gerais', sa.String(length=500), nullable=True),
+    sa.Column('quantidade_emissoes', sa.Integer(), nullable=True),
+    sa.Column('valor_unitario', sa.Float(), nullable=True),
+    sa.Column('valor_total', sa.Float(), nullable=True),
+    sa.Column('pago', sa.String(length=50), nullable=True),
     sa.ForeignKeyConstraint(['cliente_id'], ['clientes.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['metodo_pagamento_id'], ['metodo_pagamento.id'], ),
     sa.ForeignKeyConstraint(['profissional_id'], ['profissionais.id'], ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['situacao_id'], ['situacao.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
@@ -157,6 +193,7 @@ def downgrade():
     op.drop_table('usuarios')
     op.drop_table('tipo_transporte')
     op.drop_table('tipo_moradia')
+    op.drop_table('tipo_encaminhamento')
     op.drop_table('situacao')
     op.drop_table('sexo')
     op.drop_table('profissionais')

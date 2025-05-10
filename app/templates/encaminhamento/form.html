@@ -9,45 +9,46 @@
         <div class="container">
             <div class="row mb-3">
                 <div class="col-md-2">
-                    <label for="cliente_id" class="form-label">Cód Cliente:</label>
+                    <label for="cliente_id" class="form-label">Cód Cliente<span class="required-star">*</span></label>
                     <div class="input-group">
                         <input type="text" id="cliente_id" name="cliente_id" class="form-control">
                         <button type="button" name="buscar_cliente_btn" id="buscar_cliente_btn" class="btn btn-primary" onclick="buscarCliente()">Buscar</button>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="resultadoCliente" class="form-label">Cliente:</label>
+                    <label for="resultadoCliente" class="form-label">Cliente<span class="required-star">*</span></label>
                     <input type="text" id="resultadoCliente" nome="resultadoCliente" class="form-control" disabled>    
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-2">
-                    <label for="profissional_id" class="form-label">Cód Profissional:</label>
+                    <label for="profissional_id" class="form-label">Cód Profissional<span class="required-star">*</span></label>
                     <div class="input-group">
                         <input type="text" id="profissional_id" name="profissional_id" class="form-control">
                         <button type="button" name="buscar_profissional_btn" id="buscar_profissional_btn" class="btn btn-primary" onclick="buscarProfissional()">Buscar</button>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="resultadoProfissional" class="form-label">Profissional:</label>
+                    <label for="resultadoProfissional" class="form-label">Profissional<span class="required-star">*</span></label>
                     <input type="text" id="resultadoProfissional" nome="resultadoProfissional" class="form-control" disabled>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-2">
-                    <label for="convenio" class="form-label">Convênio:</label>
+                    <label for="convenio" class="form-label">Convênio</label>
                     <input id="convenio" name="convenio" class="form-control">
                 </div>
                 <div class="col-md-3">
-                    <label for="situacao" class="form-label">Situação:</label>
+                    <label for="situacao" class="form-label">Situação<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" name="situacao" id="situacao">
+                        <option value="">Selecione...</option>
                         {% for situacao in situacoes %}
                         <option value="{{ situacao.id }}">{{ situacao.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento:</label>
+                    <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento">
                         <option value="">Selecione...</option>
                         {% for tencaminhamento in tencaminhamentos %}
@@ -58,21 +59,21 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-5">
-                    <label for="dias_horas_atendimento" class="form-label">Dia e horário de atendimento:</label>
-                    <input id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" placeholder="Exemplo: Segunda as 14h">
+                    <label for="dias_horas_atendimento" class="form-label">Dia e horário de atendimento<span class="required-star">*</span></label>
+                    <input id="dias_horas_atendimento" name="dias_horas_atendimento" class="form-control" placeholder="Exemplo: Segunda as 14h" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="valor" class="form-label">Valor:</label>
-                    <input type=text id="valor" name="valor" class="form-control" placeholder="R$ 0,00">
+                    <label for="valor" class="form-label">Valor<span class="required-star">*</span></label>
+                    <input type=text id="valor" name="valor" class="form-control" placeholder="R$ 0,00" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="queixa" class="form-label">Queixa:</label>
+                    <label for="queixa" class="form-label">Queixa</label>
                     <textarea id="queixa" name="queixa" class="form-control" style="height: 150px;"></textarea>
                 </div>
                 <div class="col-md-6">
-                    <label for="observacoes_gerais" class="form-label" >Observações Gerais:</label>
+                    <label for="observacoes_gerais" class="form-label" >Observações Gerais</label>
                     <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control" style="height: 150px;"></textarea>
                 </div>
             </div>

@@ -10,45 +10,45 @@
             <h2 class="mb-4"> Dados Pessoais </h2>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="nome" class="form-label">Nome:</label>
+                    <label for="nome" class="form-label">Nome<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
+                    <label for="data_nascimento" class="form-label">Data de Nascimento<span class="required-star">*</span></label>
                     <input type="date" class="form-control" id=data_nascimento name="data_nascimento" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cpf" class="form-label">CPF:</label>
+                    <label for="cpf" class="form-label">CPF<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="rg" class="form-label">RG:</label>
+                    <label for="rg" class="form-label">RG</label>
                     <input type="text" class="form-control" id="rg" name="rg" placeholder="RG">
                 </div>
             </div>
             <h2 class="mb-4 mt-4">Contatos</h2>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="email" class="form-label">Email:</label>
+                    <label for="email" class="form-label">Email<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="fone_pessoal" class="form-label">Telefone Pessoal:</label>
+                    <label for="fone_pessoal" class="form-label">Telefone Pessoal<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="fone_pessoal" name="fone_pessoal" placeholder="(xx) xxxxxxxxx" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="fone_profissional" class="form-label">Telefone Profissional:</label>
+                    <label for="fone_profissional" class="form-label">Telefone Profissional<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="fone_profissional" name="fone_profissional" placeholder="(xx) xxxxxxxxx" required>
                 </div>
             </div>
             <h2 class="mb-4 mt-4">Endereço</h2>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cep" class="form-label">CEP:</label>
+                    <label for="cep" class="form-label">CEP<span class="required-star">*</span></label>
                     <div class="input-group">
                         <input type="text" id="cep" name="cep" class="form-control">
                         <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" required onclick="buscarCEP()">Buscar</button>
@@ -57,73 +57,73 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="endereco_profissional" class="form-label">Endereço Profissional:</label>
+                    <label for="endereco_profissional" class="form-label">Endereço Profissional<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="endereco_profissional" name="endereco_profissional" placeholder="Endereço profissional" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="bairro" class="form-label">Bairro:</label>
+                    <label for="bairro" class="form-label">Bairro<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="complemento" class="custom-label">Complemento (QD/LT):</label>
+                    <label for="complemento" class="custom-label">Complemento (QD/LT)<span class="required-star">*</span></label>
                     <input type="text" id="complemento" class="form-control" name="complemento" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cidade" class="form-label">Cidade:</label>
+                    <label for="cidade" class="form-label">Cidade<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="estado" class="form-label">Estado:</label>
+                    <label for="estado" class="form-label">Estado<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required>
                 </div>
             </div>
             <h2 class="mb-3">Dados profissionais</h2>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="graduacao" class="form-label">Graducação:</label>
+                    <label for="graduacao" class="form-label">Graducação<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="graduacao" name="graduacao" placeholder="Graducação" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="registro_profissional" class="form-label">Registro Profissional:</label>
+                    <label for="registro_profissional" class="form-label">Registro Profissional</label>
                     <input type="text" class="form-control" id="registro_profissional" name="registro_profissional" placeholder="Registro Profissional" >
                 </div>
                 <div class="col-md-3">
-                    <label for="issqn" class="form-label">ISSQN:</label>
+                    <label for="issqn" class="form-label">ISSQN</label>
                     <input type="text" class="form-control" id="issqn" name="issqn" placeholder="ISSQN" >
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="curriculum_lattes" class="form-label">Curriculum Lattes:</label>
+                    <label for="curriculum_lattes" class="form-label">Curriculum Lattes</label>
                     <input type="text" class="form-control" id="curriculum_lattes" name="curriculum_lattes" placeholder="Curriculum Lattes" >
                 </div>
                 <div class="col-md-3">
-                    <label for="valor_minimo" class="form-label">Valor mínimo:</label>
+                    <label for="valor_minimo" class="form-label">Valor mínimo<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="valor_minimo" name="valor_minimo" placeholder="Valor mínimo" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="banco" class="form-label">Banco:</label>
+                    <label for="banco" class="form-label">Banco<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="banco" name="banco" placeholder="Banco" required>
                 </div>
                 
                 <div class="col-md-6">
-                    <label for="pix" class="form-label">PIX:</label>
+                    <label for="pix" class="form-label">PIX<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="pix" name="pix" placeholder="celular/email/cpf/cnpj" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <label for="dias_horas_disponiveis" class="custom-label">Dias/Horas Disponíveis:</label>
+                    <label for="dias_horas_disponiveis" class="custom-label">Dias/Horas Disponíveis<span class="required-star">*</span></label>
                     <textarea class="form-control" id="dias_horas_disponiveis" name="dias_horas_disponiveis" style="height: 150px;" required></textarea>
                 </div>
                 <div class="col-md-5">
-                    <label for="observacoes" class="custom-label">Observações:</label>
+                    <label for="observacoes" class="custom-label">Observações</label>
                     <textarea class="form-control" id="observacoes" name="observacoes" style="height: 150px;"></textarea>
                 </div>
             </div>

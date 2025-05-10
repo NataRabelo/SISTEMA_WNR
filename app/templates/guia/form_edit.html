@@ -9,48 +9,48 @@
         <div class="container">
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cliente_id" class="form-label">Cód Cliente:</label>
+                    <label for="cliente_id" class="form-label">Cód Cliente<span class="required-star">*</span></label>
                     <div class="input-group">
                         <input type="text" id="cliente_id" name="cliente_id" class="form-control" value="{{ guia.cliente_id }}">
                         <button type="button" name="buscar_cliente_btn" id="buscar_cliente_btn" class="btn btn-primary" onclick="buscarCliente(); buscarProfissionais(); ">Buscar</button>
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <label for="resultadoCliente" class="form-label">Cliente:</label>
+                    <label for="resultadoCliente" class="form-label">Cliente<span class="required-star">*</span></label>
                     <input type="text" id="resultadoCliente" name="resultadoCliente" class="form-control" value="{{ guia.cliente.nome}}" disabled>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-8">
-                    <label for="profissional_id" class="form-label">Profissional:</label>
+                    <label for="profissional_id" class="form-label">Profissional<span class="required-star">*</span></label>
                     <select class="form-select" id="profissional_id" name="profissional_id">
                         <option value="">Selecione um profissional</option>
                         {% if guia.profissional_id %}
-                            <option value="{{ guia.profissional_id }}" selected>{{ guia.profissional.nome }}</option>
+                            <option value="{{ guia.profissional_id }}" selected>{{ guia.profissional.nome + " - " +  guia.profissional.graduacao }}</option>
                         {% endif %}
                     </select>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="tipo_pagamento" onchange="buscarValor()" class="form-label">Tipo de pagamento</label>
-                    <select class="form-select" id="tipo_pagamento" name="tipo_pagamento">
+                    <label for="tipo_pagamento" onchange="buscarValor()" class="form-label">Tipo de pagamento<span class="required-star">*</span></label>
+                    <select class="form-select" id="tipo_pagamento" name="tipo_pagamento" required>
                         <option value="">Método de pagamento</option>
-                        <option value="Pix" {% if guia.tipo_pagamento == "Pix" %}selected{% endif %}>Pix</option>
-                        <option value="Cartão de Crédito" {% if guia.tipo_pagamento == "Cartão de Crédito" %}selected{% endif %}>Cartão de Crédito</option>
-                        <option value="Cartão de Débito" {% if guia.tipo_pagamento == "Cartão de Débito" %}selected{% endif %}>Cartão de Débito</option>
+                        {% for pagamento in pagamentos %}
+                        <option value="{{ pagamento.id }}" {% if guia.metodo_pagamento_id == pagamento.id %}selected{% endif %}>{{ pagamento.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="quantidade_emissoes" class="form-label">Quantidade:</label>
+                    <label for="quantidade_emissoes" class="form-label">Quantidade<span class="required-star">*</span></label>
                     <input type="text" id="quantidade_emissoes" name="quantidade_emissoes" class="form-control" value="{{ guia.quantidade_emissoes }}">
                 </div>
                 <div class="col-md-2">
-                    <label for="valor_unitario" class="form-label">Valor Unitário:</label>
+                    <label for="valor_unitario" class="form-label">Valor Unitário<span class="required-star">*</span></label>
                     <input type="text" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$ 0,00" value="{{ valor_formatado }}" >
                 </div>
                 <div class="col-md-2">
-                    <label for="valor_total" class="form-label">Valor Total:</label>
+                    <label for="valor_total" class="form-label">Valor Total<span class="required-star">*</span></label>
                     <div class="input-group">
                         <input type="text" id="valor_total" name="valor_total" class="form-control" placeholder="R$ 0,00" value="{{ valor_total }}" >
                         <button type="button" name="valor_total_btn" id="valor_total_btn" class="btn btn-primary" onclick="calcularTotal()">Calcular</button>
@@ -59,7 +59,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-12">
-                    <label for="observacoes_gerais" class="form-label">Observações:</label>
+                    <label for="observacoes_gerais" class="form-label">Observações</label>
                     <textarea id="observacoes_gerais" name="observacoes_gerais" class="form-control" style="height: 150px;">{{ guia.observacoes_gerais }}</textarea>
                 </div>
             </div>

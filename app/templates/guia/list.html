@@ -16,6 +16,7 @@
                     <th>Especialidade</th>
                     <th>Valor</th>
                     <th>Status</th>
+                    <th>Alterar</th>
                     {% if usuario.role == "admin" or usuario.role == "financeiro"%}
                     <th>Editar</th>
                     {% endif %}
@@ -33,6 +34,11 @@
                         <td>{{ guia.profissional.graduacao }}</td>
                         <td>R$ {{ "%0.2f"|format(guia.valor_total) }}</td>
                         <td>{{ guia.pago }}</td>
+                        {% if guia.pago == 'Pendente' %}
+                        <td><a href="{{ url_for('guide_bp.aprovar_guia', id=guia.id) }}" class="btn btn-sm btn-success">Aprovar</a></td></td>
+                        {% elif guia.pago == 'Aprovada' %}
+                        <td><a href="{{ url_for('guide_bp.reprovar_guia', id=guia.id) }}" class="btn btn-sm btn-danger">Reprovar</a></td>
+                        {% endif %}
                         {% if usuario.role == "admin" or usuario.role == "financeiro"%}
                         <td><a href="{{ url_for('guide_bp.editar_guia', id=guia.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
                         {% endif %}

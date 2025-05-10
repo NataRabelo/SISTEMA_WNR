@@ -10,15 +10,15 @@
             <h2 class="mb-4"> Dados Pessoais </h2>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="nome" class="form-label">Nome</label>
+                    <label for="nome" class="form-label">Nome<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="nome" name="nome" required value="{{ cliente.nome }}">
                 </div>
                 <div class="col-md-3">
-                    <label for="dt_nascimento" class="form-label">Data de Nascimento</label>
+                    <label for="dt_nascimento" class="form-label">Data de Nascimento<span class="required-star">*</span></label>
                     <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="{{ cliente.data_nascimento.strftime('%Y-%m-%d') if cliente.data_nascimento else '' }}" onchange="verificarIdade()" required >
                 </div>
                 <div class="col-md-2">
-                    <label for="idade" class="form-label">Idade:</label>
+                    <label for="idade" class="form-label">Idade</label>
                     <input type="text" class="form-control" id="idade" name="idade" value="{{ cliente.idade }}">
                 </div>
                 {% if idade <= 17 %}
@@ -49,7 +49,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cpf" class="form-label">CPF</label>
+                    <label for="cpf" class="form-label">CPF<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="cpf" name="cpf" required value="{{ cliente.cpf }}">
                 </div>
                 <div class="col-md-3">
@@ -57,7 +57,7 @@
                     <input type="text" class="form-control" name="rg" id="rg" value="{{ cliente.rg }}">
                 </div>
                 <div class="col-md-3">
-                    <label for="sexo" class="form-label">Sexo:</label>
+                    <label for="sexo" class="form-label">Sexo<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" id="sexo" name="sexo" required>
                         <option value="">Selecione...</option>
                         {% for sexo in sexos %}
@@ -69,22 +69,22 @@
             <h2 class="mb-4 mt-4"> Contatos </h2>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="fone_pessoal" class="custom-label">Telefone Pessoal:</label>
+                    <label for="fone_pessoal" class="custom-label">Telefone Pessoal<span class="required-star">*</span></label>
                     <input type="text" class="form-control" name="fone_pessoal" id="celular" placeholder="(xx) xxxxxxxxx" required value="{{ cliente.fone_pessoal }}">
                 </div>
                 <div class="col-md-3">
-                    <label for="fone_contato" class="custom-label">Telefone Contato:</label>
+                    <label for="fone_contato" class="custom-label">Telefone Contato<span class="required-star">*</span></label>
                     <input type="text" class="form-control" name="fone_contato" id="telefone" placeholder="(xx) xxxxxxxxx" required value="{{ cliente.fone_contato }}">
                 </div>
                 <div class="col-md-6">
-                    <label for="email" class="custom-label">E-mail</label>
+                    <label for="email" class="custom-label">E-mail<span class="required-star">*</span></label>
                     <input type="email" class="form-control" id="email" name="email" required value="{{ cliente.email }}">
                 </div>
             </div>
             <h2 class="mb-4 mt-4"> Endereço </h2>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="cep" class="custom-label">CEP:</label><div class="input-group">
+                    <label for="cep" class="custom-label">CEP<span class="required-star">*</span></label><div class="input-group">
                         <input type="text" id="cep" name="cep" class="form-control" value="{{ cliente.cep }}">
                         <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
                     </div>
@@ -92,37 +92,37 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="endereco" class="custom-label">Endereço:</label>
+                    <label for="endereco" class="custom-label">Endereço<span class="required-star">*</span></label>
                     <input type="text" id="endereco" class="form-control" name="endereco" required value="{{ cliente.endereco }}">
                 </div>
                 <div class="col-md-2">
-                    <label for="numero_cs" class="custom-label">Nr Casa:</label>
+                    <label for="numero_cs" class="custom-label">Nr Casa</label>
                     <input type="text" id="numero_cs" class="form-control" name="numero_cs" value="{{ cliente.numero_cs }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="complemento" class="custom-label">Complemento (QD/LT):</label>
+                    <label for="complemento" class="custom-label">Complemento (QD/LT)<span class="required-star">*</span></label>
                     <input type="text" id="complemento" class="form-control" name="complemento" required value="{{ cliente.complemento }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <div  class="col-md-3">
-                    <label for="bairro" class="custom-label">Bairro:</label>
+                    <label for="bairro" class="custom-label">Bairro<span class="required-star">*</span></label>
                     <input type="text" id="bairro" class="form-control" name="bairro" required value="{{ cliente.bairro }}">
                 </div>
                 <div class="col-md-3">
-                    <label for="cidade" class="custom-label">Cidade:</label>
+                    <label for="cidade" class="custom-label">Cidade<span class="required-star">*</span></label>
                     <input type="text" id="cidade" class="form-control" name="cidade" required value="{{ cliente.cidade }}">
                 </div>
                 <div class="col-md-2">
-                    <label for="estado" class="custom-label">Estado:</label>
+                    <label for="estado" class="custom-label">Estado<span class="required-star">*</span></label>
                     <input type="text" id="estado" class="form-control" name="estado" required value="{{ cliente.estado }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="condicao_habitacao" class="custom-label">Condição de Habitação:</label>
+                    <label for="condicao_habitacao" class="custom-label">Condição de Habitação<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" name="condicao_habitacao" required>
                         {% for condicao in condicoes %}
                         <option value="{{ condicao.id }}" {% if cliente.condicao_id == condicao.id %}selected{% endif %}>{{ condicao.nome }}</option>
@@ -130,7 +130,7 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="tipo_moradia" class="custom-label">Tipo de Moradia:</label>
+                    <label for="tipo_moradia" class="custom-label">Tipo de Moradia<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" name="tipo_moradia" required>
                         <option value="">Selecione...</option>
                         {% for moradia in moradias %}
@@ -142,7 +142,7 @@
             <div  class="row mb-3">
                 <h2 class="mb-4 mt-4">Outras informações</h2>
                 <div class="col-md-3">
-                    <label for="transporte" class="custom-label">Meio de Transporte:</label>
+                    <label for="transporte" class="custom-label">Meio de Transporte<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" name="transporte" required>
                         <option value="">Selecione...</option>
                         {% for transporte in transportes %}
@@ -153,8 +153,8 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="escolaridade" class="custom-label">escolaridade:</label>
-                    <select class="form-select campoObrigatorio" id="escolaridade" name="escolaridade">
+                    <label for="escolaridade" class="custom-label">escolaridade<span class="required-star">*</span></label>
+                    <select class="form-select campoObrigatorio" id="escolaridade" name="escolaridade" required>
                         <option value="">Selecione...</option>
                         {% for escolaridade in escolaridades %}
                         <option value="{{ escolaridade.id }}" {% if cliente.escolaridade_id == escolaridade.id %}selected{% endif %}>{{ escolaridade.nome }}</option>
@@ -162,13 +162,13 @@
                     </select>                    
                 </div>
                 <div class="col-md-3">
-                    <label for="profissao" class="custom-label">Profissão:</label>
+                    <label for="profissao" class="custom-label">Profissão<span class="required-star">*</span></label>
                     <input type="text" class="form-control" name="profissao" required value="{{ cliente.profissao }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="plano_saude" class="custom-label">Possui Plano de Saúde?</label>
+                    <label for="plano_saude" class="custom-label">Possui Plano de Saúde?<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
                         <option value="">Selecione...</option>
                         <option value="Sim" {% if cliente.plano_saude == "Sim" %}selected{% endif %}>Sim</option>
@@ -176,13 +176,13 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde:</label>
+                    <label for="nome_plano_saude" class="custom-label">Nome do Plano de Saúde</label>
                     <input type="text" class="form-control" id="nome_plano_saude" name="nome_plano_saude" value="{{ cliente.nome_plano_saude }}" {% if cliente.plano_saude == "Não" %}disabled{% endif %}>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="possui_filhos" class="custom-label">Possui filhos?</label>
+                    <label for="possui_filhos" class="custom-label">Possui filhos?<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
                         <option value="">Selecione...</option>
                         <option value="Sim" {% if cliente.possui_filhos == "Sim" %}selected{% endif %}>Sim</option>
@@ -190,12 +190,12 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="numero_filhos" class="custom-label">Número de Filhos:</label>
+                    <label for="numero_filhos" class="custom-label">Número de Filhos</label>
                     <input type="number" class="form-control" id="qtn_filhos" name="numero_filhos" value="{{ cliente.numero_filhos }}" {% if cliente.possui_filhos == "Não"%}disabled{% endif %}>
                 </div>
                 <div class="col-md-3">
-                    <label for="previdenciario" class="custom-label">Previdenciário:</label>
-                    <select class="form-select campoObrigatorio" name="previdenciario">
+                    <label for="previdenciario" class="custom-label">Previdenciário<span class="required-star">*</span></label>
+                    <select class="form-select campoObrigatorio" name="previdenciario" required>
                         <option value="">Selecione...</option>
                         <option value="Sim" {% if cliente.previdenciario == "Sim" %}selected{% endif %}>Sim</option>
                         <option value="Não" {% if cliente.previdenciario == "Não" %}selected{% endif %}>Não</option>
@@ -204,19 +204,19 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="remuneracao" class="custom-label">Remuneração:</label>
-                    <input type="text" class="form-control" id="remuneracao" name="remuneracao" placeholder="R$ 0,00" value="{{ remuneracao }}">
+                    <label for="remuneracao" class="custom-label">Remuneração<span class="required-star">*</span></label>
+                    <input type="text" class="form-control" id="remuneracao" name="remuneracao" placeholder="R$ 0,00" value="{{ remuneracao }}" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="renda_familiar" class="custom-label">Outras Rendas:</label>
-                    <input type="text" class="form-control" id="renda_familiar" name="renda_familiar" placeholder="R$ 0,00" value="{{ renda_familiar }}">
+                    <label for="renda_familiar" class="custom-label">Outras Rendas<span class="required-star">*</span></label>
+                    <input type="text" class="form-control" id="renda_familiar" name="renda_familiar" placeholder="R$ 0,00" value="{{ renda_familiar }}" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="despesa_mensal" class="custom-label">Despesa Mensal:</label>
-                    <input type="text" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="R$ 0,00" value="{{ despesa_mensal }}">
+                    <label for="despesa_mensal" class="custom-label">Despesa Mensal<span class="required-star">*</span></label>
+                    <input type="text" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="R$ 0,00" value="{{ despesa_mensal }}" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="saldo" class="custom-label">Saldo:</label>
+                    <label for="saldo" class="custom-label">Saldo<span class="required-star">*</span></label>
                     <input type="text" class="form-control" id="saldo" name="saldo" placeholder="Saldo" placeholder="R$ 0,00" readonly value="{{ cliente.saldo }}">
                 </div>
             </div>
