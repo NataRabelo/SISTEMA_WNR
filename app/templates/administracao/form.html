@@ -51,6 +51,10 @@
             border-radius: 5px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+        .btn-voltar {
+        box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -78,7 +82,11 @@
                     <option value="atendimento">Atendimento</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Registrar</button>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary me-2 w-50">Registrar</button>
+                <a href="{{ url_for('adm_bp.usuarios') }}" class="btn btn-danger w-50">Cancelar</a>
+            </div>
+
         </form>
     </div>
 

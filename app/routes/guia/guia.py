@@ -41,7 +41,7 @@ def emitir_guia():
             metodo_pagamento_id=int(request.form.get('tipo_pagamento')),
             valor_unitario=valor_unitario,
             valor_total = valor_total,
-            pago = "Aprovado"
+            pago = "Aprovada"
         )
 
         db.session.add(guia)

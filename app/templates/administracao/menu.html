@@ -1,41 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}Menu do Adiministrador{% endblock %}
+{% block title %}Menu do Administrador{% endblock %}
 
 {% block content %}
     <!-- Container de Botões -->
     <div class="container dashboard-container mt-5">
-        <div class="row">
+        <div class="row justify-content-center">
 
             <!-- Usuarios -->
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('adm_bp.usuarios')}}" class="btn dashboard-btn btn-cliente">
-                    <i class="fas fa-user"></i> Usuarios
+            <div class="col-md-6 mb-3">
+                <a href="{{ url_for('adm_bp.usuarios')}}" class="btn dashboard-btn btn-cliente w-100">
+                    <i class="fas fa-user"></i> Usuários
                 </a>
             </div>
 
             <!-- Serviços -->
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('adm_bp.opcoes')}}" class="btn dashboard-btn btn-cliente">
-                    <i class="fas fa-user"></i> Opções do Sistema
-                </a>
-            </div>
-
-            <!-- Gerar Encaminhamento -->
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('encaminhamento_bp.encaminhamento')}}" class="btn dashboard-btn btn-encaminhamento">
-                    <i class="fas fa-file-medical"></i> Encaminhamentos
-                </a>
-            </div>
-
-            <!-- Emitir Guia -->
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('guide_bp.guia')}}" class="btn dashboard-btn btn-guia">
-                    <i class="fas fa-file-invoice"></i> Guias
+            <div class="col-md-6 mb-3">
+                <a href="{{ url_for('adm_bp.opcoes')}}" class="btn dashboard-btn btn-cliente w-100">
+                    <i class="fas fa-cogs"></i> Opções do Sistema
                 </a>
             </div>
 
         </div>
-        
     </div>
 {% endblock %}

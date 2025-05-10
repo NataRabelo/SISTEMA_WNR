@@ -64,7 +64,10 @@
                 <label for="senha" class="form-label">Senha</label>
                 <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha">
             </div>
-            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary me-2 w-50">Registrar</button>
+                <a href="{{ url_for('main_bp.index') }}" class="btn btn-danger w-50">Cancelar</a>
+            </div>
         </form>
     </div>
 
