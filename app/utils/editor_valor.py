@@ -1,9 +1,11 @@
 from babel.numbers import format_currency
 
+
 def formatar_para_moeda(valor):
     if valor is None:
         return "R$ 0,00"
     return format_currency(valor, 'BRL', locale='pt_BR')
+
 
 def converter_para_float(valor):
     if not valor:

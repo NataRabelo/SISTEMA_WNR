@@ -1,7 +1,6 @@
 from flask_login import UserMixin
 from app import db
-from alembic.operations import Operations as op
-import sqlalchemy as sa
+
 
 class Sexo(db.Model):
     __tablename__ = "sexo"
@@ -52,11 +51,13 @@ class Situacao(db.Model):
     nome = db.Column(db.String(255), nullable=False)
     encaminhamentos = db.relationship("Encaminhamento", back_populates="situacao")
 
+
 class GrauParentesco(db.Model):
     __tablename__ = "grau_parentesco"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
     clientes = db.relationship("Cliente", back_populates="grau_parentesco")
+
 
 class TipoEncaminhamento(db.Model):
     __tablename__ = "tipo_encaminhamento"
@@ -65,6 +66,8 @@ class TipoEncaminhamento(db.Model):
     encaminhamento = db.relationship("Encaminhamento", back_populates="tipo_encaminhamento")
 
 # USUÁRIO
+
+
 class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
     id = db.Column(db.Integer, primary_key=True)
@@ -80,19 +83,12 @@ class Usuario(UserMixin, db.Model):
     # Flask-Login methods
     def get_id(self):
         return str(self.id)
-    
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
 
 # CLIENTE
+
+
 class Cliente(db.Model):
+
     __tablename__ = "clientes"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
@@ -123,7 +119,6 @@ class Cliente(db.Model):
     rg = db.Column(db.String(20))
     saldo = db.Column(db.Float, nullable=False, default=0.0)
     idade = db.Column(db.Integer, default=0)
-    
 
     sexo_id = db.Column(db.Integer, db.ForeignKey("sexo.id"))
     condicao_habitacao_id = db.Column(db.Integer, db.ForeignKey("condicao_habitacao.id"))
@@ -138,7 +133,6 @@ class Cliente(db.Model):
     tipo_transporte = db.relationship("TipoTransporte", back_populates="clientes")
     escolaridade = db.relationship("Escolaridade", back_populates="clientes")
     grau_parentesco = db.relationship("GrauParentesco", back_populates="clientes")
-
 
     encaminhamentos = db.relationship("Encaminhamento", back_populates="cliente", cascade="all, delete-orphan")
     guias = db.relationship("Guia", back_populates="cliente", cascade="all, delete-orphan")

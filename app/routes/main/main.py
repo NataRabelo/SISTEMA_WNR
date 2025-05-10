@@ -4,9 +4,11 @@ from app.utils.login_required import required_login
 
 main_bp = Blueprint('main_bp', __name__)
 
+
 @main_bp.route('/')
 def index():
     return render_template('main/index.html')
+
 
 @main_bp.route('/menu')
 @required_login

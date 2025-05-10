@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, jsonify, request
+from flask import Blueprint, jsonify, request
 from app.utils.decorators import role_required
 from flask_login import login_required
 from app.models import Profissional, Cliente, Encaminhamento
@@ -32,7 +32,9 @@ def buscar_cliente():
 @utils_bp.route('/buscar_profissionais/<int:cliente_id>', methods=['GET'])
 def buscar_profissionais(cliente_id):
     encaminhamentos = Encaminhamento.query.filter_by(cliente_id=cliente_id).all()
-    profissionais = [profissional for enc in encaminhamentos for profissional in Profissional.query.filter_by(id=enc.profissional_id).all()]
+    profissionais = [
+        profissional for enc in encaminhamentos for profissional in Profissional.query.filter_by(
+            id=enc.profissional_id).all()]
 
     return jsonify({
         "profissionais": [{"id": p.id, "nome": p.nome, "graduacao": p.graduacao} for p in profissionais]
@@ -52,7 +54,7 @@ def buscar_valor():
         valor = float(encaminhamento.valor)
 
         if tipoPagamento == "Cartão de Crédito":
-            return jsonify({'valor':formatar_para_moeda( valor + 2.0)})
+            return jsonify({'valor': formatar_para_moeda(valor + 2.0)})
         else:
             return jsonify({'valor': formatar_para_moeda(valor)})
     return jsonify({'erro': 'Valor não encontrado'}), 404

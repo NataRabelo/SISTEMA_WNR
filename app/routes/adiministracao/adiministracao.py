@@ -1,17 +1,27 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
-from app import bcrypt, db
-from app.models import GrauParentesco, Sexo, Situacao, TipoEncaminhamento, TipoMoradia, Usuario, CondicaoHabitacao, TipoTransporte, Escolaridade, MetodoPagamento
-from app.utils.decorators import role_required
 from app.utils.login_required import required_login
-
+from app.utils.decorators import role_required
+from app import bcrypt, db
+from app.models import (GrauParentesco,
+                        Sexo,
+                        Situacao,
+                        TipoEncaminhamento,
+                        TipoMoradia,
+                        Usuario,
+                        CondicaoHabitacao,
+                        TipoTransporte,
+                        Escolaridade,
+                        MetodoPagamento)
 
 adm_bp = Blueprint('adm_bp', __name__)
+
 
 @adm_bp.route('/administracao', methods=['GET'])
 @required_login
 @role_required('admin')
 def administracao():
     return render_template('administracao/menu.html')
+
 
 @adm_bp.route('/opcoes', methods=['GET'])
 @required_login
@@ -26,25 +36,27 @@ def opcoes():
     pagamentos = MetodoPagamento.query.all()
     parentescos = GrauParentesco.query.all()
     tencaminhamentos = TipoEncaminhamento.query.all()
-    return render_template('administracao/menu_opcoes.html', 
-                           sexos=sexos, 
-                           situacoes=situacoes, 
-                           moradias=moradias, 
-                           transportes=transportes, 
-                           condicoes=condicoes, 
-                           escolaridades=escolaridades, 
+    return render_template('administracao/menu_opcoes.html',
+                           sexos=sexos,
+                           situacoes=situacoes,
+                           moradias=moradias,
+                           transportes=transportes,
+                           condicoes=condicoes,
+                           escolaridades=escolaridades,
                            pagamentos=pagamentos,
                            parentescos=parentescos,
                            tencaminhamentos=tencaminhamentos)
 
 # SEXO
+
+
 @adm_bp.route('/cadastrar_sexo', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_sexo():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        sexo = Sexo (
+        sexo = Sexo(
             nome=nome
         )
         db.session.add(sexo)
@@ -52,6 +64,7 @@ def cadastrar_sexo():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_sexo/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -67,12 +80,14 @@ def editar_sexo(id):
 
     return render_template('administracao/menu_opcoes.html', sexo=sexo)
 
+
 @adm_bp.route('/listar_sexo', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_sexo():
     sexos = Sexo.query.all()
     return render_template('administracao/menu_opcoes.html', sexos=sexos)
+
 
 @adm_bp.route('/deletar_sexo/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -85,13 +100,15 @@ def deletar_sexo(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # SITUACAO
+
+
 @adm_bp.route('/cadastrar_situacao', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_situacao():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        situacao = Situacao (
+        situacao = Situacao(
             nome=nome
         )
         db.session.add(situacao)
@@ -99,6 +116,7 @@ def cadastrar_situacao():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_situacao/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -114,12 +132,14 @@ def editar_situacao(id):
 
     return render_template('administracao/menu_opcoes.html', situacao=situacao)
 
+
 @adm_bp.route('/listar_situacao', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_situacao():
     situacoes = Situacao.query.all()
     return render_template('administracao/menu_opcoes.html', situacoes=situacoes)
+
 
 @adm_bp.route('/deletar_situacao/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -132,13 +152,15 @@ def deletar_situacao(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # TIPO MORADIA
+
+
 @adm_bp.route('/cadastrar_moradia', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_moradia():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        moradia = TipoMoradia (
+        moradia = TipoMoradia(
             nome=nome
         )
         db.session.add(moradia)
@@ -146,6 +168,7 @@ def cadastrar_moradia():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_moradia/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -161,12 +184,14 @@ def editar_moradia(id):
 
     return render_template('administracao/menu_opcoes.html', moradia=moradia)
 
+
 @adm_bp.route('/listar_moradia', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_moradia():
     moradias = TipoMoradia.query.all()
     return render_template('administracao/menu_opcoes.html', moradias=moradias)
+
 
 @adm_bp.route('/deletar_moradia/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -179,13 +204,15 @@ def deletar_moradia(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # CONDICAO HABITACAO
+
+
 @adm_bp.route('/cadastrar_condicao', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_condicao():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        condicao = CondicaoHabitacao (
+        condicao = CondicaoHabitacao(
             nome=nome
         )
         db.session.add(condicao)
@@ -193,6 +220,7 @@ def cadastrar_condicao():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_condicao/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -208,12 +236,14 @@ def editar_condicao(id):
 
     return render_template('administracao/menu_opcoes.html', condicao=condicao)
 
+
 @adm_bp.route('/listar_condicao', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_condicao():
     condicoes = CondicaoHabitacao.query.all()
     return render_template('administracao/menu_opcoes.html', condicoes=condicoes)
+
 
 @adm_bp.route('/deletar_condicao/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -226,13 +256,15 @@ def deletar_condicao(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # TIPO TRANSPORTE
+
+
 @adm_bp.route('/cadastrar_transporte', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_transporte():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        transporte = TipoTransporte (
+        transporte = TipoTransporte(
             nome=nome
         )
         db.session.add(transporte)
@@ -240,6 +272,7 @@ def cadastrar_transporte():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_transporte/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -254,12 +287,14 @@ def editar_transporte(id):
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html', transporte=transporte)
 
+
 @adm_bp.route('/listar_transporte', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_transporte():
     transportes = TipoTransporte.query.all()
     return render_template('administracao/menu_opcoes.html', transportes=transportes)
+
 
 @adm_bp.route('/deletar_transporte/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -272,13 +307,15 @@ def deletar_transporte(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # ESCOLARIEDADE
+
+
 @adm_bp.route('/cadastrar_escolaridade', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_escolaridade():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        escolaridade = Escolaridade (
+        escolaridade = Escolaridade(
             nome=nome
         )
         db.session.add(escolaridade)
@@ -286,6 +323,7 @@ def cadastrar_escolaridade():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_escolaridade/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -301,12 +339,14 @@ def editar_escolaridade(id):
 
     return render_template('administracao/menu_opcoes.html', escolaridade=escolaridade)
 
+
 @adm_bp.route('/listar_escolaridade', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_escolaridade():
     escolaridades = Escolaridade.query.all()
     return render_template('administracao/menu_opcoes.html', escolaridades=escolaridades)
+
 
 @adm_bp.route('/deletar_escolaridade/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -327,7 +367,7 @@ def cadastrar_pagamento():
     if request.method == 'POST':
         nome = request.form.get('nome')
         juros = request.form.get('juros')
-        pagamento = MetodoPagamento (
+        pagamento = MetodoPagamento(
             nome=nome,
             juros=juros
         )
@@ -336,6 +376,7 @@ def cadastrar_pagamento():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_pagamento/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -352,12 +393,14 @@ def editar_pagamento(id):
 
     return render_template('administracao/menu_opcoes.html', pagamento=pagamento)
 
+
 @adm_bp.route('/listar_pagamento', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_pagamento():
     pagamentos = MetodoPagamento.query.all()
     return render_template('administracao/menu_opcoes.html', pagamentos=pagamentos)
+
 
 @adm_bp.route('/deletar_pagamento/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -370,14 +413,15 @@ def deletar_pagamento(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # GRAU PARENTESCO
- 
+
+
 @adm_bp.route('/cadastrar_parentesco', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def cadastrar_parentesco():
     if request.method == 'POST':
         nome = request.form.get('nome')
-        grau = GrauParentesco (
+        grau = GrauParentesco(
             nome=nome
         )
         db.session.add(grau)
@@ -385,6 +429,7 @@ def cadastrar_parentesco():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_parentesco/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -400,12 +445,14 @@ def editar_parentesco(id):
 
     return render_template('administracao/menu_opcoes.html', grau=grau)
 
+
 @adm_bp.route('/listar_parentesco', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_parentesco():
     graus = GrauParentesco.query.all()
     return render_template('administracao/menu_opcoes.html', graus=graus)
+
 
 @adm_bp.route('/deletar_parentesco/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -418,6 +465,8 @@ def deletar_parentesco(id):
     return redirect(url_for('adm_bp.opcoes'))
 
 # TIPO ENCAMINHAMENTO
+
+
 @adm_bp.route('/cadastrar_tencaminhamento', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
@@ -425,12 +474,13 @@ def cadastrar_tencaminhamento():
     if request.method == 'POST':
         nome = request.form.get('nome')
         tencaminhamento = TipoEncaminhamento(
-            nome = nome
+            nome=nome
         )
         db.session.add(tencaminhamento)
         db.session.commit()
         return redirect(url_for('adm_bp.opcoes'))
     return render_template('administracao/menu_opcoes.html')
+
 
 @adm_bp.route('/editar_tencaminhamento/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -441,7 +491,7 @@ def editar_encaminhamento(id):
     if request.method == 'POST':
         tencaminhamento.nome = request.form.get('nome')
         db.session.commit()
-        flash ('Tipo de encaminhamento atualizado com sucesso', 'success')
+        flash('Tipo de encaminhamento atualizado com sucesso', 'success')
         return redirect(url_for('adm_bp.opcoes'))
 
     return render_template('administracao/menu_opcoes.html', tencaminhamento=tencaminhamento)
@@ -454,25 +504,28 @@ def listar_tencaminhamento():
     tencaminhamentos = TipoEncaminhamento.query.all()
     return render_template('administracao/menu_opcoes.html', tencaminhamentos=tencaminhamentos)
 
+
 @adm_bp.route('/deletar_tencaminhamento/<int:id>', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
 def deletar_tencaminhamento(id):
-     tencaminhamento = TipoEncaminhamento.query.get_or_404(id)
-     db.session.delete(tencaminhamento)
-     db.session.commit()
-     flash ('Tipo de encaminhamento deletado com sucesso', 'success')
-     return redirect(url_for('adm_bp.opcoes'))
+    tencaminhamento = TipoEncaminhamento.query.get_or_404(id)
+    db.session.delete(tencaminhamento)
+    db.session.commit()
+    flash('Tipo de encaminhamento deletado com sucesso', 'success')
+    return redirect(url_for('adm_bp.opcoes'))
 
 # USUARIOS
+
+
 @adm_bp.route('/usuarios', methods=['GET'])
 @required_login
 @role_required('admin')
 def usuarios():
     return render_template('administracao/usuarios.html')
 
-@adm_bp.route('/cadastrar_usuario', methods=['GET', 'POST'])
 
+@adm_bp.route('/cadastrar_usuario', methods=['GET', 'POST'])
 def cadastrar_usuario():
     if request.method == 'POST':
         nome = request.form.get('name')
@@ -500,6 +553,7 @@ def cadastrar_usuario():
 
     return render_template('administracao/form.html')
 
+
 @adm_bp.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
 @required_login
 @role_required('admin')
@@ -521,12 +575,14 @@ def editar_usuario(id):
 
     return render_template('administracao/form_edit.html', usuario=usuario)
 
+
 @adm_bp.route('/listar_usuario', methods=['GET'])
 @required_login
 @role_required('admin')
 def listar_usuario():
     usuarios = Usuario.query.all()
     return render_template('administracao/list.html', usuarios=usuarios)
+
 
 @adm_bp.route('/deletar_usuario/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -538,14 +594,14 @@ def deletar_usuario(id):
     flash('Usuario deletado com sucesso', 'success')
     return redirect(url_for('adm_bp.usuarios'))
 
+
 @adm_bp.route("/filtra_usaurio", methods=["GET", "POST"])
 def filtra_usaurio():
     query = request.args.get("q", "").strip()
     if query:
         usaurios = Usuario.query.filter(Usuario.nome.ilike(f"%{query}%")).limit(10).all()
         return jsonify([
-            {"id": c.id, "nome": c.nome, "role": c.role, "email": c.email} 
+            {"id": c.id, "nome": c.nome, "role": c.role, "email": c.email}
             for c in usaurios
         ])
     return jsonify([])
-

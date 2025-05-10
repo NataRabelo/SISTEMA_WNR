@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
 from app.models import Encaminhamento, Cliente, Profissional, Situacao, TipoEncaminhamento
-from app.utils.decorators import role_required 
+from app.utils.decorators import role_required
 from flask_login import current_user
 from datetime import datetime
 from app import db
@@ -10,11 +10,13 @@ from app.utils.login_required import required_login
 
 encaminhamento_bp = Blueprint('encaminhamento_bp', __name__)
 
+
 @encaminhamento_bp.route('/encaminhamento', methods=['GET', 'POST'])
 @required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def encaminhamento():
     return render_template('encaminhamento/encaminhamento.html')
+
 
 @encaminhamento_bp.route('/criar_encaminhamento', methods=['GET', 'POST'])
 @required_login
@@ -38,13 +40,14 @@ def criar_encaminhamento():
             dias_horas_atendimento=request.form.get('dias_horas_atendimento'),
             data_encaminhamento=datetime.utcnow(),
             observacoes_gerais=request.form.get('observacoes_gerais'),
-            queixa= request.form.get('queixa'),
+            queixa=request.form.get('queixa'),
             situacao_id=int(request.form.get('situacao')),
             tipo_encaminhamento_id=int(request.form.get('tipo_encaminhamento')),
-            valor= converter_para_float(request.form.get('valor'))
+            valor=converter_para_float(request.form.get('valor'))
         )
 
-        verifica_encaminnhamento = Encaminhamento.query.filter_by(cliente_id=cliente_id, profissional_id=profissional_id).first()
+        verifica_encaminnhamento = Encaminhamento.query.filter_by(
+            cliente_id=cliente_id, profissional_id=profissional_id).first()
 
         if verifica_encaminnhamento:
             flash('Cliente já encaminhado para esse profissional', 'danger')
@@ -58,10 +61,11 @@ def criar_encaminhamento():
     clientes = Cliente.query.all()
     profissionais = Profissional.query.all()
     return render_template('encaminhamento/form.html',
-                            clientes=clientes,
-                            profissionais=profissionais,
-                            tencaminhamentos=tencaminhamentos,
-                            situacoes=situacoes)
+                           clientes=clientes,
+                           profissionais=profissionais,
+                           tencaminhamentos=tencaminhamentos,
+                           situacoes=situacoes)
+
 
 @encaminhamento_bp.route('/listar_encaminhamento', methods=['GET', 'POST'])
 @required_login
@@ -70,6 +74,7 @@ def listar_encaminhamento():
     encaminhamentos = Encaminhamento.query.all()
     usuario = current_user
     return render_template('encaminhamento/list.html', encaminhamentos=encaminhamentos, usuario=usuario)
+
 
 @encaminhamento_bp.route('/editar_encaminhamento/<int:id>', methods=['GET', 'POST'])
 @required_login
@@ -92,7 +97,7 @@ def editar_encaminhamento(id):
         encaminhamento.situacao_id = int(request.form.get('situacao'))
         encaminhamento.tipo_encaminhamento_id = int(request.form.get('tipo_encaminhamento'))
         encaminhamento.valor = converter_para_float(request.form.get('valor'))
-        
+
         db.session.commit()
         flash('Encaminhamento atualizado com sucesso!', 'success')
         return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
@@ -105,6 +110,7 @@ def editar_encaminhamento(id):
         tencaminhamentos=tencaminhameos,
         situacoes=situacoes)
 
+
 @encaminhamento_bp.route('/deletar_encaminhamento/<int:id>')
 @required_login
 @role_required('admin')
@@ -115,10 +121,11 @@ def deletar_encaminhamento(id):
     flash('Encaminhamento excluido com sucesso', 'success')
     return redirect(url_for('encaminhamento_bp.listar_encaminhamento'))
 
+
 @encaminhamento_bp.route("/filtra_encaminhamento", methods=["GET", "POST"])
 def filtra_encaminhamento():
     query = request.args.get("q", "").strip()
-    
+
     if query:
         encaminhamentos = (
             Encaminhamento.query
@@ -133,8 +140,8 @@ def filtra_encaminhamento():
                 "id": c.id,
                 "nome": c.cliente.nome,  # Acessando o nome pelo relacionamento
                 "profissional": c.profissional.nome
-            } 
+            }
             for c in encaminhamentos
         ])
-    
+
     return jsonify([])
