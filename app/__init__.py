@@ -1,17 +1,17 @@
-from datetime import timedelta
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from config import DevelopmentConfig
 from flask_login import LoginManager
+from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
-from app.models import Usuario
+from datetime import timedelta
+from flask import Flask
 
-db = SQLAlchemy()
+from app.extensions import db
+
 migrate = Migrate()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 
+from app.models import Usuario
 
 @login_manager.user_loader
 def load_user(id):
@@ -29,6 +29,8 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.init_app(app)
     login_manager.login_view = 'auth_bp.login'
     bcrypt.init_app(app)
+
+    
 
     from app.routes.autenticadores.autenticador import auth_bp
     from app.routes.cliente.cliente import client_bp
