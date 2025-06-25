@@ -25,6 +25,7 @@ def emitir_guia():
     if request.method == 'POST':
         cliente_id = request.form.get('cliente_id')
         profissional_id = request.form.get('profissional_id')
+        usuario = current_user
 
         if not cliente_id or not profissional_id:
             flash('Erro: Cliente e profissional são obrigatórios!', 'danger')
@@ -44,7 +45,8 @@ def emitir_guia():
             metodo_pagamento_id=int(request.form.get('tipo_pagamento')),
             valor_unitario=valor_unitario,
             valor_total=valor_total,
-            pago="Aprovada"
+            pago="Aprovada",
+            usuario_emitente_id=usuario.id
         )
 
         db.session.add(guia)

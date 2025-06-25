@@ -80,9 +80,17 @@ class Usuario(UserMixin, db.Model):
     is_anonymous = db.Column(db.Boolean, default=False)
     data_criacao = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    guias = db.relationship("Guia", back_populates="usuario_emitente", cascade="all, delete-orphan")
+
     # Flask-Login methods
     def get_id(self):
         return str(self.id)
+    
+    def is_active(self):
+        return self.is_active
+    
+    def is_authenticated(self):
+        return self.is_authenticated
 
 # CLIENTE
 
@@ -119,6 +127,7 @@ class Cliente(db.Model):
     rg = db.Column(db.String(20))
     saldo = db.Column(db.Float, nullable=False, default=0.0)
     idade = db.Column(db.Integer, default=0)
+    data_cadastro = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     sexo_id = db.Column(db.Integer, db.ForeignKey("sexo.id"))
     condicao_habitacao_id = db.Column(db.Integer, db.ForeignKey("condicao_habitacao.id"))
@@ -164,6 +173,7 @@ class Profissional(db.Model):
     registro_profissional = db.Column(db.String)
     rg = db.Column(db.String(11), unique=True, nullable=False)
     valor_minimo = db.Column(db.Float)
+    data_cadastro = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     encaminhamentos = db.relationship("Encaminhamento", back_populates="profissional", cascade="all, delete-orphan")
     guias = db.relationship("Guia", back_populates="profissional", cascade="all, delete-orphan")
@@ -179,6 +189,7 @@ class Encaminhamento(db.Model):
     observacoes_gerais = db.Column(db.String)
     queixa = db.Column(db.String)
     valor = db.Column(db.Float)
+    data_cadastro = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     cliente_id = db.Column(db.Integer, db.ForeignKey("clientes.id", ondelete="CASCADE"))
     profissional_id = db.Column(db.Integer, db.ForeignKey("profissionais.id", ondelete="CASCADE"))
@@ -205,7 +216,10 @@ class Guia(db.Model):
     valor_unitario = db.Column(db.Float)
     valor_total = db.Column(db.Float)
     pago = db.Column(db.String(50))
-
+    data_cadastro = db.Column(db.DateTime, default=db.func.current_timestamp())
+    usuario_emitente_id = db.Column(db.Integer, db.ForeignKey("usuarios.id"))
+    
+    usuario_emitente = db.relationship("Usuario", back_populates="guias")
     cliente = db.relationship("Cliente", back_populates="guias", passive_deletes=True)
     profissional = db.relationship("Profissional", back_populates="guias", passive_deletes=True)
     metodo_pagamento = db.relationship("MetodoPagamento", back_populates="guias")

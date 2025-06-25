@@ -46,7 +46,7 @@
 
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- NAVBAR DO SISTEMA -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-black px-4 fixed-top">
         <a class="navbar-brand" href="{{ url_for('main_bp.menu' )}}">
             <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo" width="70" height="70" class="d-inline-block align-text-center">
@@ -91,6 +91,7 @@
         </div>
     </nav>
 
+    <!-- BOTÃO DE VOLTA AO MENU + LÓGICA DE OCULTAÇÃO -->
     {% if request.endpoint != 'main_bp.menu' %}
     <div class="container mt-5 pt-3">
         <a href="{{ url_for('main_bp.menu') }}" class="btn btn-outline-secondary">
@@ -99,7 +100,7 @@
     </div>
     {% endif %}
 
-
+    <!-- FLASH MENSAGENS -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="container">
@@ -113,12 +114,13 @@
             </div>
         {% endif %}
     {% endwith %}
-
+    
+    <!-- CONTEÚDO PRINCIPAL -->
     <div class="container container-fluid mt-5">
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Modal de Confirmação -->
+    <!-- MODAL DE CONFIRMAÇÃO DE LOGOUT -->>
     <div class="modal fade" id="ConfirmarSair" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
