@@ -1,0 +1,109 @@
+<!-- Botão Adicionar -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5>Gerenciar Estados Civils</h5>
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEstadoCivil">Adicionar Estado Civil</button>
+</div>
+
+<!-- Tabela -->
+<table id="tabela-estados" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for estado in estados %}
+    <tr>
+      <td>{{ estado.id }}</td>
+      <td>{{ estado.nome }}</td>
+      <td>
+        <button class="btn btn-sm btn-warning btn-editar" 
+          data-bs-toggle="modal" 
+          data-bs-target="#modalEditarEstado"
+          data-id="{{ estado.id }}"
+          data-nome="{{ estado.nome }}"
+        >Editar</button>
+
+        <button class="btn btn-sm btn-danger btn-excluir" 
+          data-bs-toggle="modal"
+          data-bs-url="/deletar_estado/{{ estado.id }}"
+          data-bs-target="#modalConfirmarExclusao" 
+          data-id="{{ estado.id }}"
+        >Excluir</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Modal Cadastrar -->
+<div class="modal fade" id="modalEstadoCivil" tabindex="-1" aria-labelledby="modalEstadoCivilLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="/cadastrar_estado">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Cadastrar Estado Civil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="novoCondicaoNome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="novoCondicaoNome" name="nome" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Salvar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="modalEditarEstado" tabindex="-1" aria-labelledby="modalEditarEstadoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" id="formEditarEstado">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Estado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="editarEstadoId">
+          <div class="mb-3">
+            <label for="editarEstadoNome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="editarEstadoNome" name="nome" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Atualizar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+const modalEditarEstado = document.getElementById('modalEditarEstado');
+if (modalEditarEstado) {
+  modalEditarEstado.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget; 
+    const id = button.getAttribute('data-id');  
+    const nome = button.getAttribute('data-nome');  
+
+    const inputId = modalEditarEstado.querySelector('#editarEstadoId');
+    const inputNome = modalEditarEstado.querySelector('#editarEstadoNome');
+    const form = document.getElementById('formEditarEstado');
+
+    inputId.value = id;  
+    inputNome.value = nome;  
+    form.action = `/editar_estado/${id}`;  
+  });
+}});
+</script>

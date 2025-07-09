@@ -2,7 +2,8 @@ from flask import Blueprint, flash, jsonify, redirect, render_template, request,
 from app.utils.login_required import required_login
 from app.utils.decorators import role_required
 from app import bcrypt, db
-from app.models import (GrauParentesco,
+from app.models import (EstadosCivis, 
+                        GrauParentesco,
                         Sexo,
                         Situacao,
                         TipoEncaminhamento,
@@ -11,7 +12,7 @@ from app.models import (GrauParentesco,
                         CondicaoHabitacao,
                         TipoTransporte,
                         Escolaridade,
-                        MetodoPagamento)
+                        MetodoPagamento,)
 
 adm_bp = Blueprint('adm_bp', __name__)
 
@@ -36,6 +37,7 @@ def opcoes():
     pagamentos = MetodoPagamento.query.all()
     parentescos = GrauParentesco.query.all()
     tencaminhamentos = TipoEncaminhamento.query.all()
+    estados = EstadosCivis.query.all()
     return render_template('administracao/menu_opcoes.html',
                            sexos=sexos,
                            situacoes=situacoes,
@@ -45,7 +47,8 @@ def opcoes():
                            escolaridades=escolaridades,
                            pagamentos=pagamentos,
                            parentescos=parentescos,
-                           tencaminhamentos=tencaminhamentos)
+                           tencaminhamentos=tencaminhamentos,
+                           estados=estados)
 
 # SEXO
 
@@ -514,6 +517,56 @@ def deletar_tencaminhamento(id):
     db.session.commit()
     flash('Tipo de encaminhamento deletado com sucesso', 'success')
     return redirect(url_for('adm_bp.opcoes'))
+
+
+# ESTADO CIVIL 
+
+@adm_bp.route('/cadastrar_estado', methods=['GET', 'POST'])
+@required_login
+@role_required('admin')
+def cadastrar_estado():
+    if request.method == 'POST':
+        nome = request.form.get('nome')
+        estado = EstadosCivis(
+            nome=nome
+        )
+        db.session.add(estado)
+        db.session.commit()
+        flash('Registro realizado com sucesso!', 'success')
+        return redirect(url_for('adm_bp.opcoes'))
+    return render_template('administracao/menu_opcoes.html')
+
+@adm_bp.route('/editar_estado/<int:id>', methods=['GET', 'POST'])
+@required_login
+@role_required('admin')
+def editar_estado(id):
+    estado = EstadosCivis.query.get_or_404(id)
+
+    if request.method == 'POST':
+        estado.nome = request.form.get('nome')
+        db.session.commit()
+        flash('Estado civil editado com sucesso', 'success')
+        return redirect(url_for('adm_bp.opcoes'))
+
+    return render_template('administracao/menu_opcoes.html', estado=estado)
+
+@adm_bp.route('/listar_estado', methods=['GET'])
+@required_login
+@role_required('admin')
+def listar_estado():
+    estados = EstadosCivis.query.all()
+    return render_template('administracao/menu_opcoes.html', estados=estados)
+
+@adm_bp.route('/deletar_estado/<int:id>', methods=['GET', 'POST'])
+@required_login
+@role_required('admin')
+def deletar_estado(id):
+    estado = EstadosCivis.query.get_or_404(id)
+    db.session.delete(estado)
+    db.session.commit()
+    flash('Estado civil deletado com sucesso', 'success')
+    return redirect(url_for('adm_bp.opcoes'))
+
 
 # USUARIOS
 

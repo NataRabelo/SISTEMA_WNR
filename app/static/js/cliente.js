@@ -213,3 +213,10 @@ function toggleCampos() {
 
 // Adiciona um evento para chamar a função quando o valor do campo de data for alterado
 document.getElementById('dt_nascimento').addEventListener('input', atualizarIdade);
+
+
+function alertaCalculo() {
+    document.getElementById("renda_familiar").addEventListener("focus", function() {
+    alert("Somar: Água + Luz + Alim. + Transp. + Aluguel + Saúde + Escola + Outros");
+  });
+}

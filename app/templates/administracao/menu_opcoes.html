@@ -34,6 +34,9 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="transporte-tab" data-bs-toggle="tab" data-bs-target="#transporte" type="button" role="tab">Tipo de Transporte</button>
       </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="estado-tab" data-bs-toggle="tab" data-bs-target="#estado" type="button" role="tab">Estado Civil</button>
+      </li>
     </ul>
   </div> 
 
@@ -73,6 +76,9 @@
   
     <div class="tab-pane fade" id="transporte" role="tabpanel">
       {% include 'administracao/transporte_card.html' %}
+    </div>
+    <div class="tab-pane fade" id="estado" role="tabpanel">
+      {% include 'administracao/estados_card.html' %}
     </div>
   </div>  
 </div>

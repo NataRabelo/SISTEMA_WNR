@@ -52,12 +52,23 @@
                     <label for="rg" class="form-label">RG</label>
                     <input type="text" class="form-control" name="rg" id="rg">
                 </div>
+            </div>
+            <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="sexo" class="form-label">Sexo<span class="required-star">*</span></label>
                     <select class="form-select campoObrigatorio" id="sexo" name="sexo" required>
                         <option value="">Selecione...</option>
                         {% for sexo in sexos %}
                         <option value="{{ sexo.id }}">{{ sexo.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="estado_civil" class="form-label">Estado Civil<span class="required-star">*</span></label>
+                    <select class="form-select campoObrigatorio" id="estado_civil" name="estado_civil" required>
+                        <option value="">Selecione...</option>
+                        {% for estado_civil in estados %}
+                        <option value="{{ estado_civil.id }}">{{ estado_civil.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>

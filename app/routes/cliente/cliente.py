@@ -7,7 +7,7 @@ from datetime import datetime
 from app import db
 from app.models import (Cliente,
                         CondicaoHabitacao,
-                        Escolaridade,
+                        Escolaridade, EstadosCivis,
                         GrauParentesco,
                         Sexo,
                         TipoMoradia,
@@ -34,46 +34,47 @@ def cadastrar_cliente():
     transportes = TipoTransporte.query.all()
     escolaridades = Escolaridade.query.all()
     parentescos = GrauParentesco.query.all()
+    estados = EstadosCivis.query.all()
 
     if request.method == 'POST':
         idade = request.form.get('idade')
         print(idade)
         cliente = Cliente(
-            nome=request.form.get('nome'),
-            cpf=request.form.get('cpf'),
-            email=request.form.get('email'),
-            data_nascimento=datetime.strptime(request.form.get('dt_nascimento'), "%Y-%m-%d").date(),
-            renda_familiar=converter_para_float(request.form.get('renda_familiar')),
-            bairro=request.form.get('bairro'),
-            canal_divulgacao=request.form.get('canal_divulgacao'),
-            cep=request.form.get('cep'),
-            cidade=request.form.get('cidade'),
-            cpf_responsavel=request.form.get('cpf_responsavel'),
-            complemento=request.form.get('complemento'),
-            numero_cs=request.form.get('numero_cs'),
-            despesa_mensal=converter_para_float(request.form.get('despesa_mensal')),
-            estado=request.form.get('estado'),
-            endereco=request.form.get('endereco'),
-            fone_contato=request.form.get('fone_contato'),
-            fone_pessoal=request.form.get('fone_pessoal'),
-            nome_plano_saude=request.form.get('nome_plano_saude'),
-            nome_responsavel=request.form.get('nome_responsavel'),
-            possui_filhos=request.form.get('possui_filhos'),
-            numero_filhos=request.form.get('numero_filhos'),
-            plano_saude=request.form.get('plano_saude'),
-            previdenciario=request.form.get('previdenciario'),
-            profissao=request.form.get('profissao'),
-            remuneracao=converter_para_float(request.form.get('remuneracao')),
-            rg=request.form.get('rg'),
-            saldo=converter_para_float(request.form.get('saldo')),
-            idade=int(request.form.get('idade')),
-
-            sexo_id=int(request.form.get('sexo')),
-            condicao_habitacao_id=int(request.form.get('condicao_habitacao')),
-            tipo_moradia_id=int(request.form.get('tipo_moradia')),
-            tipo_transporte_id=int(request.form.get('transporte')),
-            escolaridade_id=int(request.form.get('escolaridade')),
-            grau_parentesco_id=request.form.get('grau_parentesco')
+            nome                        = request.form.get('nome'),
+            cpf                         = request.form.get('cpf'),
+            email                       = request.form.get('email'),
+            bairro                      = request.form.get('bairro'),
+            canal_divulgacao            = request.form.get('canal_divulgacao'),
+            cep                         = request.form.get('cep'),
+            cidade                      = request.form.get('cidade'),
+            cpf_responsavel             = request.form.get('cpf_responsavel'),
+            complemento                 = request.form.get('complemento'),
+            numero_cs                   = request.form.get('numero_cs'),
+            estado                      = request.form.get('estado'),
+            endereco                    = request.form.get('endereco'),
+            fone_contato                = request.form.get('fone_contato'),
+            fone_pessoal                = request.form.get('fone_pessoal'),
+            nome_plano_saude            = request.form.get('nome_plano_saude'),
+            nome_responsavel            = request.form.get('nome_responsavel'),
+            possui_filhos               = request.form.get('possui_filhos'),
+            numero_filhos               = request.form.get('numero_filhos'),
+            plano_saude                 = request.form.get('plano_saude'),
+            previdenciario              = request.form.get('previdenciario'),
+            profissao                   = request.form.get('profissao'),
+            rg                          = request.form.get('rg'),
+            grau_parentesco_id          = request.form.get('grau_parentesco'),
+            estado_civil_id             = request.form.get('estado_civil'),
+            renda_familiar              = converter_para_float(request.form.get('renda_familiar')),
+            despesa_mensal              = converter_para_float(request.form.get('despesa_mensal')),
+            remuneracao                 = converter_para_float(request.form.get('remuneracao')),
+            saldo                       = converter_para_float(request.form.get('saldo')),
+            idade                       = int(request.form.get('idade')),
+            sexo_id                     = int(request.form.get('sexo')),
+            condicao_habitacao_id       = int(request.form.get('condicao_habitacao')),
+            tipo_moradia_id             = int(request.form.get('tipo_moradia')),
+            tipo_transporte_id          = int(request.form.get('transporte')),
+            escolaridade_id             = int(request.form.get('escolaridade')),
+            data_nascimento             = datetime.strptime(request.form.get('dt_nascimento'), "%Y-%m-%d").date()
         )
 
         cpf = request.form.get('cpf')
@@ -94,7 +95,8 @@ def cadastrar_cliente():
                            moradias=moradias,
                            transportes=transportes,
                            escolaridades=escolaridades,
-                           parentescos=parentescos)
+                           parentescos=parentescos,
+                           estados=estados)
 
 
 @client_bp.route('/listar_cliente', methods=['GET', 'POST'])
@@ -110,17 +112,17 @@ def listar_cliente():
 @required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_cliente(id):
-    sexos = Sexo.query.all()
-    condicoes = CondicaoHabitacao.query.all()
-    moradias = TipoMoradia.query.all()
-    transportes = TipoTransporte.query.all()
-    escolaridades = Escolaridade.query.all()
-    parentescos = GrauParentesco.query.all()
-
-    cliente = Cliente.query.get_or_404(id)
-    remuneracao_formatada = formatar_para_moeda(cliente.remuneracao)
-    renda_familiar_formatada = formatar_para_moeda(cliente.renda_familiar)
-    despesa_mensal_formatada = formatar_para_moeda(cliente.despesa_mensal)
+    sexos                               = Sexo.query.all()
+    condicoes                           = CondicaoHabitacao.query.all()
+    moradias                            = TipoMoradia.query.all()
+    transportes                         = TipoTransporte.query.all()
+    escolaridades                       = Escolaridade.query.all()
+    parentescos                         = GrauParentesco.query.all()
+    estados                             = EstadosCivis.query.all()
+    cliente                             = Cliente.query.get_or_404(id)
+    remuneracao_formatada               = formatar_para_moeda(cliente.remuneracao)
+    renda_familiar_formatada            = formatar_para_moeda(cliente.renda_familiar)
+    despesa_mensal_formatada            = formatar_para_moeda(cliente.despesa_mensal)
 
     if cliente.idade is None:
         idade = 00
@@ -129,42 +131,56 @@ def editar_cliente(id):
 
     print(idade)
     if request.method == 'POST':
-        sexos = Sexo.query.all()
-        condicoes = CondicaoHabitacao.query.all()
-        moradias = TipoMoradia.query.all()
-        transportes = TipoTransporte.query.all()
-        escolaridades = Escolaridade.query.all()
-        parentescos = GrauParentesco.query.all()
+        sexos                           = Sexo.query.all()
+        condicoes                       = CondicaoHabitacao.query.all()
+        moradias                        = TipoMoradia.query.all()
+        transportes                     = TipoTransporte.query.all()
+        escolaridades                   = Escolaridade.query.all()
+        parentescos                     = GrauParentesco.query.all()
+        estados                         = EstadosCivis.query.all()
 
-        idade = request.form.get('idade')
+        idade                           = request.form.get('idade')
+        cliente.nome                    = request.form.get('nome')
+        cliente.cpf                     = request.form.get('cpf')
+        cliente.email                   = request.form.get('email')
+        data_nascimento                 = request.form.get('dt_nascimento')
+        cliente.idade                   = request.form.get('idade')
+        cliente.bairro                  = request.form.get('bairro')
+        cliente.canal_divulgacao        = request.form.get('canal_divulgacao')
+        cliente.cep                     = request.form.get('cep')
+        cliente.cidade                  = request.form.get('cidade')
+        cliente.condicao_habitacao_id   = request.form.get('condicao_habitacao')
+        cliente.cpf_responsavel         = request.form.get('cpf_responsavel')
+        cliente.complemento             = request.form.get('complemento')
+        cliente.numero_cs               = request.form.get('numero_cs')
+        cliente.escolaridade_id         = request.form.get('escolaridade')
+        cliente.estado                  = request.form.get('estado')
+        cliente.endereco                = request.form.get('endereco')
+        cliente.fone_contato            = request.form.get('fone_contato')
+        cliente.fone_pessoal            = request.form.get('fone_pessoal')
+        cliente.grau_parentesco_id      = request.form.get('grau_parentesco')
+        cliente.nome_responsavel        = request.form.get('nome_responsavel')
+        numero_filhos                   = request.form.get('numero_filhos')
+        possui_filhos                   = request.form.get('possui_filhos')
+        nome_plano_saude                = request.form.get('nome_plano_saude')
+        plano_saude                     = request.form.get('plano_saude')
+        cliente.previdenciario          = request.form.get('previdenciario')
+        cliente.profissao               = request.form.get('profissao')
+        cliente.rg                      = request.form.get('rg')
+        cliente.sexo_id                 = request.form.get('sexo')
+        cliente.tipo_moradia_id         = request.form.get('tipo_moradia')
+        cliente.transporte_id           = request.form.get('transporte')
 
-        cliente.nome = request.form.get('nome')
-        cliente.cpf = request.form.get('cpf')
-        cliente.email = request.form.get('email')
-        data_nascimento = request.form.get('dt_nascimento')
-        cliente.idade = request.form.get('idade')
+        cliente.saldo                   = converter_para_float(request.form.get('saldo'))
+        cliente.remuneracao             = converter_para_float(request.form.get('remuneracao'))
+        cliente.despesa_mensal          = converter_para_float(request.form.get('despesa_mensal'))
+        cliente.renda_familiar          = converter_para_float(request.form.get('renda_familiar'))
+
+        # Lógica para verificar se o campo 'idade' foi preenchido
         if data_nascimento:
-            cliente.data_nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
-        cliente.renda_familiar = converter_para_float(request.form.get('renda_familiar'))
-        cliente.bairro = request.form.get('bairro')
-        cliente.canal_divulgacao = request.form.get('canal_divulgacao')
-        cliente.cep = request.form.get('cep')
-        cliente.cidade = request.form.get('cidade')
-        cliente.condicao_habitacao_id = request.form.get('condicao_habitacao')
-        cliente.cpf_responsavel = request.form.get('cpf_responsavel')
-        cliente.complemento = request.form.get('complemento')
-        cliente.numero_cs = request.form.get('numero_cs')
-        cliente.despesa_mensal = converter_para_float(request.form.get('despesa_mensal'))
-        cliente.escolaridade_id = request.form.get('escolaridade')
-        cliente.estado = request.form.get('estado')
-        cliente.endereco = request.form.get('endereco')
-        cliente.fone_contato = request.form.get('fone_contato')
-        cliente.fone_pessoal = request.form.get('fone_pessoal')
-        cliente.grau_parentesco_id = request.form.get('grau_parentesco')
-        cliente.nome_responsavel = request.form.get('nome_responsavel')
+            cliente.data_nascimento     = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
 
-        numero_filhos = request.form.get('numero_filhos')
-        possui_filhos = request.form.get('possui_filhos')
+        # Lógica para verificar se o campo 'possui_filhos' foi preenchido
         if possui_filhos == 'Não':
             cliente.numero_filhos = 0
             cliente.possui_filhos = possui_filhos
@@ -172,8 +188,7 @@ def editar_cliente(id):
             cliente.numero_filhos = numero_filhos
             cliente.possui_filhos = possui_filhos
 
-        nome_plano_saude = request.form.get('nome_plano_saude')
-        plano_saude = request.form.get('plano_saude')
+        # Lógica para verificar se o campo 'plano_saude' foi preenchido
         if plano_saude == 'Sim':
             cliente.nome_plano_saude = nome_plano_saude
             cliente.plano_saude = plano_saude
@@ -181,14 +196,7 @@ def editar_cliente(id):
             cliente.nome_plano_saude = 'Sem plano de Saúde'
             cliente.plano_saude = plano_saude
 
-        cliente.previdenciario = request.form.get('previdenciario')
-        cliente.profissao = request.form.get('profissao')
-        cliente.remuneracao = converter_para_float(request.form.get('remuneracao'))
-        cliente.rg = request.form.get('rg')
-        cliente.saldo = converter_para_float(request.form.get('saldo'))
-        cliente.sexo_id = request.form.get('sexo')
-        cliente.tipo_moradia_id = request.form.get('tipo_moradia')
-        cliente.transporte_id = request.form.get('transporte')
+        
         db.session.commit()
         flash('Cliente atualizado com sucesso!', 'success')
         return redirect(url_for('client_bp.listar_cliente'))
@@ -204,7 +212,8 @@ def editar_cliente(id):
                            moradias=moradias,
                            transportes=transportes,
                            escolaridades=escolaridades,
-                           parentescos=parentescos)
+                           parentescos=parentescos,
+                           estados=estados)
 
 
 @client_bp.route('/deletar_cliente/<int:id>', methods=['GET', 'POST'])
