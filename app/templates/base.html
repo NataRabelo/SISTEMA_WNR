@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titulo da página -->
     <title>{% block title %}{% endblock %}</title>
 
     <!-- jQuery (necessário para DataTables) -->
@@ -147,41 +148,10 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function (){
-            // Lógica do modal
-            var modal = document.getElementById("ConfirmarSair");
-            var confirmBtn = document.getElementById("confirmarSairBtn");
+    <!-- JS global -->
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     
-            modal.addEventListener("show.bs.modal", function (event) {
-                var button = event.relatedTarget;
-                if (button) {
-                    confirmBtn.href = "/logout";
-                }
-            });
-    
-            // Lógica para remover as flash messages
-            let flashMessages = document.querySelectorAll('.flash-message');
-    
-            if (flashMessages.length > 0) {
-                setTimeout(() => {
-                    flashMessages.forEach(msg => {
-                        msg.style.transition = "opacity 0.5s ease";
-                        msg.style.opacity = "0";
-                        setTimeout(() => msg.remove(), 500);
-                    });
-                }, 3000);
-            }
-        });
-
-        window.onbeforeunload = function() {
-            // Enviar um pedido para o servidor para limpar a sessão quando a aba for fechada
-            fetch('/logout', {
-                method: 'POST',
-            });
-        };
-    </script>
-    
-    
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

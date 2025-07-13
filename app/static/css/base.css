@@ -47,18 +47,26 @@ body {
     transform: scale(1.05);
 }
 
-/* Cores dos botões 457b9d  396a8f*/
-.btn-cliente { background-color: rgb(33, 37, 41); color: white; }
-.btn-profissional { background-color: rgb(33, 37, 41); color: white; }
-.btn-encaminhamento { background-color: rgb(33, 37, 41); color: white; }
-.btn-guia { background-color: rgb(33, 37, 41); color: white; }
-.btn-adm { background-color: rgb(33, 37, 41); color: white; }
+/* Cores dos botões: #457b9d e #396a8f */
+.btn-cliente,
+.btn-profissional,
+.btn-encaminhamento,
+.btn-guia,
+.btn-adm {
+    background-color: rgb(33, 37, 41); /* cor base escura */
+    color: white;
+}
 
-.btn-cliente:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
-.btn-profissional:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
-.btn-encaminhamento:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
-.btn-guia:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
-.btn-adm:hover { background-color: rgb(255, 255, 255); border: 1px solid black;}
+.btn-cliente:hover,
+.btn-profissional:hover,
+.btn-encaminhamento:hover,
+.btn-guia:hover,
+.btn-adm:hover {
+    background-color: white;
+    border: 1px solid black;
+    color: black; /* opcional para contraste */
+}
+
 
 #flash-container {
     position: fixed;
