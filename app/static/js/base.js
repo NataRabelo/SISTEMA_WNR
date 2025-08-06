@@ -216,21 +216,6 @@ function buscarProfissionais() {
         });
 }
 
-// Função para calcular o saldo - Cliente
-function calcularResultado() {
-    const campo1 = parseFloat(document.getElementById('remuneracao').value) || 0;
-    const campo2 = parseFloat(document.getElementById('renda_familiar').value) || 0;
-    const campo3 = parseFloat(document.getElementById('despesa_mensal').value) || 0;
-
-    const resultado = campo1 + campo2 - campo3;
-    document.getElementById('saldo').value = resultado;
-}
-const campoRemuneracao = document.getElementById("remuneracao");
-if (campoFilhos) {
-    document.getElementById('remuneracao').addEventListener('input', calcularResultado);
-    document.getElementById('renda_familiar').addEventListener('input', calcularResultado);
-    document.getElementById('despesa_mensal').addEventListener('input', calcularResultado);
-}
 // Função para ativar o tolltip
 document.addEventListener('DOMContentLoaded', function () {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -250,3 +235,54 @@ const cpf = document.getElementById('cpf');
 if (cpf) IMask(cpf, { mask: '000.000.000-00'})
 const cep = document.getElementById('cep')
 if (cep) IMask(cep, '00000-000')
+
+// Função para formatar os input de valores monetários 
+function mascaraMoeda(event) {
+    let value = event.target.value.replace(/\D/g, '');
+    let valorFormatado = (Number(value) / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+    event.target.value = valorFormatado;
+}
+
+// Aplicação da função de valor monetário 
+const fRemuneracao = document.getElementById('remuneracao');
+if (fRemuneracao) fRemuneracao.addEventListener('input', mascaraMoeda);
+
+const fRendaFamiliar = document.getElementById('renda_familiar');
+if (fRendaFamiliar) fRendaFamiliar.addEventListener('input', mascaraMoeda);
+
+const fdespesaMensal = document.getElementById('despesa_mensal');
+if (fdespesaMensal) fdespesaMensal.addEventListener('input', mascaraMoeda);
+
+const fValorMinimo = document.getElementById('valor_minimo');
+if (fValorMinimo) fValorMinimo.addEventListener('input', mascaraMoeda);
+
+// Função para desformatar o valor monetário para realizar o calculo
+function desformatarMoeda(valorFormatado) {
+    if (!valorFormatado) return 0;
+    return parseFloat(
+        valorFormatado.replace(/\s|R\$|\./g, '').replace(',', '.')
+    ) || 0;
+}
+
+// Função para calcular o saldo - Cliente
+function calcularResultado() {
+    const campo1 = desformatarMoeda(document.getElementById('remuneracao').value);
+    const campo2 = desformatarMoeda(document.getElementById('renda_familiar').value);
+    const campo3 = desformatarMoeda(document.getElementById('despesa_mensal').value);
+
+    const resultado = campo1 + campo2 - campo3;
+
+    document.getElementById('saldo').value = resultado.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+}
+const campoRemuneracao = document.getElementById("remuneracao");
+if (campoFilhos) {
+    document.getElementById('remuneracao').addEventListener('input', calcularResultado);
+    document.getElementById('renda_familiar').addEventListener('input', calcularResultado);
+    document.getElementById('despesa_mensal').addEventListener('input', calcularResultado);
+}
