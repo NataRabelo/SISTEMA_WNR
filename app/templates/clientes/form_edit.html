@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="cpf_responsavel" class="form-label">CPF responsável:</label>
-                        <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel" value="{{ cliente.cpf_responsavel }}">
+                        <input type="text" class="form-control" id="cpf_responsavel" name="cpf_responsavel"  value="{{ cliente.cpf_responsavel }}">
                     </div>
                     <div class="col-md-3">
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
@@ -81,11 +81,11 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="fone_pessoal" class="custom-label">Telefone Pessoal<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" name="fone_pessoal" id="celular" placeholder="(xx) xxxxxxxxx" required value="{{ cliente.fone_pessoal }}">
+                    <input type="text" class="form-control" name="fone_pessoal" id="fone_pessoal" placeholder="(xx) xxxxxxxxx" required value="{{ cliente.fone_pessoal }}">
                 </div>
                 <div class="col-md-3">
                     <label for="fone_contato" class="custom-label">Telefone Contato<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" name="fone_contato" id="telefone" placeholder="(xx) xxxxxxxxx" required value="{{ cliente.fone_contato }}">
+                    <input type="text" class="form-control" name="fone_contato" id="fone_contato" placeholder="(xx) xxxxxxxxx" required value="{{ cliente.fone_contato }}">
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="custom-label">E-mail<span class="required-star">*</span></label>
@@ -97,7 +97,7 @@
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP<span class="required-star">*</span></label><div class="input-group">
                         <input type="text" id="cep" name="cep" class="form-control" value="{{ cliente.cep }}">
-                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCep()">Buscar</button>
                     </div>
                 </div>
             </div>

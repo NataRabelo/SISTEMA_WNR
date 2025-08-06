@@ -1,13 +1,12 @@
 body {
     display: flex;
-    flex-direction: column; /* Faz com que os elementos filhos fiquem empilhados verticalmente */
+    flex-direction: column;
     margin: 0;
     padding-top: 56px;
     font-family: Arial, sans-serif;
     background-color: #f1f3f5;
 }
 
-/* Conteúdo principal ajustado */
 .content {
     margin-left: 60px;
     padding: 20px;
@@ -53,7 +52,7 @@ body {
 .btn-encaminhamento,
 .btn-guia,
 .btn-adm {
-    background-color: rgb(33, 37, 41); /* cor base escura */
+    background-color: rgb(33, 37, 41);
     color: white;
 }
 
@@ -64,7 +63,7 @@ body {
 .btn-adm:hover {
     background-color: white;
     border: 1px solid black;
-    color: black; /* opcional para contraste */
+    color: black;
 }
 
 

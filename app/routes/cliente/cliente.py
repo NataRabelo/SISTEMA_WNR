@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, render_template, request, redirect, url_for, flash
 from app.utils.editor_valor import converter_para_float, formatar_para_moeda
+from app.utils.limpa_valor import limpar_mascara
 from app.utils.login_required import required_login
 from app.utils.decorators import role_required
 from flask_login import current_user
@@ -28,32 +29,30 @@ def cliente():
 @required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def cadastrar_cliente():
-    sexos = Sexo.query.all()
-    condicoes = CondicaoHabitacao.query.all()
-    moradias = TipoMoradia.query.all()
-    transportes = TipoTransporte.query.all()
-    escolaridades = Escolaridade.query.all()
-    parentescos = GrauParentesco.query.all()
-    estados = EstadosCivis.query.all()
+    sexos           = Sexo.query.all()
+    condicoes       = CondicaoHabitacao.query.all()
+    moradias        = TipoMoradia.query.all()
+    transportes     = TipoTransporte.query.all()
+    escolaridades   = Escolaridade.query.all()
+    parentescos     = GrauParentesco.query.all()
+    estados         = EstadosCivis.query.all()
 
     if request.method == 'POST':
-        idade = request.form.get('idade')
-        print(idade)
         cliente = Cliente(
             nome                        = request.form.get('nome'),
-            cpf                         = request.form.get('cpf'),
+            cpf                         = limpar_mascara(request.form.get('cpf')),
             email                       = request.form.get('email'),
             bairro                      = request.form.get('bairro'),
             canal_divulgacao            = request.form.get('canal_divulgacao'),
-            cep                         = request.form.get('cep'),
+            cep                         = limpar_mascara(request.form.get('cep')),
             cidade                      = request.form.get('cidade'),
             cpf_responsavel             = request.form.get('cpf_responsavel'),
             complemento                 = request.form.get('complemento'),
             numero_cs                   = request.form.get('numero_cs'),
             estado                      = request.form.get('estado'),
             endereco                    = request.form.get('endereco'),
-            fone_contato                = request.form.get('fone_contato'),
-            fone_pessoal                = request.form.get('fone_pessoal'),
+            fone_contato                = limpar_mascara(request.form.get('fone_contato')),
+            fone_pessoal                = limpar_mascara(request.form.get('fone_pessoal')),
             nome_plano_saude            = request.form.get('nome_plano_saude'),
             nome_responsavel            = request.form.get('nome_responsavel'),
             possui_filhos               = request.form.get('possui_filhos'),
@@ -124,12 +123,11 @@ def editar_cliente(id):
     renda_familiar_formatada            = formatar_para_moeda(cliente.renda_familiar)
     despesa_mensal_formatada            = formatar_para_moeda(cliente.despesa_mensal)
 
-    if cliente.idade is None:
-        idade = 00
-    else:
-        idade = int(cliente.idade)
+    cpf_limpo = request.form.get('cpf')
+    celular_limpo = request.form.get('fone_pessoal')
+    telefone_limpo = request.form.get('fone_contato')
+    cep_limpo = request.form.get('cep')
 
-    print(idade)
     if request.method == 'POST':
         sexos                           = Sexo.query.all()
         condicoes                       = CondicaoHabitacao.query.all()
@@ -141,13 +139,13 @@ def editar_cliente(id):
 
         idade                           = request.form.get('idade')
         cliente.nome                    = request.form.get('nome')
-        cliente.cpf                     = request.form.get('cpf')
+        cliente.cpf                     = cpf_limpo
         cliente.email                   = request.form.get('email')
         data_nascimento                 = request.form.get('dt_nascimento')
         cliente.idade                   = request.form.get('idade')
         cliente.bairro                  = request.form.get('bairro')
         cliente.canal_divulgacao        = request.form.get('canal_divulgacao')
-        cliente.cep                     = request.form.get('cep')
+        cliente.cep                     = cep_limpo
         cliente.cidade                  = request.form.get('cidade')
         cliente.condicao_habitacao_id   = request.form.get('condicao_habitacao')
         cliente.cpf_responsavel         = request.form.get('cpf_responsavel')
@@ -156,8 +154,8 @@ def editar_cliente(id):
         cliente.escolaridade_id         = request.form.get('escolaridade')
         cliente.estado                  = request.form.get('estado')
         cliente.endereco                = request.form.get('endereco')
-        cliente.fone_contato            = request.form.get('fone_contato')
-        cliente.fone_pessoal            = request.form.get('fone_pessoal')
+        cliente.fone_contato            = telefone_limpo
+        cliente.fone_pessoal            = celular_limpo
         cliente.grau_parentesco_id      = request.form.get('grau_parentesco')
         cliente.nome_responsavel        = request.form.get('nome_responsavel')
         numero_filhos                   = request.form.get('numero_filhos')
@@ -206,7 +204,7 @@ def editar_cliente(id):
                            remuneracao=remuneracao_formatada,
                            renda_familiar=renda_familiar_formatada,
                            despesa_mensal=despesa_mensal_formatada,
-                           idade=idade,
+                           idade=20,
                            sexos=sexos,
                            condicoes=condicoes,
                            moradias=moradias,
@@ -233,7 +231,7 @@ def filtra_cliente():
     if query:
         clientes = Cliente.query.filter(Cliente.nome.ilike(f"%{query}%")).limit(10).all()
         return jsonify([
-            {"id": c.id, "nome": c.nome, "cpf": c.cpf, "email": c.email}
+            {"id": c.id, "nome": c.nome, "cpf": c.cpf, "email": c.email, "contato": c.fone_contato}
             for c in clientes
         ])
     return jsonify([])

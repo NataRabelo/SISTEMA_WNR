@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="dt_nascimento" class="form-label">Data de Nascimento<span class="required-star">*</span></label>
-                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" onchange="verificarIdade()" required>
+                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" required>
                 </div>
                 <div class="col-md-2">
                     <label for="idade" class="form-label">Idade</label>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="grau_parentesco" class="form-label">Grau de parentesco:</label>
-                        <select class="form-select" name="grau_parentesco" id="grau_parentesco">
+                        <select class="form-select" name="grau_parentesco" id="grau_parentesco" >
                             <option value="">Selecione...</option>
                             {% for parentesco in parentescos %}
                             <option value="{{ parentesco.id }}">{{ parentesco.nome }}</option>
@@ -56,7 +56,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="sexo" class="form-label">Sexo<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" id="sexo" name="sexo" required>
+                    <select class="form-select " id="sexo" name="sexo" required>
                         <option value="">Selecione...</option>
                         {% for sexo in sexos %}
                         <option value="{{ sexo.id }}">{{ sexo.nome }}</option>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="estado_civil" class="form-label">Estado Civil<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" id="estado_civil" name="estado_civil" required>
+                    <select class="form-select " id="estado_civil" name="estado_civil" required>
                         <option value="">Selecione...</option>
                         {% for estado_civil in estados %}
                         <option value="{{ estado_civil.id }}">{{ estado_civil.nome }}</option>
@@ -77,11 +77,11 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="fone_pessoal" class="custom-label">Telefone Pessoal<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" name="fone_pessoal" id="celular" placeholder="(xx) xxxxxxxxx" required>
+                    <input type="text" class="form-control" id="fone_pessoal" name="fone_pessoal" placeholder="(00) 00000-0000" required>
                 </div>
                 <div class="col-md-3">
                     <label for="fone_contato" class="custom-label">Telefone Contato<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" name="fone_contato" id="telefone" placeholder="(xx) xxxxxxxxx" required>
+                    <input type="text" class="form-control" id="fone_contato" name="fone_contato" placeholder="(00) 00000-0000" required>
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="custom-label">E-mail<span class="required-star">*</span></label>
@@ -93,8 +93,8 @@
                 <div class="col-md-3">
                     <label for="cep" class="custom-label">CEP<span class="required-star">*</span></label>
                     <div class="input-group">
-                        <input type="text" id="cep" name="cep" class="form-control" required>
-                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" onclick="buscarCEP()">Buscar</button>
+                        <input type="text" class="form-control" id="cep" name="cep" required>
+                        <button type="button" class="btn btn-primary" id="buscar_cep_btn" name="buscar_cep_btn" onclick="buscarCep()">Buscar</button>
                     </div>
                 </div>
             </div>
@@ -131,7 +131,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="condicao_habitacao" class="custom-label">Condição de Habitação<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" name="condicao_habitacao" required>
+                    <select class="form-select " name="condicao_habitacao" required>
                         <option value="">Selecione...</option>
                         {% for condicao in condicoes %}
                         <option value="{{ condicao.id }}">{{ condicao.nome }}</option>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_moradia" class="custom-label">Tipo de Moradia<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" name="tipo_moradia" required>
+                    <select class="form-select " name="tipo_moradia" required>
                         <option value="">Selecione...</option>
                         {% for moradia in moradias %}
                         <option value="{{ moradia.id }}">{{ moradia.nome }}</option>
@@ -152,7 +152,7 @@
                 <h2 class="mb-4 mt-4">Outras informações</h2>
                 <div class="col-md-3">
                     <label for="transporte" class="custom-label">Meio de Transporte<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" name="transporte" required>
+                    <select class="form-select " name="transporte" required>
                         <option value="">Selecione...</option>
                         {% for transporte in transportes %}
                         <option value="{{ transporte.id }}">{{ transporte.nome }}</option>
@@ -163,7 +163,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="escolaridade" class="custom-label">Escolaridade<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" id="escolaridade" name="escolaridade" required>
+                    <select class="form-select " id="escolaridade" name="escolaridade" required>
                         <option value="">Selecione...</option>
                         {% for escolaridade in escolaridades %}
                         <option value="{{ escolaridade.id }}">{{ escolaridade.nome }}</option>
@@ -178,7 +178,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="plano_saude" class="custom-label">Possui Plano de Saúde?<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" id="plano_saude" name="plano_saude"  onchange="verificaDropdown_PlanodeSaude()">
+                    <select class="form-select " id="plano_saude" name="plano_saude" required>
                         <option value="">Selecione...</option>
                         <option value="Sim">Sim</option>
                         <option value="Não">Não</option>
@@ -192,7 +192,7 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="possui_filhos" class="custom-label">Possui filhos?<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" id="possui_filhos" name="possui_filhos" onchange="verificarDropdown_Filhos()">
+                    <select class="form-select " id="possui_filhos" name="possui_filhos" required>
                         <option value="">Selecione...</option>
                         <option value="Sim">Sim</option>
                         <option value="Não">Não</option>
@@ -204,7 +204,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="previdenciario" class="custom-label">Previdenciário<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" name="previdenciario" required>
+                    <select class="form-select " name="previdenciario" required>
                         <option value="">Selecione...</option>
                         <option value="Sim">Sim</option>
                         <option value="Não">Não</option>
@@ -222,7 +222,8 @@
                 </div>
                 <div class="col-md-3">
                     <label for="despesa_mensal" class="custom-label">Despesa Mensal<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="R$ 0,00" required>
+                    <input type="text" class="form-control" id="despesa_mensal" name="despesa_mensal" placeholder="R$ 0,00" data-bs-toggle="tooltip" data-bs-placement="top" title="Somar: Água + Luz + Alim. + Transp. + Aluguel + Saúde + Escola" required>
+                    
                 </div>
                 <div class="col-md-3">
                     <label for="saldo" class="custom-label">Saldo<span class="required-star">*</span></label>
@@ -238,8 +239,4 @@
         </div>
     </form>
 </div>
-
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/cliente.js') }}"></script>
-{% endblock %}
 {% endblock %}

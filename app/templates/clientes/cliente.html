@@ -20,10 +20,45 @@
         </div>
     </div>
 </div>
-
-{% block scripts %}
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/cliente.js') }}"></script> 
-{% endblock %}
- 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const searchResults = document.getElementById("searchResults");
+    
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value.trim();
+    
+            if (query.length > 0) {
+                fetch(`/filtra_cliente?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = "";
+                        
+                        if (data.length > 0) {
+                            data.forEach(cliente => {
+                                const item = document.createElement("div");
+                                item.classList.add("p-2", "border-bottom");
+    
+                                item.innerHTML = `
+                                    <a href="/editar_cliente/${cliente.id}" class="text-decoration-none text-dark">
+                                        Nome: <strong>${cliente.nome}</strong> <br>
+                                        <small>CPF: ${cliente.cpf} | Contato: ${cliente.fone_contato}</small>
+                                    </a>
+                                `;
+    
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = "<p class='text-muted'>Nenhum cliente encontrada...</p>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao buscar clientes:", error);
+                    });
+            } else {
+                searchResults.innerHTML = "<p class='text-muted'>Resultados aparecerão aqui...</p>";
+            }
+        });
+    });
+</script>
 {% endblock %}

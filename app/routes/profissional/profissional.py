@@ -23,29 +23,35 @@ def profissional():
 def cadastrar_profissional():
     if request.method == 'POST':
 
+        cpf_limpo       = request.form.get('cpf').replace('.', '').replace('-', '').strip()
+        celular_limpo   = request.form.get('fone_pessoal').replace('(', '').replace(')', '').replace('-', '').replace(' ', '').strip()
+        telefone_limpo  = request.form.get('fone_profissional').replace('(', '').replace(')', '').replace('-', '').replace(' ', '').strip()
+        cep_limpo       = request.form.get('cep').replace('.', '').replace('-', '').strip()
+
+
         profissional = Profissional(
-            nome=request.form.get('nome'),
-            cpf=request.form.get('cpf'),
-            email=request.form.get('email'),
-            data_nascimento=datetime.strptime(request.form.get('data_nascimento'), "%Y-%m-%d").date(),
-            bairro=request.form.get('bairro'),
-            banco=request.form.get('banco'),
-            cep=request.form.get('cep'),
-            cidade=request.form.get('cidade'),
-            complemento=request.form.get('complemento'),
-            graduacao=request.form.get('graduacao'),
-            issqn=request.form.get('issqn'),
-            fone_pessoal=request.form.get('fone_pessoal'),
-            fone_profissional=request.form.get('fone_profissional'),
-            curriculum_lattes=request.form.get('curriculum_lattes'),
-            dias_horas_disponiveis=request.form.get('dias_horas_disponiveis'),
-            endereco_profissional=request.form.get('endereco_profissional'),
-            estado=request.form.get('estado'),
-            observacoes=request.form.get('observacoes'),
-            pix=request.form.get('pix'),
-            registro_profissional=request.form.get('registro_profissional'),
-            rg=request.form.get('rg'),
-            valor_minimo=converter_para_float(request.form.get('valor_minimo'))
+            nome                                = request.form.get('nome'),
+            cpf                                 = cpf_limpo,
+            email                               = request.form.get('email'),
+            data_nascimento                     = datetime.strptime(request.form.get('data_nascimento'), "%Y-%m-%d").date(),
+            bairro                              = request.form.get('bairro'),
+            banco                               = request.form.get('banco'),
+            cep                                 = cep_limpo,
+            cidade                              = request.form.get('cidade'),
+            complemento                         = request.form.get('complemento'),
+            graduacao                           = request.form.get('graduacao'),
+            issqn                               = request.form.get('issqn'),
+            fone_pessoal                        = celular_limpo,
+            fone_profissional                   = telefone_limpo,
+            curriculum_lattes                   = request.form.get('curriculum_lattes'),
+            dias_horas_disponiveis              = request.form.get('dias_horas_disponiveis'),
+            endereco_profissional               = request.form.get('endereco_profissional'),
+            estado                              = request.form.get('estado'),
+            observacoes                         = request.form.get('observacoes'),
+            pix                                 = request.form.get('pix'),
+            registro_profissional               = request.form.get('registro_profissional'),
+            rg                                  = request.form.get('rg'),
+            valor_minimo                        = converter_para_float(request.form.get('valor_minimo'))
         )
         cpf = request.form.get('cpf')
         verifica_profissional = Profissional.query.filter_by(cpf=cpf).first()
@@ -76,31 +82,38 @@ def editar_profissional(id):
     profissional = Profissional.query.get_or_404(id)
     if request.method == 'POST':
 
-        profissional.nome = request.form.get('nome')
-        profissional.cpf = request.form.get('cpf')
-        profissional.email = request.form.get('email')
-        data_nascimento = request.form.get('data_nascimento')
+        cpf_limpo       = request.form.get('cpf').replace('.', '').replace('-', '').strip()
+        celular_limpo   = request.form.get('fone_pessoal').replace('(', '').replace(')', '').replace('-', '').replace(' ', '').strip()
+        telefone_limpo  = request.form.get('fone_profissional').replace('(', '').replace(')', '').replace('-', '').replace(' ', '').strip()
+        cep_limpo       = request.form.get('cep').replace('.', '').replace('-', '').strip()
+
+        profissional.nome                       = request.form.get('nome')
+        profissional.cpf                        = cpf_limpo
+        profissional.email                      = request.form.get('email')
+        data_nascimento                         = request.form.get('data_nascimento')
+        profissional.bairro                     = request.form.get('bairro')
+        profissional.banco                      = request.form.get('banco')
+        profissional.cep                        = cep_limpo
+        profissional.cidade                     = request.form.get('cidade')
+        profissional.complemento                = request.form.get('complemento')
+        profissional.graduacao                  = request.form.get('graduacao')
+        profissional.issqn                      = request.form.get('issqn')
+        profissional.fone_pessoal               = celular_limpo
+        profissional.fone_profissional          = telefone_limpo
+        profissional.foto                       = request.form.get('foto')
+        profissional.curriculum_lattes          = request.form.get('curriculum_lattes')
+        profissional.dias_horas_disponivei      = request.form.get('dias_horas_disponiveis')
+        profissional.endereco_profissional      = request.form.get('endereco_profissional')
+        profissional.estado                     = request.form.get('estado')
+        profissional.observacoes                = request.form.get('observacoes')
+        profissional.pix                        = request.form.get('pix')
+        profissional.registro_profissional      = request.form.get('registro_profissional')
+        profissional.rg                         = request.form.get('rg')
+        profissional.valor_minimo               = converter_para_float(request.form.get('valor_minimo'))
+
+        # Lógica para verificar a Data de Nascimento e Converter para o tipo date
         if data_nascimento:
-            profissional.data_nascimento = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
-        profissional.bairro = request.form.get('bairro')
-        profissional.banco = request.form.get('banco')
-        profissional.cep = request.form.get('cep')
-        profissional.cidade = request.form.get('cidade')
-        profissional.complemento = request.form.get('complemento')
-        profissional.graduacao = request.form.get('graduacao')
-        profissional.issqn = request.form.get('issqn')
-        profissional.fone_pessoal = request.form.get('fone_pessoal')
-        profissional.fone_profissional = request.form.get('fone_profissional')
-        profissional.foto = request.form.get('foto')
-        profissional.curriculum_lattes = request.form.get('curriculum_lattes')
-        profissional.dias_horas_disponivei = request.form.get('dias_horas_disponiveis')
-        profissional.endereco_profissional = request.form.get('endereco_profissional')
-        profissional.estado = request.form.get('estado')
-        profissional.observacoes = request.form.get('observacoes')
-        profissional.pix = request.form.get('pix')
-        profissional.registro_profissional = request.form.get('registro_profissional')
-        profissional.rg = request.form.get('rg')
-        profissional.valor_minimo = converter_para_float(request.form.get('valor_minimo'))
+            profissional.data_nascimento        = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
 
         db.session.add(profissional)
         db.session.commit()

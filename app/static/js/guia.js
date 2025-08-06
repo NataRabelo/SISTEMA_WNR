@@ -1,70 +1,10 @@
-function buscarCliente() {
-    const codigo = document.getElementById('cliente_id').value;
-    const nomeClienteInput = document.getElementById('resultadoCliente');
-
-    if (!codigo.trim()) {
-        nomeClienteInput.value = '';
-        return;
+// Função para bucar o valor acordado - Guia
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoPagamento = document.getElementById('tipo_pagamento');
+    if (tipoPagamento) {
+        tipoPagamento.addEventListener('change', buscarValor);
     }
-
-    fetch(`/buscar_cliente?codigo=${codigo}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.erro) {
-                nomeClienteInput.value = data.erro;
-            } else {
-                nomeClienteInput.value = data.nome;
-            }
-        })
-        .catch(error => {
-            nomeClienteInput.value = 'Erro na requisição';
-            console.error('Erro:', error);
-        });
-}
-
-function buscarProfissionais() {
-    let clienteId = document.getElementById("cliente_id").value;
-
-    if (!clienteId.trim()) return;
-
-    fetch(`/buscar_profissionais/${clienteId}`)
-        .then(response => response.json())
-        .then(data => {
-            let select = document.getElementById("profissional_id");
-
-            // Limpa todas as opções antes de adicionar as novas
-            select.innerHTML = '';
-
-            if (!data.profissionais || data.profissionais.length === 0) {
-                select.innerHTML = '<option value="">Nenhum profissional encontrado</option>';
-                return;
-            }
-
-            // Adiciona uma opção padrão vazia
-            select.innerHTML = '<option value="">Selecione um profissional</option>';
-
-            data.profissionais.forEach(profissional => {
-                let option = document.createElement("option");
-                option.value = profissional.id;
-                option.textContent = profissional.nome + ' - ' + profissional.graduacao;
-                select.appendChild(option);
-            });
-
-            // Verifique se há um valor já selecionado e mantenha a seleção
-            let profissionalSelecionado = "{{ guia.profissional_id }}"; // Obtém o valor de guia.profissional_id já selecionado
-            if (profissionalSelecionado) {
-                select.value = profissionalSelecionado; // Pre-seleciona o profissional
-            }
-        })
-        .catch(error => {
-            console.error("Erro ao buscar profissionais:", error);
-            document.getElementById("profissional_id").innerHTML = '<option value="">Erro ao carregar profissionais</option>';
-        });
-}
-
-
-
-document.getElementById('tipo_pagamento').addEventListener('change', buscarValor);
+});
 
 function buscarValor() {
     const codigoCliente = document.getElementById('cliente_id').value;
@@ -91,6 +31,7 @@ function buscarValor() {
             console.error('Erro:', error);
         });
 }
+
 
 function calcularTotal() {
     const quantidadeElement = document.getElementById('quantidade_emissoes');

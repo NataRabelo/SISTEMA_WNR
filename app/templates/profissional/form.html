@@ -32,17 +32,17 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="email" class="form-label">Email<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="fone_pessoal" class="form-label">Telefone Pessoal<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" id="fone_pessoal" name="fone_pessoal" placeholder="(xx) xxxxxxxxx" required>
+                    <input type="text" class="form-control" id="fone_pessoal" name="fone_pessoal" placeholder="(00) 00000-0000" required>
                 </div>
                 <div class="col-md-3">
                     <label for="fone_profissional" class="form-label">Telefone Profissional<span class="required-star">*</span></label>
-                    <input type="text" class="form-control" id="fone_profissional" name="fone_profissional" placeholder="(xx) xxxxxxxxx" required>
+                    <input type="text" class="form-control" id="fone_profissional" name="fone_profissional" placeholder="(00) 00000-0000" required>
                 </div>
             </div>
             <h2 class="mb-4 mt-4">Endereço</h2>
@@ -51,7 +51,7 @@
                     <label for="cep" class="form-label">CEP<span class="required-star">*</span></label>
                     <div class="input-group">
                         <input type="text" id="cep" name="cep" class="form-control">
-                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" required onclick="buscarCEP()">Buscar</button>
+                        <button type="button" name="buscar_cep_btn" id="buscar_cep_btn" class="btn btn-primary" required onclick="buscarCep()">Buscar</button>
                     </div>
                 </div>
             </div>
@@ -136,5 +136,4 @@
         </div>
     </form>
 </div>
-<script src="{{ url_for('static', filename='js/profissional.js') }}"></script>
 {% endblock %}
