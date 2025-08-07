@@ -16,6 +16,7 @@
                     <th>Especialidade</th>
                     <th>Valor</th>
                     <th>Status</th>
+                    <th>PDF</th>
                     {% if usuario.role == "admin" or usuario.role == "financeiro"%}
                     <th>Editar</th>
                     {% endif %}
@@ -37,6 +38,7 @@
                         {% elif guia.pago == 'Aprovada' %}
                         <td><a href="{{ url_for('guide_bp.reprovar_guia', id=guia.id) }}" class="btn btn-sm btn-success">Aprovada</a></td>
                         {% endif %}
+                        <td><a href="{{ url_for('guide_bp.visualizar_guia_pdf', guia_id=guia.id) }}" target="_blank" class="btn btn-sm btn-warning">Visualizar</a></td>
                         {% if usuario.role == "admin" or usuario.role == "financeiro"%}
                         <td><a href="{{ url_for('guide_bp.editar_guia', id=guia.id) }}" class="btn btn-sm btn-warning">Editar</a></td>
                         {% endif %}

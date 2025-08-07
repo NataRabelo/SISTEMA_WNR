@@ -34,16 +34,16 @@ def criar_encaminhamento():
             return redirect(url_for('encaminhamento_bp.criar_encaminhamento'))
 
         encaminhamento = Encaminhamento(
-            cliente_id=cliente_id,
-            profissional_id=profissional_id,
-            convenio=request.form.get('convenio'),
-            dias_horas_atendimento=request.form.get('dias_horas_atendimento'),
-            data_encaminhamento=datetime.utcnow(),
-            observacoes_gerais=request.form.get('observacoes_gerais'),
-            queixa=request.form.get('queixa'),
-            situacao_id=int(request.form.get('situacao')),
-            tipo_encaminhamento_id=int(request.form.get('tipo_encaminhamento')),
-            valor=converter_para_float(request.form.get('valor'))
+            cliente_id                      = cliente_id,
+            profissional_id                 = profissional_id,
+            convenio                        = request.form.get('convenio'),
+            dias_horas_atendimento          = request.form.get('dias_horas_atendimento'),
+            data_encaminhamento             = datetime.utcnow(),
+            observacoes_gerais              = request.form.get('observacoes_gerais'),
+            queixa                          = request.form.get('queixa'),
+            situacao_id                     = int(request.form.get('situacao')),
+            tipo_encaminhamento_id          = int(request.form.get('tipo_encaminhamento')),
+            valor                           = converter_para_float(request.form.get('valor'))
         )
 
         verifica_encaminnhamento = Encaminhamento.query.filter_by(
@@ -80,23 +80,23 @@ def listar_encaminhamento():
 @required_login
 @role_required('atendimento', 'financeiro', 'admin')
 def editar_encaminhamento(id):
-    tencaminhameos = TipoEncaminhamento.query.all()
-    situacoes = Situacao.query.all()
-    encaminhamento = Encaminhamento.query.get_or_404(id)
-    clientes = Cliente.query.all()
-    profissionais = Profissional.query.all()
-    valor_formatado = formatar_para_moeda(encaminhamento.valor)
+    tencaminhameos      = TipoEncaminhamento.query.all()
+    situacoes           = Situacao.query.all()
+    encaminhamento      = Encaminhamento.query.get_or_404(id)
+    clientes            = Cliente.query.all()
+    profissionais       = Profissional.query.all()
+    valor_formatado     = formatar_para_moeda(encaminhamento.valor)
 
     if request.method == 'POST':
-        encaminhamento.cliente_id = request.form.get('cliente_id')
-        encaminhamento.profissional_id = request.form.get('profissional_id')
-        encaminhamento.convenio = request.form.get('convenio')
-        encaminhamento.dias_horas_atendimento = request.form.get('dias_horas_atendimento')
-        encaminhamento.observacoes_gerais = request.form.get('observacoes_gerais')
-        encaminhamento.queixa = request.form.get('queixa')
-        encaminhamento.situacao_id = int(request.form.get('situacao'))
-        encaminhamento.tipo_encaminhamento_id = int(request.form.get('tipo_encaminhamento'))
-        encaminhamento.valor = converter_para_float(request.form.get('valor'))
+        encaminhamento.cliente_id                   = request.form.get('cliente_id')
+        encaminhamento.profissional_id              = request.form.get('profissional_id')
+        encaminhamento.convenio                     = request.form.get('convenio')
+        encaminhamento.dias_horas_atendimento       = request.form.get('dias_horas_atendimento')
+        encaminhamento.observacoes_gerais           = request.form.get('observacoes_gerais')
+        encaminhamento.queixa                       = request.form.get('queixa')
+        encaminhamento.situacao_id                  = int(request.form.get('situacao'))
+        encaminhamento.tipo_encaminhamento_id       = int(request.form.get('tipo_encaminhamento'))
+        encaminhamento.valor                        = converter_para_float(request.form.get('valor'))
 
         db.session.commit()
         flash('Encaminhamento atualizado com sucesso!', 'success')

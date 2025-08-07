@@ -1,6 +1,8 @@
 from datetime import datetime
-from flask import Blueprint, flash, jsonify, render_template, request, redirect, url_for
+from io import BytesIO
+from flask import Blueprint, flash, jsonify, make_response, render_template, request, redirect, url_for
 from flask_login import current_user
+from weasyprint import HTML
 from app.models import Cliente, MetodoPagamento, Guia, Profissional
 from app import db
 from app.utils.decorators import role_required
@@ -111,6 +113,20 @@ def deletar_guia(id):
     db.session.commit()
     flash('Guia deletada com sucesso', 'success')
     return redirect(url_for('guide_bp.listar_guia'))
+
+@guide_bp.route('/guia/pdf/<int:guia_id>')
+def visualizar_guia_pdf(guia_id):
+    guia = Guia.query.get_or_404(guia_id)
+    html = render_template('pdf/guia.html', guia=guia)
+
+    pdf_io = BytesIO()
+    HTML(string=html).write_pdf(pdf_io)
+    pdf_io.seek(0)
+
+    response = make_response(pdf_io.read())
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = f'inline; filename=guia_{guia.id}.pdf'
+    return response
 
 
 @guide_bp.route("/filtrar_guia", methods=["GET", "POST"])

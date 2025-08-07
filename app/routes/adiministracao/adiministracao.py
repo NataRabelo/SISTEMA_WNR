@@ -645,7 +645,7 @@ def deletar_usuario(id):
     db.session.delete(usuario)
     db.session.commit()
     flash('Usuario deletado com sucesso', 'success')
-    return redirect(url_for('adm_bp.usuarios'))
+    return redirect(url_for('adm_bp.listar_usuario'))
 
 
 @adm_bp.route("/filtra_usaurio", methods=["GET", "POST"])

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Guia Nº {{ guia.id }}</title>
+    <style>
+        @page {
+            size: 80mm auto;
+            margin: 5mm;
+        }
+
+        body {
+            font-family: monospace;
+            font-size: 10pt;
+            color: #000;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .dotted {
+            border-top: 1px dotted #000;
+            margin: 5px 0;
+        }
+
+        .section {
+            margin-bottom: 8px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .linha {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="center">
+        <div class="bold">WNR SYSTEMS</div>
+        <div>Recibo de Emissão</div>
+        <div>Guia Nº {{ guia.id }}</div>
+    </div>
+
+    <div class="dotted"></div>
+
+    <div class="section">
+        <div><span class="bold">Cliente:</span> {{ guia.cliente.nome }}</div>
+        <div><span class="bold">Profissional:</span> {{ guia.profissional.nome }}</div>
+    </div>
+
+    <div class="section">
+        <div class="linha">
+            <span>Qtd:</span>
+            <span>{{ guia.quantidade_emissoes }}</span>
+        </div>
+        <div class="linha">
+            <span>V. Unit:</span>
+            <span>R$ {{ "%.2f"|format(guia.valor_unitario) }}</span>
+        </div>
+        <div class="linha bold">
+            <span>Total:</span>
+            <span>R$ {{ "%.2f"|format(guia.valor_total) }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="linha">
+            <span>Pagamento:</span>
+            <span>{{ guia.pago }}</span>
+        </div>
+        <div class="linha">
+            <span>Forma:</span>
+            <span>{{ guia.metodo_pagamento.nome }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div><span class="bold">Emitente:</span> {{ guia.usuario_emitente.nome }}</div>
+        <div><span class="bold">Data:</span> {{ guia.data_original.strftime('%d/%m/%Y') }}</div>
+        <div><span class="bold">Hora:</span> {{ guia.hora_emissao }}</div>
+    </div>
+
+    {% if guia.observacoes_gerais %}
+    <div class="section">
+        <span class="bold">Obs:</span><br>
+        {{ guia.observacoes_gerais }}
+    </div>
+    {% endif %}
+
+    <div class="dotted"></div>
+
+    <div class="center">
+        Obrigado pela preferência!
+    </div>
+
+</body>
+</html>
