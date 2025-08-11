@@ -35,6 +35,12 @@
             </div>
         </div>
         <div class="row">
+            <!-- Emissão de Relatórios -->
+            <div class="col-md-3 mb-3">
+                <a href="{{ url_for('adm_bp.administracao')}}" class="btn dashboard-btn btn-adm">
+                    <i class="fas fa-file-invoice"></i> Relatórios
+                </a>
+            </div>
             <!-- Adiministração -->
              {% if usuario.role == "admin" %}
             <div class="col-md-3 mb-3">
