@@ -649,6 +649,7 @@ def deletar_usuario(id):
 
 
 @adm_bp.route("/filtra_usaurio", methods=["GET", "POST"])
+@required_login
 def filtra_usaurio():
     query = request.args.get("q", "").strip()
     if query:

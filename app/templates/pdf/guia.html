@@ -4,99 +4,152 @@
     <meta charset="UTF-8">
     <title>Guia Nº {{ guia.id }}</title>
     <style>
-        @page {
-            size: 80mm auto;
-            margin: 5mm;
-        }
-
         body {
-            font-family: monospace;
-            font-size: 10pt;
-            color: #000;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
         }
 
-        .center {
+        .header {
             text-align: center;
+            margin-bottom: 30px;
         }
 
-        .dotted {
-            border-top: 1px dotted #000;
-            margin: 5px 0;
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
         }
 
-        .section {
-            margin-bottom: 8px;
+        .header small {
+            font-size: 14px;
+            color: #555;
         }
 
-        .bold {
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            width: 48%;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .info-line {
+            margin-bottom: 6px;
+        }
+
+        .info-line span.label {
             font-weight: bold;
         }
 
-        .linha {
-            display: flex;
-            justify-content: space-between;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .observacoes {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #007BFF;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            text-align: center;
+            color: #777;
         }
     </style>
 </head>
 <body>
-
-    <div class="center">
-        <div class="bold">WNR SYSTEMS</div>
-        <div>Recibo de Emissão</div>
-        <div>Guia Nº {{ guia.id }}</div>
+    <div class="header">
+        <h1>Guia Nº {{ guia.id }}</h1>
+        <small>Emitido em {{ guia.data_original.strftime('%d/%m/%Y') }} às {{ guia.hora_emissao }}</small>
     </div>
 
-    <div class="dotted"></div>
-
-    <div class="section">
-        <div><span class="bold">Cliente:</span> {{ guia.cliente.nome }}</div>
-        <div><span class="bold">Profissional:</span> {{ guia.profissional.nome }}</div>
-    </div>
-
-    <div class="section">
-        <div class="linha">
-            <span>Qtd:</span>
-            <span>{{ guia.quantidade_emissoes }}</span>
+    <div class="info-section">
+        <div class="info-box">
+            <h3>Cliente</h3>
+            <div class="info-line"><span class="label">ID:</span> {{ guia.cliente.id }}</div>
+            <div class="info-line"><span class="label">Nome:</span> {{ guia.cliente.nome }}</div>
         </div>
-        <div class="linha">
-            <span>V. Unit:</span>
-            <span>R$ {{ "%.2f"|format(guia.valor_unitario) }}</span>
-        </div>
-        <div class="linha bold">
-            <span>Total:</span>
-            <span>R$ {{ "%.2f"|format(guia.valor_total) }}</span>
+        <div class="info-box">
+            <h3>Profissional</h3>
+            <div class="info-line"><span class="label">ID:</span> {{ guia.profissional.id }}</div>
+            <div class="info-line"><span class="label">Nome:</span> {{ guia.profissional.nome }}</div>
         </div>
     </div>
 
-    <div class="section">
-        <div class="linha">
-            <span>Pagamento:</span>
-            <span>{{ guia.pago }}</span>
+    <div class="info-section">
+        <div class="info-box">
+            <h3>Pagamento</h3>
+            <div class="info-line"><span class="label">Método:</span> {{ guia.metodo_pagamento.nome }}</div>
+            <div class="info-line"><span class="label">Status:</span> {{ guia.pago }}</div>
         </div>
-        <div class="linha">
-            <span>Forma:</span>
-            <span>{{ guia.metodo_pagamento.nome }}</span>
+        <div class="info-box">
+            <h3>Emitido por</h3>
+            <div class="info-line"><span class="label">Usuário ID:</span> {{ guia.usuario_emitente.id }}</div>
+            <div class="info-line"><span class="label">Nome:</span> {{ guia.usuario_emitente.nome }}</div>
         </div>
     </div>
 
-    <div class="section">
-        <div><span class="bold">Emitente:</span> {{ guia.usuario_emitente.nome }}</div>
-        <div><span class="bold">Data:</span> {{ guia.data_original.strftime('%d/%m/%Y') }}</div>
-        <div><span class="bold">Hora:</span> {{ guia.hora_emissao }}</div>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Qtd. Emissões</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ guia.quantidade_emissoes }}</td>
+                <td>R$ {{ "%.2f"|format(guia.valor_unitario) }}</td>
+                <td>R$ {{ "%.2f"|format(guia.valor_total) }}</td>
+            </tr>
+        </tbody>
+    </table>
 
     {% if guia.observacoes_gerais %}
-    <div class="section">
-        <span class="bold">Obs:</span><br>
+    <div class="observacoes">
+        <strong>Observações:</strong><br>
         {{ guia.observacoes_gerais }}
     </div>
     {% endif %}
 
-    <div class="dotted"></div>
-
-    <div class="center">
-        Obrigado pela preferência!
+    <div class="footer">
+        Sistema gerado automaticamente - {{ guia.data_cadastro.strftime('%d/%m/%Y %H:%M') }}
     </div>
-
 </body>
 </html>

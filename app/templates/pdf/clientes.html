@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório Resumido de Clientes - WNR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+
+        header {
+            border-bottom: 3px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header img {
+            max-height: 45px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0;
+            color: #222;
+        }
+
+        small {
+            font-size: 12px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 5px 6px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        footer {
+            border-top: 1px solid #aaa;
+            padding-top: 10px;
+            font-size: 11px;
+            text-align: center;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        @media print {
+            header, footer {
+                position: fixed;
+                left: 0;
+                width: 100%;
+                background: white;
+            }
+            header { top: 0; }
+            footer { bottom: 0; }
+            body { 
+                margin: 0;
+                padding-top: 80px; /* espaço para cabeçalho */
+                padding-bottom: 40px; /* espaço para rodapé */
+            }
+            table { page-break-inside: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>Relatório Resumido de Clientes</h1>
+        <small>Gerado em: {{ data_atual }}</small>
+    </div>
+    <img src="{{ url_for('static', filename='img/logo_wnr.png') }}" alt="Logo WNR">
+</header>
+
+<table>
+    <thead>
+        <tr>
+            <th>Cód</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Data Cadastro</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente.id }}</td>
+            <td>{{ cliente.nome }}</td>
+            <td>{{ cliente.cpf }}</td>
+            <td>{{ cliente.fone_pessoal }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.cidade }}</td>
+            <td>{{ cliente.estado }}</td>
+            <td>{{ cliente.data_cadastro.strftime('%d/%m/%Y') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<footer>
+    Relatório gerado automaticamente pelo sistema WNR — {{ data_atual }}
+</footer>
+
+</body>
+</html>
