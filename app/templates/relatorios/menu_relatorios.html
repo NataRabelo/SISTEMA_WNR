@@ -9,46 +9,30 @@
             <!-- Cliente -->
             <div class="col-md-3 mb-3">
                 <a href="{{ url_for('client_bp.cliente')}}" class="btn dashboard-btn btn-cliente">
-                    <i class="fas fa-user"></i> Clientes
+                    <i class="fas fa-file-invoice"></i> Guias do dia 
                 </a>
             </div>
 
             <!-- Profissional -->
             <div class="col-md-3 mb-3">
                 <a href="{{ url_for('professional_bp.profissional')}}" class="btn dashboard-btn btn-profissional">
-                    <i class="fas fa-user-md"></i> Profissionais
+                    <i class="fas fa-file-invoice"></i> Fatura detalhadas
                 </a>
             </div>
 
             <!-- Gerar Encaminhamento -->
             <div class="col-md-3 mb-3">
                 <a href="{{ url_for('encaminhamento_bp.encaminhamento')}}" class="btn dashboard-btn btn-encaminhamento">
-                    <i class="fas fa-file-medical"></i> Encaminhamentos
+                    <i class="fas fa-file-invoice"></i> Resumo de faturas
                 </a>
             </div>
 
             <!-- Emitir Guia -->
             <div class="col-md-3 mb-3">
                 <a href="{{ url_for('guide_bp.guia')}}" class="btn dashboard-btn btn-guia">
-                    <i class="fas fa-file-invoice"></i> Guias
+                    <i class="fas fa-file-invoice"></i> Encaminhamentos
                 </a>
             </div>
-        </div>
-        <div class="row">
-            <!-- Emissão de Relatórios -->
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('report_bps.relatorios')}}" class="btn dashboard-btn btn-adm">
-                    <i class="fas fa-file-invoice"></i> Relatórios
-                </a>
-            </div>
-            <!-- Adiministração -->
-             {% if usuario.role == "admin" %}
-            <div class="col-md-3 mb-3">
-                <a href="{{ url_for('adm_bp.administracao')}}" class="btn dashboard-btn btn-adm">
-                    <i class="fas fa-file-invoice"></i> Adiministração
-                </a>
-            </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
