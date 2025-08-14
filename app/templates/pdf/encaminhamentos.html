@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório Resumido de Clientes - WNR</title>
+    <title>Relatório Resumido de Encaminhamentos - WNR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,10 +19,6 @@
             align-items: center;
         }
 
-        header img {
-            max-height: 45px;
-        }
-
         h1 {
             font-size: 20px;
             margin: 0;
@@ -37,7 +33,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 10px;
         }
 
         th, td {
@@ -78,8 +74,8 @@
             footer { bottom: 0; }
             body { 
                 margin: 0;
-                padding-top: 80px; /* espaço para cabeçalho */
-                padding-bottom: 40px; /* espaço para rodapé */
+                padding-top: 80px;
+                padding-bottom: 40px;
             }
             table { page-break-inside: auto; }
         }
@@ -89,7 +85,7 @@
 
 <header>
     <div>
-        <h1>Relatório Resumido de Clientes</h1>
+        <h1>Relatório Resumido de Encaminhamentos</h1>
         <small>Gerado em: {{ data_atual }}</small>
     </div>
 </header>
@@ -98,26 +94,26 @@
     <thead>
         <tr>
             <th>Cód</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Telefone</th>
-            <th>Email</th>
-            <th>Cidade</th>
-            <th>Estado</th>
-            <th>Data Cadastro</th>
+            <th>Cliente</th>
+            <th>Profissional</th>
+            <th>Convênio</th>
+            <th>Tipo Encaminhamento</th>
+            <th>Situação</th>
+            <th>Valor</th>
+            <th>Data Encaminhamento</th>
         </tr>
     </thead>
     <tbody>
-        {% for cliente in clientes %}
+        {% for enc in encaminhamentos %}
         <tr>
-            <td>{{ cliente.id }}</td>
-            <td>{{ cliente.nome }}</td>
-            <td>{{ cliente.cpf }}</td>
-            <td>{{ cliente.fone_pessoal }}</td>
-            <td>{{ cliente.email }}</td>
-            <td>{{ cliente.cidade }}</td>
-            <td>{{ cliente.estado }}</td>
-            <td>{{ cliente.data_cadastro.strftime('%d/%m/%Y') }}</td>
+            <td>{{ enc.id }}</td>
+            <td>{{ enc.cliente.nome }}</td>
+            <td>{{ enc.profissional.nome }}</td>
+            <td>{{ enc.convenio }}</td>
+            <td>{{ enc.tipo_encaminhamento.nome }}</td>
+            <td>{{ enc.situacao.nome }}</td>
+            <td>R$ {{ "%.2f"|format(enc.valor) }}</td>
+            <td>{{ enc.data_encaminhamento.strftime('%d/%m/%Y') }}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 text: "Relatório",
                 className: "btn btn-warning",
                 action: function () {
-                    window.location.href = "{{ url_for('report_bp.relatorios') }}";
+                    window.open("{{ url_for('report_bp.visualizar_profissionais_pdf') }}", "_blank");
                 }
             }
         ]

@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório Resumido de Clientes - WNR</title>
+    <title>Relatório Resumido de Profissionais - WNR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,10 +17,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        header img {
-            max-height: 45px;
         }
 
         h1 {
@@ -78,8 +74,8 @@
             footer { bottom: 0; }
             body { 
                 margin: 0;
-                padding-top: 80px; /* espaço para cabeçalho */
-                padding-bottom: 40px; /* espaço para rodapé */
+                padding-top: 80px;
+                padding-bottom: 40px;
             }
             table { page-break-inside: auto; }
         }
@@ -89,7 +85,7 @@
 
 <header>
     <div>
-        <h1>Relatório Resumido de Clientes</h1>
+        <h1>Relatório Resumido de Profissionais</h1>
         <small>Gerado em: {{ data_atual }}</small>
     </div>
 </header>
@@ -100,24 +96,24 @@
             <th>Cód</th>
             <th>Nome</th>
             <th>CPF</th>
-            <th>Telefone</th>
-            <th>Email</th>
+            <th>Telefone Pessoal</th>
+            <th>Telefone Profissional</th>
             <th>Cidade</th>
             <th>Estado</th>
             <th>Data Cadastro</th>
         </tr>
     </thead>
     <tbody>
-        {% for cliente in clientes %}
+        {% for profissional in profissionais %}
         <tr>
-            <td>{{ cliente.id }}</td>
-            <td>{{ cliente.nome }}</td>
-            <td>{{ cliente.cpf }}</td>
-            <td>{{ cliente.fone_pessoal }}</td>
-            <td>{{ cliente.email }}</td>
-            <td>{{ cliente.cidade }}</td>
-            <td>{{ cliente.estado }}</td>
-            <td>{{ cliente.data_cadastro.strftime('%d/%m/%Y') }}</td>
+            <td>{{ profissional.id }}</td>
+            <td>{{ profissional.nome }}</td>
+            <td>{{ profissional.cpf }}</td>
+            <td>{{ profissional.fone_pessoal }}</td>
+            <td>{{ profissional.fone_profissional }}</td>
+            <td>{{ profissional.cidade }}</td>
+            <td>{{ profissional.estado }}</td>
+            <td>{{ profissional.data_cadastro.strftime('%d/%m/%Y') }}</td>
         </tr>
         {% endfor %}
     </tbody>
