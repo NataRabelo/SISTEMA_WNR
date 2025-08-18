@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório Resumido de Guias - WNR</title>
+    <title>Relatório de Guias por Profissional - WNR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,6 +25,13 @@
             color: #222;
         }
 
+        h2 {
+            font-size: 16px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
         small {
             font-size: 12px;
             color: #666;
@@ -34,11 +41,12 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 12px;
+            margin-top: 10px;
         }
 
         th, td {
             border: 1px solid #ccc;
-            padding-top: 5px;
+            padding: 5px;
             vertical-align: middle;
             text-align: center;
         }
@@ -46,8 +54,6 @@
         th {
             background-color: #f5f5f5;
             font-weight: bold;
-            text-align: center;
-            
         }
 
         tr:nth-child(even) {
@@ -78,6 +84,8 @@
                 padding-bottom: 40px;
             }
             table { page-break-inside: auto; }
+            /* Se quiser cada profissional em nova página, descomente abaixo */
+            /* .profissional { page-break-before: always; } */
         }
     </style>
 </head>
@@ -85,65 +93,57 @@
 
 <header>
     <div>
-        <h1>Relatório de Guias do Dia</h1>
-        <small>Data Selecionada: {{ data_selecionada }}</small><br>
+        <h1>Relatório de Guias por Profissional</h1>
+        <small>Período: {{ periodo }}</small><br>
         <small>Gerado em: {{ data_atual }}</small>
     </div>
 </header>
 
-<table>
-    <thead>
-        <tr>
-            <th>Cód. Guia</th>
-            <th>Cód. Cliente</th>
-            <th>Emitente</th>
-            <th>Dt Emissão</th>
-            <th>Hora</th>
-            <th>Pagamento</th>
-            <th>Vlr. Unit.</th>
-            <th>Qtd.</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for guia in guias %}
-        <tr>
-            <td>{{ guia.id }}</td>
-            <td>{{ guia.cliente.id }}</td>
-            <td>{{ guia.usuario_emitente.role }}</td>
-            <td>{{ guia.data_original.strftime('%d/%m/%Y') if guia.data_original else '' }}</td>
-            <td>{{ guia.hora_emissao }}</td>
-            <td>{{ guia.metodo_pagamento.nome }}</td>
-            <td>{{ guia.valor_unitario|currency }}</td>
-            <td>{{ guia.quantidade_emissoes }}</td>
-            <td>{{ guia.valor_total|currency  }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% for profissional, lista in guias_por_profissional.items() %}
+    <div class="profissional">
+        <h2>Profissional: {{ profissional }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cód. Guia</th>
+                    <th>Cliente</th>
+                    <th>Dt Emissão</th>
+                    <th>Met. Pag.</th>
+                    <th>Vlr. Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guia in lista %}
+                <tr>
+                    <td>{{ guia.id }}</td>
+                    <td>{{ guia.cliente.nome if guia.cliente else "Não informado" }}</td>
+                    <td>{{ guia.data_original.strftime('%d/%m/%Y') if guia.data_original else '' }}</td>
+                    <td>{{ guia.metodo_pagamento.nome if guia.metodo_pagamento else "Não informado" }}</td>
+                    <td>{{ guia.valor_total|currency }}</td>
+                </tr>
+                {% endfor %}
+                <tr style="font-weight: bold; background-color: #f5f5f5;">
+                    <td colspan="4" style="text-align: right;">Total do Profissional</td>
+                    <td>{{ totais_profissionais[profissional]|currency }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
 
-<h3 style="margin-top:30px;">Totais por Tipo de Pagamento</h3>
+<h2 style="margin-top:40px;">Total de todos os profissionais</h2>
 <table>
     <thead>
         <tr>
-            <th>Forma de Pagamento</th>
-            <th>Total</th>
+            <th>Total Geral</th>
         </tr>
     </thead>
     <tbody>
-        {% for metodo, valor in total_por_pagamento.items() %}
-        <tr>
-            <td>{{ metodo }}</td>
-            <td>{{ valor|currency }}</td>
-        </tr>
-        {% endfor %}
         <tr style="font-weight: bold; background-color: #f5f5f5;">
-            <td>Total Geral</td>
             <td>{{ total_geral|currency }}</td>
         </tr>
     </tbody>
 </table>
-
 
 <footer>
     Relatório gerado automaticamente pelo sistema WNR — {{ data_atual }}

@@ -16,3 +16,10 @@ def converter_para_float(valor):
         return float(valor)
     except ValueError:
         return 0.0
+
+def format_currency(value):
+    try:
+        return f"R$ {value:,.2f}".replace(",", "v").replace(".", ",").replace("v", ".")
+    except (ValueError, TypeError):
+        return "R$ 0,00"
+

@@ -15,15 +15,15 @@
 
             <!-- Profissional -->
             <div class="col-md-3 mb-3">
-                <a href="{{ url_for('professional_bp.profissional')}}" class="btn dashboard-btn btn-profissional">
-                    <i class="fas fa-file-invoice"></i> Fatura detalhadas
+                <a class="btn dashboard-btn btn-profissional" data-bs-toggle="modal" data-bs-target="#modalRelatorio2">
+                    <i class="fas fa-file-invoice"></i> Fatura detalhada
                 </a>
             </div>
 
             <!-- Gerar Encaminhamento -->
             <div class="col-md-3 mb-3">
                 <a href="{{ url_for('encaminhamento_bp.encaminhamento')}}" class="btn dashboard-btn btn-encaminhamento">
-                    <i class="fas fa-file-invoice"></i> Resumo de faturas
+                    <i class="fas fa-file-invoice"></i> Resumo faturas
                 </a>
             </div>
 
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-<!-- Modal Bootstrap -->
+<!-- Modal Guias do dia  -->
 <div class="modal fade" id="modalRelatorio" tabindex="-1" aria-labelledby="modalRelatorioLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -56,12 +56,45 @@
   </div>
 </div>
 
+<!-- Modal fatura detalhada  -->
+<div class="modal fade" id="modalRelatorio2" tabindex="-1" aria-labelledby="modalRelatorio2Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRelatorio2Label">Filtrar Fatura Detalhada</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <label for="dataInicial">Selecione a data inicial:</label>
+        <input type="date" id="dataInicial" class="form-control">
+        <label for="dataFinal">Selecione a data final:</label>
+        <input type="date" id="dataFinal" class="form-control">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="gerarRelatorio2()">Gerar Relatório</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function gerarRelatorio() {
     const data = document.getElementById("dataFiltro").value;
     let url = "/relatorios/guias_do_dia";
     if (data) {
         url += "?data=" + data;
+    }
+    window.open(url, "_blank");
+}
+
+function gerarRelatorio2() {
+    const dataInicial = document.getElementById("dataInicial").value;
+    const dataFinal = document.getElementById("dataFinal").value;
+    let url = "/relatorios/guias_por_profissional";
+
+    if (dataInicial && dataFinal) {
+        url += "?data_inicio=" + dataInicial + "&data_fim=" + dataFinal;
     }
     window.open(url, "_blank");
 }
