@@ -26,13 +26,28 @@ def criar_encaminhamento():
     tencaminhamentos = TipoEncaminhamento.query.all()
 
     if request.method == 'POST':
+        # Verifica se o cliente e o profissional foram selecionados
         cliente_id = request.form.get('cliente_id')
         profissional_id = request.form.get('profissional_id')
-
         if not cliente_id or not profissional_id:
             flash('Erro: Cliente e profissional são obrigatórios!', 'danger')
-            return redirect(url_for('encaminhamento_bp.criar_encaminhamento'))
+            return redirect(url_for('encaminhamento_bp.encaminhamento'))
+        
+        # Verifica se o cliente e o profissional existem
+        cliente = Cliente.query.get(cliente_id)
+        profissional = Profissional.query.get(profissional_id)
+        if not cliente or not profissional:
+            flash('Erro: Cliente ou profissional não encontrado!', 'danger')
+            return redirect(url_for('encaminhamento_bp.encaminhamento'))
 
+        
+        # Verifica se já existe um encaminhamento para o cliente e profissional selecionados
+        verifica_encaminnhamento = Encaminhamento.query.filter_by(
+            cliente_id=cliente_id, profissional_id=profissional_id).first()
+        if verifica_encaminnhamento:
+            flash('Cliente já encaminhado para esse profissional', 'danger')
+            return redirect(url_for('encaminhamento_bp.encaminhamento'))
+        
         encaminhamento = Encaminhamento(
             cliente_id                      = cliente_id,
             profissional_id                 = profissional_id,
@@ -45,13 +60,6 @@ def criar_encaminhamento():
             tipo_encaminhamento_id          = int(request.form.get('tipo_encaminhamento')),
             valor                           = converter_para_float(request.form.get('valor'))
         )
-
-        verifica_encaminnhamento = Encaminhamento.query.filter_by(
-            cliente_id=cliente_id, profissional_id=profissional_id).first()
-
-        if verifica_encaminnhamento:
-            flash('Cliente já encaminhado para esse profissional', 'danger')
-            return redirect(url_for('encaminhamento_bp.encaminhamento'))
 
         db.session.add(encaminhamento)
         db.session.commit()

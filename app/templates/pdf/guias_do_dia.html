@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório Resumido de Guias - WNR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+
+        header {
+            border-bottom: 3px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0;
+            color: #222;
+        }
+
+        small {
+            font-size: 12px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding-top: 5px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            text-align: center;
+            
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        footer {
+            border-top: 1px solid #aaa;
+            padding-top: 10px;
+            font-size: 11px;
+            text-align: center;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        @media print {
+            header, footer {
+                position: fixed;
+                left: 0;
+                width: 100%;
+                background: white;
+            }
+            header { top: 0; }
+            footer { bottom: 0; }
+            body { 
+                margin: 0;
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+            table { page-break-inside: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>Relatório de Guias do Dia</h1>
+        <small>Data Selecionada: {{ data_selecionada }}</small><br>
+        <small>Gerado em: {{ data_atual }}</small>
+    </div>
+</header>
+
+<table>
+    <thead>
+        <tr>
+            <th>Cód. Guia</th>
+            <th>Cód. Cliente</th>
+            <th>Emitente</th>
+            <th>Data Emissão</th>
+            <th>Hora</th>
+            <th>Pagamento</th>
+            <th>Valor Unitário</th>
+            <th>Quantidade</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for guia in guias %}
+        <tr>
+            <td>{{ guia.id }}</td>
+            <td>{{ guia.cliente.id }}</td>
+            <td>{{ guia.usuario_emitente.role }}</td>
+            <td>{{ guia.data_original.strftime('%d/%m/%Y') if guia.data_original else '' }}</td>
+            <td>{{ guia.hora_emissao }}</td>
+            <td>{{ guia.metodo_pagamento.nome }}</td>
+            <td>R$ {{ "%.2f"|format(guia.valor_unitario) }}</td>
+            <td>{{ guia.quantidade_emissoes }}</td>
+            <td>R$ {{ "%.2f"|format(guia.valor_total) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 style="margin-top:30px;">Totais por Tipo de Pagamento</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Forma de Pagamento</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for metodo, valor in total_por_pagamento.items() %}
+        <tr>
+            <td>{{ metodo }}</td>
+            <td>R$ {{ "%.2f"|format(valor) }}</td>
+        </tr>
+        {% endfor %}
+        <tr style="font-weight: bold; background-color: #f5f5f5;">
+            <td>Total Geral</td>
+            <td>R$ {{ "%.2f"|format(total_geral) }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<footer>
+    Relatório gerado automaticamente pelo sistema WNR — {{ data_atual }}
+</footer>
+
+</body>
+</html>

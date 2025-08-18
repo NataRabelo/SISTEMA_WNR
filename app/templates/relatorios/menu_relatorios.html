@@ -8,7 +8,7 @@
         <div class="row">
             <!-- Cliente -->
             <div class="col-md-3 mb-3">
-                <a href="{{ url_for('client_bp.cliente')}}" class="btn dashboard-btn btn-cliente">
+                <a class="btn dashboard-btn btn-cliente" data-bs-toggle="modal" data-bs-target="#modalRelatorio">
                     <i class="fas fa-file-invoice"></i> Guias do dia 
                 </a>
             </div>
@@ -35,4 +35,36 @@
             </div>
         </div>
     </div>
+
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="modalRelatorio" tabindex="-1" aria-labelledby="modalRelatorioLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRelatorioLabel">Filtrar Relatório de Guias</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <label for="dataFiltro">Selecione a data:</label>
+        <input type="date" id="dataFiltro" class="form-control">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="gerarRelatorio()">Gerar Relatório</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function gerarRelatorio() {
+    const data = document.getElementById("dataFiltro").value;
+    let url = "/relatorios/guias_do_dia";
+    if (data) {
+        url += "?data=" + data;
+    }
+    window.open(url, "_blank");
+}
+</script>
+
 {% endblock %}
