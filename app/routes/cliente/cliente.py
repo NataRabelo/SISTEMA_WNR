@@ -179,22 +179,6 @@ def editar_cliente(id):
         if data_nascimento:
             cliente.data_nascimento     = datetime.strptime(data_nascimento, "%Y-%m-%d").date()
 
-        # Lógica para verificar se o campo 'possui_filhos' foi preenchido
-        if possui_filhos == 'Não':
-            cliente.numero_filhos = 0
-            cliente.possui_filhos = possui_filhos
-        elif possui_filhos == 'Sim':
-            cliente.numero_filhos = numero_filhos
-            cliente.possui_filhos = possui_filhos
-
-        # Lógica para verificar se o campo 'plano_saude' foi preenchido
-        if plano_saude == 'Sim':
-            cliente.nome_plano_saude = nome_plano_saude
-            cliente.plano_saude = plano_saude
-        elif plano_saude == 'Não':
-            cliente.nome_plano_saude = 'Sem plano de Saúde'
-            cliente.plano_saude = plano_saude
-
         
         db.session.commit()
         flash('Cliente atualizado com sucesso!', 'success')
