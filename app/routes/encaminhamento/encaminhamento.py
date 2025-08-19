@@ -131,6 +131,7 @@ def deletar_encaminhamento(id):
 
 
 @encaminhamento_bp.route("/filtra_encaminhamento", methods=["GET", "POST"])
+@required_login
 def filtra_encaminhamento():
     query = request.args.get("q", "").strip()
 

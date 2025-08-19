@@ -18,10 +18,9 @@ guide_bp = Blueprint('guide_bp', __name__)
 def guia():
     return render_template('guia/guide.html')
 
-# Essa rota é utilizada somente pelo fluxo interno
-
 
 @guide_bp.route('/emitir_guia', methods=['GET', 'POST'])
+@required_login
 def emitir_guia():
 
     if request.method == 'POST':
@@ -115,6 +114,7 @@ def deletar_guia(id):
     return redirect(url_for('guide_bp.listar_guia'))
 
 @guide_bp.route('/guia/pdf/<int:guia_id>')
+@required_login
 def visualizar_guia_pdf(guia_id):
     guia = Guia.query.get_or_404(guia_id)
     html = render_template('pdf/guia.html', guia=guia)
@@ -130,6 +130,7 @@ def visualizar_guia_pdf(guia_id):
 
 
 @guide_bp.route("/filtrar_guia", methods=["GET", "POST"])
+@required_login
 def filtrar_guia():
     query = request.args.get("q", "").strip()
     if query:
@@ -145,6 +146,7 @@ def filtrar_guia():
 
 
 @guide_bp.route('/aprovar_guia/<int:id>', methods=["GET", "POST"])
+@required_login
 def aprovar_guia(id):
     guia = Guia.query.get_or_404(id)
     guia.pago = "Aprovada"
@@ -153,6 +155,7 @@ def aprovar_guia(id):
 
 
 @guide_bp.route('/reprovar_guia/<int:id>', methods=["GET", "POST"])
+@required_login
 def reprovar_guia(id):
     guia = Guia.query.get_or_404(id)
     guia.pago = "Pendente"

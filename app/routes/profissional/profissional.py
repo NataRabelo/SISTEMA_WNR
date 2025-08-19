@@ -134,6 +134,7 @@ def deletar_profissional(id):
 
 
 @professional_bp.route("/filtra_profissional", methods=["GET", "POST"])
+@required_login
 def filtra_profissional():
     query = request.args.get("q", "").strip()
     if query:

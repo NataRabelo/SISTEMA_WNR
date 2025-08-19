@@ -30,6 +30,7 @@ def buscar_cliente():
 
 
 @utils_bp.route('/buscar_profissionais/<int:cliente_id>', methods=['GET'])
+@login_required
 def buscar_profissionais(cliente_id):
     encaminhamentos = Encaminhamento.query.filter_by(cliente_id=cliente_id).all()
     profissionais = [

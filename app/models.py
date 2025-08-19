@@ -4,73 +4,73 @@ from app.extensions import db
 
 class Sexo(db.Model):
     __tablename__ = "sexo"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="sexo")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="sexo")
 
 
 class CondicaoHabitacao(db.Model):
     __tablename__ = "condicao_habitacao"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="condicao_habitacao")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="condicao_habitacao")
 
 
 class TipoMoradia(db.Model):
     __tablename__ = "tipo_moradia"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="tipo_moradia")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="tipo_moradia")
 
 
 class TipoTransporte(db.Model):
     __tablename__ = "tipo_transporte"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="tipo_transporte")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="tipo_transporte")
 
 
 class Escolaridade(db.Model):
     __tablename__ = "escolaridade"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="escolaridade")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="escolaridade")
 
 
 class MetodoPagamento(db.Model):
     __tablename__ = "metodo_pagamento"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    juros = db.Column(db.Float, nullable=False, default=0.0)
-    guias = db.relationship("Guia", back_populates="metodo_pagamento")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    juros                           = db.Column(db.Float, nullable=False, default=0.0)
+    guias                           = db.relationship("Guia", back_populates="metodo_pagamento")
 
 
 class Situacao(db.Model):
     __tablename__ = "situacao"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    encaminhamentos = db.relationship("Encaminhamento", back_populates="situacao")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    encaminhamentos                 = db.relationship("Encaminhamento", back_populates="situacao")
 
 
 class GrauParentesco(db.Model):
     __tablename__ = "grau_parentesco"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="grau_parentesco")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="grau_parentesco")
 
 
 class TipoEncaminhamento(db.Model):
     __tablename__ = "tipo_encaminhamento"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    encaminhamento = db.relationship("Encaminhamento", back_populates="tipo_encaminhamento")
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    encaminhamento                  = db.relationship("Encaminhamento", back_populates="tipo_encaminhamento")
 
 
 class EstadosCivis(db.Model):
     __tablename__ = "estados_civis"
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(255), nullable=False)
-    clientes = db.relationship("Cliente", back_populates="estado_civil")    
+    id                              = db.Column(db.Integer, primary_key=True)
+    nome                            = db.Column(db.String(255), nullable=False)
+    clientes                        = db.relationship("Cliente", back_populates="estado_civil")    
 
 # USUÁRIO
 
@@ -156,7 +156,7 @@ class Cliente(db.Model):
 # PROFISSIONAL
 class Profissional(db.Model):
     __tablename__ = "profissionais"
-    id = db.Column(db.Integer, primary_key=True)
+    id                              = db.Column(db.Integer, primary_key=True)
     nome                            = db.Column(db.String(255), nullable=False)
     cpf                             = db.Column(db.String(14), unique=True, nullable=False)
     email                           = db.Column(db.String(255))
@@ -181,8 +181,8 @@ class Profissional(db.Model):
     valor_minimo                    = db.Column(db.Float)
     data_cadastro                   = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-    encaminhamentos = db.relationship("Encaminhamento", back_populates="profissional", cascade="all, delete-orphan")
-    guias = db.relationship("Guia", back_populates="profissional", cascade="all, delete-orphan")
+    encaminhamentos                 = db.relationship("Encaminhamento", back_populates="profissional", cascade="all, delete-orphan")
+    guias                           = db.relationship("Guia", back_populates="profissional", cascade="all, delete-orphan")
 
 
 # ENCAMINHAMENTO

@@ -12,11 +12,13 @@ report_bp = Blueprint('report_bp', __name__)
 
 # Rota para o menu de relatórios do sistema 
 @report_bp.route('/relatorios')
+@required_login
 def relatorios():
  return render_template('relatorios/menu_relatorios.html')
 
 # Rota para gerar o relatório geral dos clientes cadastrados 
 @report_bp.route('/relatorios/clientes')
+@required_login
 def visualizar_clientes_pdf():
     clientes = Cliente.query.all()
     data_atual = datetime.now().strftime('%d/%m/%Y')
@@ -33,6 +35,7 @@ def visualizar_clientes_pdf():
 
 # Rota para gerar o relatório geral dos profissionais cadastrados
 @report_bp.route('/relatorios/profissionais')
+@required_login
 def visualizar_profissionais_pdf():
     profissionais = Profissional.query.all()
     data_atual = datetime.now().strftime('%d/%m/%Y')
@@ -49,6 +52,7 @@ def visualizar_profissionais_pdf():
 
 # Rota para gerar o relatório geral dos encaminhamentos realizados 
 @report_bp.route('/relatorios/encaminhamentos')
+@required_login
 def visualizar_encaminhamentos_pdf():
     encaminhamentos = Encaminhamento.query.all()
     data_atual = datetime.now().strftime('%d/%m/%Y')
@@ -65,6 +69,7 @@ def visualizar_encaminhamentos_pdf():
 
 # Rota para gerar o relatório geral das guias emitidas 
 @report_bp.route('/relatorios/guias')
+@required_login
 def visualizar_guias_pdf():
     guias = Guia.query.all()
     data_atual = datetime.now().strftime('%d/%m/%Y')
@@ -81,6 +86,7 @@ def visualizar_guias_pdf():
 
 # Rota para gerar o relatório de guias emitidas em uma data específica 
 @report_bp.route('/relatorios/guias_do_dia')
+@required_login
 def visualizar_guias_do_dia_pdf():
     data_str = request.args.get("data")
 
@@ -127,6 +133,7 @@ def visualizar_guias_do_dia_pdf():
 
 # Rota para gerar guias emitidas para cada profissional em um período
 @report_bp.route('/relatorios/guias_por_profissional')
+@required_login
 def visualizar_guias_por_profissional_pdf():
     data_inicio_str = request.args.get("data_inicio")
     data_fim_str = request.args.get("data_fim")

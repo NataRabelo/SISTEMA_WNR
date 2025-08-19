@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, url_fo
 from flask_login import current_user, login_user, logout_user
 from app.models import Usuario
 from app import bcrypt
+from app.utils.login_required import required_login
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -29,6 +30,7 @@ def login():
 
 
 @auth_bp.route('/logout')
+@required_login
 def logout():
     session.clear()
     logout_user()

@@ -122,11 +122,12 @@ def editar_cliente(id):
     remuneracao_formatada               = formatar_para_moeda(cliente.remuneracao)
     renda_familiar_formatada            = formatar_para_moeda(cliente.renda_familiar)
     despesa_mensal_formatada            = formatar_para_moeda(cliente.despesa_mensal)
+    saldo_formatado                     = formatar_para_moeda(cliente.saldo)
 
-    cpf_limpo = request.form.get('cpf')
-    celular_limpo = request.form.get('fone_pessoal')
-    telefone_limpo = request.form.get('fone_contato')
-    cep_limpo = request.form.get('cep')
+    cpf_limpo       = request.form.get('cpf')
+    celular_limpo   = request.form.get('fone_pessoal')
+    telefone_limpo  = request.form.get('fone_contato')
+    cep_limpo       = request.form.get('cep')
 
     if request.method == 'POST':
         sexos                           = Sexo.query.all()
@@ -137,7 +138,7 @@ def editar_cliente(id):
         parentescos                     = GrauParentesco.query.all()
         estados                         = EstadosCivis.query.all()
 
-        idade                           = request.form.get('idade')
+        cliente.idade                   = request.form.get('idade')
         cliente.nome                    = request.form.get('nome')
         cliente.cpf                     = cpf_limpo
         cliente.email                   = request.form.get('email')
@@ -204,7 +205,7 @@ def editar_cliente(id):
                            remuneracao=remuneracao_formatada,
                            renda_familiar=renda_familiar_formatada,
                            despesa_mensal=despesa_mensal_formatada,
-                           idade=20,
+                           saldo_formatado=saldo_formatado,
                            sexos=sexos,
                            condicoes=condicoes,
                            moradias=moradias,
@@ -226,6 +227,7 @@ def deletar_cliente(id):
 
 
 @client_bp.route("/filtra_cliente", methods=["GET", "POST"])
+@required_login
 def filtra_cliente():
     query = request.args.get("q", "").strip()
     if query:
