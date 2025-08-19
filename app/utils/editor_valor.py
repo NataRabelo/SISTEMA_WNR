@@ -17,7 +17,7 @@ def converter_para_float(valor):
     except ValueError:
         return 0.0
 
-def format_currency(value):
+def formatar_moeda(value):
     try:
         return f"R$ {value:,.2f}".replace(",", "v").replace(".", ",").replace("v", ".")
     except (ValueError, TypeError):

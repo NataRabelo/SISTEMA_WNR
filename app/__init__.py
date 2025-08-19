@@ -1,4 +1,4 @@
-from app.utils.editor_valor import format_currency
+from app.utils.editor_valor import formatar_moeda
 from config import DevelopmentConfig
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -31,7 +31,7 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.login_view = 'auth_bp.login'
     bcrypt.init_app(app)
 
-    app.jinja_env.filters['currency'] = format_currency
+    app.jinja_env.filters['currency'] = formatar_moeda
 
     from app.routes.autenticadores.autenticador import auth_bp
     from app.routes.cliente.cliente import client_bp
