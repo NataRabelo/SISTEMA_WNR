@@ -21,7 +21,7 @@
                     <label for="idade" class="form-label">Idade</label>
                     <input type="text" class="form-control" id="idade" name="idade" value="{{ cliente.idade }}">
                 </div>
-                {% if idade <= 17 %}
+                {% if cliente.idade <= 17 %}
                 <div class="col-md-1 d-flex align-items-end">
                     <button type="button" class="btn btn-secondary" onclick="toggleCampos()">Mostrar/Ocultar</button>
                 </div>

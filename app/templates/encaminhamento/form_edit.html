@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="situacao" class="form-label">Situação<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" name="situacao" id="situacao">
+                    <select class="form-select campoObrigatorio" name="situacao" id="situacao" required>
                         <option value="">Selecione...</option>
                         {% for situacao in situacoes %}
                         <option value="{{ situacao.id }}" {% if encaminhamento.situacao_id == situacao.id %}selected{% endif %}>{{ situacao.nome }}</option>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="tipo_encaminhamento" class="form-label">Tipo de encaminhamento<span class="required-star">*</span></label>
-                    <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento">
+                    <select class="form-select campoObrigatorio" name="tipo_encaminhamento" id="tipo_encaminhamento" required>
                         <option value="">Selecione...</option>
                         {% for tencaminhamento in tencaminhamentos %}
                         <option value="{{ tencaminhamento.id }}" {% if encaminhamento.tipo_encaminhamento_id == tencaminhamento.id %}selected{% endif %}>{{ tencaminhamento.nome }}</option>
